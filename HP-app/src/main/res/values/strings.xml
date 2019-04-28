@@ -58,6 +58,7 @@
     <string name="tips_register_repassword">请输入确认密码</string>
     <string name="tips_register_nickname">请输入用户昵称</string>
     <string name="tips_register_phone">请输入手机号码</string>
+    <string name="tips_show_more">查看更多</string>
 
 
 </resources>

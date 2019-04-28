@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_marginTop="@dimen/dp_6"
+    android:layout_marginBottom="@dimen/dp_6"
+    android:textSize="@dimen/sp_14"
+    android:textColor="@color/md_black_300"
+    android:text="旅人丶: 我劝你善良"
+    tools:contentDescription="// TODO 添加背景"/>
