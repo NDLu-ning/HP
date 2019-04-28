@@ -10,5 +10,9 @@ public interface UserService {
 
     @FormUrlEncoded
     @POST("")
-    Single<Result> login();
+    Single<String> login();
+
+    @FormUrlEncoded
+    @POST("")
+    Single<String> singup();
 }
