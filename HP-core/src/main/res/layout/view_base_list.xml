@@ -1,36 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.scwang.smartrefresh.layout.SmartRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/view_base_refresh_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:background="@color/md_grey_100">
 
-    <com.scwang.smartrefresh.layout.SmartRefreshLayout
-        android:id="@+id/view_base_refresh_layout"
+    <com.scwang.smartrefresh.header.MaterialHeader
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/md_grey_100">
+        android:layout_height="wrap_content" />
 
-        <com.scwang.smartrefresh.header.MaterialHeader
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include
+            layout="@layout/view_show_empty"
+            android:visibility="gone" />
+
+        <include
+            layout="@layout/view_show_error"
+            android:visibility="gone" />
+
+        <include
+            layout="@layout/view_show_loading"
+            android:visibility="gone" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/view_main"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="match_parent"
+            android:background="@android:color/transparent"
+            android:overScrollMode="never" />
 
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+    </FrameLayout>
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/view_main"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@android:color/transparent"
-                android:overScrollMode="never" />
+    <com.scwang.smartrefresh.layout.footer.ClassicsFooter
+        android:id="@+id/view_base_loadmore_footer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
-        </FrameLayout>
-
-        <com.scwang.smartrefresh.layout.footer.ClassicsFooter
-            android:id="@+id/view_base_loadmore_footer"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
-</LinearLayout>
+</com.scwang.smartrefresh.layout.SmartRefreshLayout>

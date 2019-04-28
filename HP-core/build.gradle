@@ -74,6 +74,7 @@ dependencies {
         exclude module: 'rxandroid'
         exclude module: 'rxlifecycle'
     }
+    api rootProject.ext.dependencies["ninegridview"]
     api rootProject.ext.dependencies["fastjson"]
     api rootProject.ext.dependencies['percent-support']
     api rootProject.ext.dependencies['rxPermissions']

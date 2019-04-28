@@ -105,6 +105,9 @@ ext {
             "kotlin"                : "org.jetbrains.kotlin:kotlin-stdlib-jre7:${version["kotlinVersion"]}",
             "YLCircleImageView"         : 'com.github.ai2101039:YLCircleImageView:v1.0.6',
 
+
+            "ninegridview"          : "com.lzy.widget:ninegridview:0.2.0",
+
     ]
 }
 

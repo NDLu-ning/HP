@@ -22,6 +22,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="start"
             android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
             android:background="@null"
             android:maxHeight="@dimen/dp_40"
             android:maxWidth="@dimen/dp_40"

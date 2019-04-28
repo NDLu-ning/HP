@@ -58,14 +58,14 @@ public class AuthActivity extends SingleFragmentActivity<AuthPresenter>
             mCurFragment = getIntent().getIntExtra(KEY_FIRST_FRAGMENT, FRAGMENT_IS_SIGN_IN);
         }
         getSupportFragmentManager().addOnBackStackChangedListener(this::setHomeButtonEnabled);
-        initToolbar(mRootView, "", R.mipmap.ic_close_black_24, 0, R.color.md_white);
+        initToolbar(mRootView, "", R.mipmap.ic_close_24, 0, R.color.md_white);
     }
 
     private void setHomeButtonEnabled() {
         if (mCurFragment != FRAGMENT_IS_SIGN_IN || getSupportFragmentManager().getBackStackEntryCount() > 0) {
             setToolbarLeftDrawableRes(R.mipmap.ic_navigation_back);
         } else {
-            setToolbarLeftDrawableRes(R.mipmap.ic_close_black_24);
+            setToolbarLeftDrawableRes(R.mipmap.ic_close_24);
         }
     }
 
