@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:maxHeight="@dimen/dp_200"
+    android:minHeight="@dimen/dp_140">
+
+    <View
+        android:id="@+id/line"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_1"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@color/md_grey_100" />
+
+    <android.support.v7.widget.AppCompatImageView
+        android:id="@+id/adapter_user_news_single_icon_iv"
+        android:layout_width="@dimen/dp_30"
+        android:layout_height="@dimen/dp_30"
+        android:layout_marginStart="@dimen/dp_12"
+        android:layout_marginTop="@dimen/dp_12"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/line"
+        tools:src="@mipmap/ic_user_default_photo" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/adapter_user_news_single_name_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_10"
+        android:textColor="@color/md_black"
+        android:textSize="@dimen/sp_14"
+        app:layout_constraintStart_toEndOf="@+id/adapter_user_news_single_icon_iv"
+        app:layout_constraintTop_toBottomOf="@+id/line"
+        tools:text="来啊LIVALL" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/adapter_user_news_single_date_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_8"
+        android:textColor="@color/md_grey_500"
+        android:textSize="@dimen/sp_12"
+        app:layout_constraintBottom_toBottomOf="@+id/adapter_user_news_single_icon_iv"
+        app:layout_constraintStart_toEndOf="@+id/adapter_user_news_single_icon_iv"
+        app:layout_constraintTop_toBottomOf="@+id/adapter_user_news_single_name_tv"
+        tools:text="2天前" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/adapter_user_news_single_Title_tv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_12"
+        android:maxLines="4"
+        android:paddingEnd="@dimen/dp_12"
+        android:paddingStart="@dimen/dp_12"
+        android:textColor="@color/md_black_300"
+        android:textSize="@dimen/sp_16"
+        app:layout_constraintEnd_toStartOf="@+id/adapter_user_news_single_image_iv"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/adapter_user_news_single_icon_iv"
+        tools:text="章子怡妆前妆后差距大，素颜吓呆众人，与梅婷相比甚远" />
+
+    <android.support.v7.widget.AppCompatImageView
+        android:id="@+id/adapter_user_news_single_image_iv"
+        android:layout_width="@dimen/dp_100"
+        android:layout_height="@dimen/dp_70"
+        android:layout_marginEnd="@dimen/dp_12"
+        android:layout_marginTop="@dimen/dp_12"
+        android:layout_weight="1"
+        android:adjustViewBounds="true"
+        android:scaleType="fitXY"
+        android:src="@mipmap/ic_launcher"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/adapter_user_news_single_icon_iv"
+        tools:visibility="visible" />
+
+    <android.support.v7.widget.AppCompatImageView
+        android:id="@+id/adapter_user_news_single_isvideo_iv"
+        android:layout_width="@dimen/dp_20"
+        android:layout_height="@dimen/dp_20"
+        android:adjustViewBounds="true"
+        android:scaleType="fitXY"
+        android:src="@mipmap/ic_video_play"
+        app:layout_constraintBottom_toBottomOf="@+id/adapter_user_news_single_image_iv"
+        app:layout_constraintEnd_toEndOf="@+id/adapter_user_news_single_image_iv"
+        app:layout_constraintStart_toStartOf="@+id/adapter_user_news_single_image_iv"
+        app:layout_constraintTop_toTopOf="@+id/adapter_user_news_single_image_iv"
+        tools:visibility="visible" />
+
+
+</android.support.constraint.ConstraintLayout>

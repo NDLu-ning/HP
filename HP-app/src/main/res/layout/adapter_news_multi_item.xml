@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/md_white"
+    android:maxHeight="@dimen/dp_140"
+    android:paddingStart="@dimen/dp_14"
+    android:paddingTop="@dimen/dp_6"
+    android:paddingEnd="@dimen/dp_14"
+    android:paddingBottom="@dimen/dp_6">
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/adapter_news_multi_title_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:lineSpacingExtra="@dimen/dp_2"
+        android:maxLines="2"
+        android:paddingBottom="@dimen/dp_6"
+        android:textColor="@color/md_black"
+        android:textSize="@dimen/sp_16"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="顽固皮肤问题，反反复复怎么办？试试这招吧" />
+
+    <LinearLayout
+        android:id="@+id/adapter_news_multi_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="@dimen/dp_6"
+        android:paddingBottom="@dimen/dp_6"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/adapter_news_multi_title_tv"
+        tools:visibility="visible">
+
+        <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/adapter_news_image_1_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dp_3"
+            android:layout_weight="1"
+            android:adjustViewBounds="true"
+            android:maxHeight="@dimen/dp_70"
+            android:scaleType="fitXY"
+            android:src="@mipmap/ic_launcher"
+            android:visibility="invisible"
+            tools:padding="1dp"
+            tools:src="@mipmap/ic_yang_1"
+            tools:visibility="visible" />
+
+        <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/adapter_news_image_2_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_3"
+            android:layout_marginEnd="@dimen/dp_3"
+            android:layout_weight="1"
+            android:adjustViewBounds="true"
+            android:maxHeight="@dimen/dp_70"
+            android:scaleType="fitXY"
+            android:src="@mipmap/ic_launcher"
+            android:visibility="invisible"
+            tools:src="@mipmap/ic_yang_2"
+            tools:visibility="visible" />
+
+        <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/adapter_news_image_3_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_3"
+            android:layout_weight="1"
+            android:adjustViewBounds="true"
+            android:maxHeight="@dimen/dp_70"
+            android:scaleType="fitXY"
+            android:src="@mipmap/ic_yang_3"
+            android:visibility="invisible"
+            tools:visibility="visible" />
+
+    </LinearLayout>
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/adapter_news_multi_author_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/secondary_text"
+        android:layout_marginTop="@dimen/dp_5"
+        android:textSize="@dimen/sp_12"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/adapter_news_multi_ll"
+        tools:text="皮肤调理中心" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/adapter_news_multi_comment_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_10"
+        android:textColor="@color/secondary_text"
+        android:layout_marginTop="@dimen/dp_5"
+        android:textSize="@dimen/sp_12"
+        app:layout_constraintStart_toEndOf="@id/adapter_news_multi_author_tv"
+        app:layout_constraintTop_toBottomOf="@id/adapter_news_multi_ll"
+        tools:text="11评" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/adapter_news_multi_date_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_10"
+        android:textColor="@color/secondary_text"
+        android:layout_marginTop="@dimen/dp_5"
+        android:textSize="@dimen/sp_12"
+        app:layout_constraintStart_toEndOf="@id/adapter_news_multi_comment_tv"
+        app:layout_constraintTop_toBottomOf="@id/adapter_news_multi_ll"
+        tools:text="4-23" />
+
+
+</android.support.constraint.ConstraintLayout>

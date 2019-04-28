@@ -1,0 +1,63 @@
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="app_name">健康养生</string>
+
+    <string name="tab_home">主页</string>
+    <string name="tab_post">论坛</string>
+    <string name="tab_constitution">体质</string>
+    <string name="tab_attention">关注</string>
+    <string name="tab_myself">我的</string>
+
+    <string name="tips_attention_title">我的关注</string>
+    <string name="tips_search">搜索你感兴趣的:</string>
+    <string name="tips_myself_login">登录账号享受更多优质体验</string>
+    <string name="tips_myself_message">我的消息</string>
+    <string name="tips_myself_test">体质测试</string>
+    <string name="tips_myself_attention">我的关注</string>
+    <string name="tips_myself_post">我的帖子</string>
+
+    <string name="template_skip">跳过 ( %d )</string>
+
+    <string name="tips_myself_setting">设置</string>
+
+    <string name="action_subscribed">已关注</string>
+    <string name="action_not_subscribed">关注</string>
+
+
+    <string name="tips_user_info">个人信息</string>
+    <string name="tips_user_profile">头像</string>
+    <string name="tips_user_nickname">昵称</string>
+    <string name="tips_user_gender">性别</string>
+    <string name="tips_user_birthday">生日</string>
+    <string name="tips_user_address">所在地</string>
+    <string name="tips_user_signature">个人简介</string>
+    <string name="tips_edit_signature">编辑个人简介</string>
+    <string name="tips_user_male">男</string>
+    <string name="tips_user_female">女</string>
+    <string name="tips_edit_address">编辑个人地址</string>
+    <string name="tips_secret">保密</string>
+    <string name="tips_load_all_data">健康养生：已加载全部数据</string>
+
+    <string name="news_comment_num_template"><xliff:g id="IMAGE_NUM">%d</xliff:g>评</string>
+
+    <string name="tips_login_title">账号密码登录</string>
+    <string name="tips_new_user_register">新用户注册</string>
+    <string name="tips_login_username">账号</string>
+    <string name="tips_login_password">密码</string>
+
+    <string name="tips_login_forget">忘记密码</string>
+    <string name="tips_register_title">新用户注册</string>
+    <string name="tips_register_subtitle_message">注册账号体验专业养生社区</string>
+
+    <string name="action_register_send_code">发送验证码</string>
+    <string name="tips_register_code">验证码</string>
+
+    <string name="action_login_with_space">&#032;登&#032;&#032;录&#032;</string>
+    <string name="action_register_with_space">&#032;注&#032;&#032;册&#032;</string>
+    <string name="hint_please_input_username">请输入账号</string>
+    <string name="hint_please_input_password">请输入密码</string>
+    <string name="tips_register_repassword">请输入确认密码</string>
+    <string name="tips_register_nickname">请输入用户昵称</string>
+    <string name="tips_register_phone">请输入手机号码</string>
+
+
+</resources>

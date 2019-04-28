@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+    <dimen name="bottom_navigation_height">56dp</dimen>
+    <dimen name="tab_badge_corner_radius">15dp</dimen>
+    <dimen name="tab_badge_bubble_size">18dp</dimen>
+    <dimen name="tab_badge_left_spacing">10dp</dimen>
+    <dimen name="tab_badge_text_size">10sp</dimen>
+    <dimen name="tab_icon_size_selected">26dp</dimen>
+    <dimen name="tab_icon_size_inactive">24dp</dimen>
+    <dimen name="tab_name_text_size">8sp</dimen>
+
+</resources>

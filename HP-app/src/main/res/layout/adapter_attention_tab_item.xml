@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:minHeight="@dimen/dp_160"
+    android:paddingEnd="@dimen/dp_12"
+    android:paddingStart="@dimen/dp_12"
+    android:paddingTop="@dimen/dp_12">
+
+    <android.support.v7.widget.AppCompatImageView
+        android:id="@+id/adapter_attention_tab_icon_iv"
+        android:layout_width="@dimen/dp_30"
+        android:layout_height="@dimen/dp_30"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@mipmap/ic_user_default_photo" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/adapter_attention_tab_name_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_10"
+        android:textColor="@color/md_black"
+        android:textSize="@dimen/sp_14"
+        app:layout_constraintBottom_toBottomOf="@+id/adapter_attention_tab_icon_iv"
+        app:layout_constraintStart_toEndOf="@+id/adapter_attention_tab_icon_iv"
+        app:layout_constraintTop_toTopOf="@+id/adapter_attention_tab_icon_iv"
+        tools:text="来啊LIVALL" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/adapter_attention_tab_content_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_12"
+        android:textColor="@color/md_black_300"
+        android:textSize="@dimen/sp_16"
+        app:layout_constraintTop_toBottomOf="@+id/adapter_attention_tab_icon_iv"
+        tools:text="章子怡妆前妆后差距大，素颜吓呆众人，与梅婷相比甚远" />
+
+    <android.support.v7.widget.AppCompatCheckBox
+        android:id="@+id/adapter_attention_tab_sub_cb"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dp_28"
+        android:layout_marginStart="@dimen/dp_6"
+        android:background="@drawable/selector_sub_cb"
+        android:button="@null"
+        android:gravity="center"
+        android:text="@string/action_not_subscribed"
+        android:textColor="@color/selector_sub_tv"
+        android:checked="true"
+        android:textSize="@dimen/sp_12"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/adapter_attention_tab_multi_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_4"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@+id/adapter_attention_tab_content_tv"
+        tools:visibility="visible">
+
+        <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/adapter_attention_tab_image_1_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dp_2"
+            android:layout_marginTop="@dimen/dp_4"
+            android:layout_weight="1"
+            android:adjustViewBounds="true"
+            android:maxHeight="@dimen/dp_70"
+            android:padding="@dimen/dp_1"
+            android:scaleType="fitXY"
+            android:src="@mipmap/ic_launcher"
+            android:visibility="invisible"
+            tools:padding="1dp"
+            tools:visibility="visible" />
+
+        <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/adapter_attention_tab_image_2_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dp_2"
+            android:layout_marginStart="@dimen/dp_2"
+            android:layout_marginTop="@dimen/dp_4"
+            android:layout_weight="1"
+            android:adjustViewBounds="true"
+            android:maxHeight="@dimen/dp_70"
+            android:scaleType="fitXY"
+            android:src="@mipmap/ic_launcher"
+            android:visibility="invisible"
+            tools:visibility="visible" />
+
+        <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/adapter_attention_tab_image_3_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_2"
+            android:layout_marginTop="@dimen/dp_4"
+            android:layout_weight="1"
+            android:adjustViewBounds="true"
+            android:maxHeight="@dimen/dp_70"
+            android:scaleType="fitXY"
+            android:src="@mipmap/ic_launcher"
+            android:visibility="invisible"
+            tools:visibility="visible" />
+    </LinearLayout>
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/adapter_attention_tab_domain_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dp_8"
+        android:layout_marginTop="@dimen/dp_4"
+        android:textColor="@color/md_grey_500"
+        android:textSize="@dimen/sp_12"
+        app:layout_constraintBottom_toTopOf="@+id/line"
+        app:layout_constraintStart_toStartOf="@+id/adapter_attention_tab_icon_iv"
+        app:layout_constraintTop_toBottomOf="@+id/adapter_attention_tab_multi_ll"
+        tools:text="娱乐" />
+
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/adapter_attention_tab_comment_num_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dp_8"
+        android:layout_marginStart="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_4"
+        android:textColor="@color/md_grey_500"
+        android:textSize="@dimen/sp_12"
+        app:layout_constraintBottom_toTopOf="@+id/line"
+        app:layout_constraintStart_toEndOf="@+id/adapter_attention_tab_domain_tv"
+        app:layout_constraintTop_toBottomOf="@+id/adapter_attention_tab_multi_ll"
+        tools:text="79评" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/adapter_attention_tab_date_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dp_8"
+        android:layout_marginStart="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_4"
+        android:textColor="@color/md_grey_500"
+        android:textSize="@dimen/sp_12"
+        app:layout_constraintBottom_toTopOf="@+id/line"
+        app:layout_constraintStart_toEndOf="@+id/adapter_attention_tab_comment_num_tv"
+        app:layout_constraintTop_toBottomOf="@+id/adapter_attention_tab_multi_ll"
+        tools:text="2天前" />
+
+    <View
+        android:id="@+id/line"
+        android:layout_width="match_parent"
+        android:layout_height="0.8dp"
+        android:background="@color/md_grey_100"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+
+</android.support.constraint.ConstraintLayout>

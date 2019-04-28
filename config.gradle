@@ -1,0 +1,110 @@
+ext {
+    android = [
+            compileSdkVersion    : 27,
+            buildToolsVersion    : "27.0.0",
+            minSdkVersion        : 17,
+            targetSdkVersion     : 26,
+            versionCode          : 1,
+            versionName          : "0.0.1",
+            greendaoSchemaVersion: 1,
+    ]
+
+
+    version = [
+            androidSupportSdkVersion: "27.0.0",
+            retrofitVersion         : "2.4.0",
+            dagger2Version          : "2.15",
+            glideVersion            : "4.6.1",
+            butterknifeVersion      : "8.8.1",
+            eventbusVersion         : "3.1.1",
+            multitypeVersion        : "3.4.4",
+            greendaoVersion         : "3.2.2",
+            multidexVersion         : "1.0.3",
+            fragmentationVersion    : "1.2.6",
+            smartrefreshVersion     : "1.0.5.1",
+            constraintVersion       : "1.1.0",
+            rxlifecycleVersion      : "2.2.1",
+            percentSupportVersion   : '1.1.1',
+            xrecyclerVersion        : '1.5.9',
+            gsyvideoplayer          : '6.0.3',
+            kotlinVersion           : '1.2.71',
+    ]
+
+    dependencies = [
+            //support
+            "appcompat-v7"          : "com.android.support:appcompat-v7:${version["androidSupportSdkVersion"]}",
+            "design"                : "com.android.support:design:${version["androidSupportSdkVersion"]}",
+            "support-v4"            : "com.android.support:support-v4:${version["androidSupportSdkVersion"]}",
+            "cardview-v7"           : "com.android.support:cardview-v7:${version["androidSupportSdkVersion"]}",
+            "annotations"           : "com.android.support:support-annotations:${version["androidSupportSdkVersion"]}",
+            "recyclerview-v7"       : "com.android.support:recyclerview-v7:${version["androidSupportSdkVersion"]}",
+            "constraint"            : "com.android.support.constraint:constraint-layout:${version["constraintVersion"]}",
+            "test-runner"           : "com.android.support.test:runner:1.0.1",
+            "test-espresso"         : "com.android.support.test.espresso:espresso-core:3.0.1",
+            "junit"                 : "junit:junit:4.12",
+
+            "percent-support"       : "com.zhy:percent-support-extends:${version["percentSupportVersion"]}",
+
+            "wraplayout"            : "am.widget:wraplayout:1.2.1",
+
+            // OkHttp
+            "okio"                  : "com.squareup.okio:okio:1.13.0",
+            "okhttp"                : "com.squareup.okhttp3:okhttp:3.8.1",
+            "retrofit"              : "com.squareup.retrofit2:retrofit:${version["retrofitVersion"]}",
+            "retrofit-rxjava2"      : "com.squareup.retrofit2:adapter-rxjava2:${version["retrofitVersion"]}",
+            "retrofit-scalars"      : "com.squareup.retrofit2:converter-scalars:${version["retrofitVersion"]}",
+            "retrofit-gson"         : "com.squareup.retrofit2:converter-gson:${version["retrofitVersion"]}",
+            "retrofit-logging"      : "com.squareup.okhttp3:logging-interceptor:3.8.1",
+
+            // EventBus
+            "eventbus"              : "org.greenrobot:eventbus:${version["eventbusVersion"]}",
+            "multitype"             : "me.drakeet.multitype:multitype:${version["multitypeVersion"]}",
+
+            // RxJava
+            "rxjava"                : "io.reactivex.rxjava2:rxjava:2.1.10",
+            "rxandroid"             : "io.reactivex.rxjava2:rxandroid:2.0.2",
+            "rxPermissions"         : "com.tbruyelle.rxpermissions2:rxpermissions:0.9.4@aar",
+            "rxlifecycle"           : "com.trello.rxlifecycle2:rxlifecycle:${version["rxlifecycleVersion"]}",
+            "rxlifecycle-android"   : "com.trello.rxlifecycle2:rxlifecycle-android:${version["rxlifecycleVersion"]}",
+            "rxlifecycle-components": "com.trello.rxlifecycle2:rxlifecycle-components:${version["rxlifecycleVersion"]}",
+
+            // Rxbinding
+            "rxbinding"             : "com.jakewharton.rxbinding2:rxbinding-support-v4:2.0.0",
+
+            // butterknif
+            "butterknife"           : "com.jakewharton:butterknife:${version["butterknifeVersion"]}",
+            "butterknife-compiler"  : "com.jakewharton:butterknife-compiler:${version["butterknifeVersion"]}",
+
+            // GreenDao
+            "greendao-generator"    : "org.greenrobot:greendao-generator:${version["greendaoVersion"]}",
+            "greendao"              : "org.greenrobot:greendao:${version["greendaoVersion"]}",
+
+            // 上拉加载下拉刷新
+            "smartrefresh"          : "com.scwang.smartrefresh:SmartRefreshLayout:${version["smartrefreshVersion"]}",
+            "smartrefresh-header"   : "com.scwang.smartrefresh:SmartRefreshHeader:${version["smartrefreshVersion"]}",
+
+            "dagger2"               : "com.google.dagger:dagger:${version["dagger2Version"]}",
+            "dagger2-compiler"      : "com.google.dagger:dagger-compiler:${version["dagger2Version"]}",
+
+            "multidex"              : "com.android.support:multidex:${version["multidexVersion"]}",
+
+            "glide"                 : "com.github.bumptech.glide:glide:${version["glideVersion"]}",
+            "glide-compiler"        : "com.github.bumptech.glide:compiler:${version["glideVersion"]}",
+            "xrecyclerview"         : "com.jcodecraeer:xrecyclerview:${version["xrecyclerVersion"]}",
+            "fragmentation"         : "me.yokeyword:fragmentation:${version["fragmentationVersion"]}",
+            "fragmentation-swipe"   : "me.yokeyword:fragmentation-swipeback:${version["fragmentationVersion"]}",
+            "fastjson"              : "com.alibaba:fastjson:1.2.51",
+            "photoview"             : "com.github.chrisbanes:PhotoView:2.0.0",
+
+            'videoplayer'           : "com.shuyu:GSYVideoPlayer:6.0.3",
+
+            "sqlcipher"             : "net.zetetic:android-database-sqlcipher:3.5.7@aar",
+            "PickerView"            : 'com.contrarywind:Android-PickerView:4.1.2',
+
+            // Kotlin
+            "kotlin"                : "org.jetbrains.kotlin:kotlin-stdlib-jre7:${version["kotlinVersion"]}",
+            "YLCircleImageView"         : 'com.github.ai2101039:YLCircleImageView:v1.0.6',
+
+    ]
+}
+

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/dp_4"
+    android:background="@color/md_white"
+    android:maxHeight="@dimen/dp_100"
+    android:orientation="horizontal"
+    android:paddingStart="@dimen/dp_14"
+    android:paddingEnd="@dimen/dp_14">
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/adapter_news_single_title_tv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:lineSpacingExtra="@dimen/dp_2"
+        android:maxLines="2"
+        android:paddingTop="@dimen/dp_6"
+        android:paddingEnd="@dimen/dp_6"
+        android:paddingRight="@dimen/dp_6"
+        android:paddingBottom="@dimen/dp_6"
+        android:textColor="@color/md_black"
+        android:textSize="@dimen/sp_16"
+        app:layout_constraintEnd_toStartOf="@id/adapter_news_single_image_iv"
+        app:layout_constraintHorizontal_weight="7"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="最强生发秘籍：外养+穴位+食疗！亲测有效！脱发再见！" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/adapter_news_single_author_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/md_grey_400"
+        android:textSize="@dimen/sp_12"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/adapter_news_single_title_tv"
+        tools:text="中科在线" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/adapter_news_single_comment_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_8"
+        android:textColor="@color/md_grey_400"
+        android:textSize="@dimen/sp_12"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/adapter_news_single_author_tv"
+        app:layout_constraintTop_toBottomOf="@id/adapter_news_single_title_tv"
+        tools:text="20评" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/adapter_news_single_date_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_8"
+        android:textColor="@color/md_grey_400"
+        android:textSize="@dimen/sp_12"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/adapter_news_single_comment_tv"
+        app:layout_constraintTop_toBottomOf="@id/adapter_news_single_title_tv"
+        tools:text="1个小时前" />
+
+    <android.support.v7.widget.AppCompatImageView
+        android:id="@+id/adapter_news_single_image_iv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_6"
+        android:layout_marginBottom="@dimen/dp_6"
+        android:adjustViewBounds="true"
+        android:maxWidth="@dimen/dp_100"
+        android:maxHeight="@dimen/dp_70"
+        android:scaleType="fitXY"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_weight="3"
+        app:layout_constraintStart_toEndOf="@id/adapter_news_single_title_tv"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@mipmap/ic_heizhima" />
+
+    <android.support.v7.widget.AppCompatImageView
+        android:id="@+id/adapter_news_single_isvideo_iv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:maxWidth="@dimen/dp_20"
+        android:maxHeight="@dimen/dp_20"
+        android:src="@mipmap/ic_video_play"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/adapter_news_single_image_iv"
+        app:layout_constraintEnd_toEndOf="@id/adapter_news_single_image_iv"
+        app:layout_constraintStart_toStartOf="@id/adapter_news_single_image_iv"
+        app:layout_constraintTop_toTopOf="@id/adapter_news_single_image_iv" />
+
+
+</android.support.constraint.ConstraintLayout>

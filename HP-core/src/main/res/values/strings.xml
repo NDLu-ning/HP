@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">HP-core</string>
+    <string name="tips_confirm">确认</string>
+    <string name="tips_cancel">取消</string>
+    <string name="tips_empty">暂无相关数据</string>
+    <string name="tips_retry">重试一次</string>
+
+    <string name="tips_error_general">糟糕，系统出错。请稍后再试。</string>
+    <string name="tips_network_unavailable">健康养生：当前网络不可用</string>
+</resources>

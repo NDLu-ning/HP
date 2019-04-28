@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/md_white"
+    android:maxHeight="@dimen/dp_320"
+    android:orientation="horizontal"
+    android:paddingStart="@dimen/dp_14"
+    android:paddingTop="@dimen/dp_6"
+    android:paddingEnd="@dimen/dp_14"
+    android:paddingBottom="@dimen/dp_6">
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/adapter_news_big_title_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:lineSpacingExtra="@dimen/dp_2"
+        android:maxLines="3"
+        android:paddingBottom="@dimen/dp_5"
+        android:textColor="@color/md_black"
+        android:textSize="@dimen/sp_16"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="西兰花和此物一起，皮肤嫩滑，大肚子没了，尤其是女人，不可错误" />
+
+    <android.support.v7.widget.AppCompatImageView
+        android:id="@+id/adapter_news_big_image_iv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:maxHeight="@dimen/dp_180"
+        android:scaleType="fitXY"
+        android:src="@mipmap/ic_xilanhua"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/adapter_news_big_title_tv" />
+
+    <android.support.v7.widget.AppCompatImageView
+        android:id="@+id/adapter_news_big_isvideo_iv"
+        android:layout_width="@dimen/dp_40"
+        android:layout_height="@dimen/dp_40"
+        android:src="@mipmap/ic_video_play"
+        app:layout_constraintBottom_toBottomOf="@id/adapter_news_big_image_iv"
+        app:layout_constraintEnd_toEndOf="@id/adapter_news_big_image_iv"
+        app:layout_constraintStart_toStartOf="@id/adapter_news_big_image_iv"
+        app:layout_constraintTop_toTopOf="@id/adapter_news_big_image_iv" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/adapter_news_big_author_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_6"
+        android:textColor="@color/secondary_text"
+        android:textSize="@dimen/sp_12"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/adapter_news_big_image_iv"
+        tools:text="悠悠哉哉" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/adapter_news_big_comment_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_6"
+        android:textColor="@color/secondary_text"
+        android:textSize="@dimen/sp_12"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/adapter_news_big_author_tv"
+        app:layout_constraintTop_toBottomOf="@id/adapter_news_big_image_iv"
+        tools:text="11评" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/adapter_news_big_date_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_6"
+        android:textColor="@color/secondary_text"
+        android:textSize="@dimen/sp_12"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/adapter_news_big_comment_tv"
+        app:layout_constraintTop_toBottomOf="@id/adapter_news_big_image_iv"
+        tools:text="4个小时前" />
+
+</android.support.constraint.ConstraintLayout>

@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:minHeight="@dimen/dp_160"
+    android:paddingStart="@dimen/dp_12"
+    android:paddingTop="@dimen/dp_12"
+    android:paddingEnd="@dimen/dp_12">
+
+    <android.support.v7.widget.AppCompatImageView
+        android:id="@+id/adapter_attention_tab_single_icon_iv"
+        android:layout_width="@dimen/dp_30"
+        android:layout_height="@dimen/dp_30"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@mipmap/ic_user_default_photo" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/adapter_attention_tab_single_name_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_10"
+        android:textColor="@color/md_black"
+        android:textSize="@dimen/sp_14"
+        app:layout_constraintBottom_toBottomOf="@+id/adapter_attention_tab_single_icon_iv"
+        app:layout_constraintStart_toEndOf="@+id/adapter_attention_tab_single_icon_iv"
+        app:layout_constraintTop_toTopOf="@+id/adapter_attention_tab_single_icon_iv"
+        tools:text="来啊LIVALL" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/adapter_attention_tab_single_content_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_12"
+        android:textColor="@color/md_black_300"
+        android:textSize="@dimen/sp_16"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/adapter_attention_tab_single_icon_iv"
+        tools:text="章子怡妆前妆后差距大，素颜吓呆众人，与梅婷相比甚远" />
+
+    <android.support.v7.widget.AppCompatCheckBox
+        android:id="@+id/adapter_attention_tab_sub_cb"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dp_28"
+        android:layout_marginStart="@dimen/dp_6"
+        android:background="@drawable/selector_sub_cb"
+        android:button="@null"
+        android:checked="true"
+        android:gravity="center"
+        android:text="@string/action_not_subscribed"
+        android:textColor="@color/selector_sub_tv"
+        android:textSize="@dimen/sp_12"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <android.support.v7.widget.AppCompatImageView
+        android:id="@+id/adapter_attention_tab_single_image_iv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:maxHeight="@dimen/dp_180"
+        android:scaleType="fitXY"
+        android:src="@mipmap/ic_launcher"
+        android:layout_marginTop="@dimen/dp_4"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/adapter_attention_tab_single_content_tv" />
+
+    <android.support.v7.widget.AppCompatImageView
+        android:id="@+id/adapter_attention_tab_single_isvideo_iv"
+        android:layout_width="@dimen/dp_40"
+        android:layout_height="@dimen/dp_40"
+        android:adjustViewBounds="true"
+        android:src="@mipmap/ic_video_play"
+        app:layout_constraintBottom_toBottomOf="@+id/adapter_attention_tab_single_image_iv"
+        app:layout_constraintEnd_toEndOf="@+id/adapter_attention_tab_single_image_iv"
+        app:layout_constraintStart_toStartOf="@+id/adapter_attention_tab_single_image_iv"
+        app:layout_constraintTop_toTopOf="@+id/adapter_attention_tab_single_image_iv" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/adapter_attention_tab_single_domain_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_4"
+        android:layout_marginBottom="@dimen/dp_8"
+        android:textColor="@color/md_grey_500"
+        android:textSize="@dimen/sp_12"
+        app:layout_constraintBottom_toTopOf="@+id/line"
+        app:layout_constraintStart_toStartOf="@+id/adapter_attention_tab_single_icon_iv"
+        app:layout_constraintTop_toBottomOf="@+id/adapter_attention_tab_single_image_iv"
+        tools:text="娱乐" />
+
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/adapter_attention_tab_single_comment_num_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_4"
+        android:layout_marginBottom="@dimen/dp_8"
+        android:textColor="@color/md_grey_500"
+        android:textSize="@dimen/sp_12"
+        app:layout_constraintBottom_toTopOf="@+id/line"
+        app:layout_constraintStart_toEndOf="@+id/adapter_attention_tab_single_domain_tv"
+        app:layout_constraintTop_toBottomOf="@+id/adapter_attention_tab_single_image_iv"
+        tools:text="79评" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/adapter_attention_tab_single_date_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_4"
+        android:layout_marginBottom="@dimen/dp_8"
+        android:textColor="@color/md_grey_500"
+        android:textSize="@dimen/sp_12"
+        app:layout_constraintBottom_toTopOf="@+id/line"
+        app:layout_constraintStart_toEndOf="@+id/adapter_attention_tab_single_comment_num_tv"
+        app:layout_constraintTop_toBottomOf="@+id/adapter_attention_tab_single_image_iv"
+        tools:text="2天前" />
+
+    <View
+        android:id="@+id/line"
+        android:layout_width="match_parent"
+        android:layout_height="0.8dp"
+        android:background="@color/md_grey_100"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+
+</android.support.constraint.ConstraintLayout>

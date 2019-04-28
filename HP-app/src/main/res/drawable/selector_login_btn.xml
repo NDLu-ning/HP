@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/bg_login_pressed_btn" android:state_pressed="true" android:state_enabled="true" />
+    <item android:drawable="@drawable/bg_login_normal_btn" android:state_pressed="false" android:state_enabled="true"/>
+    <item android:drawable="@drawable/bg_login_normal_btn" android:state_enabled="true" />
+    <item android:drawable="@drawable/bg_login_unenabled_btn" android:state_enabled="false" />
+</selector>
