@@ -5,9 +5,13 @@ import com.graduation.hp.core.repository.http.bean.Result;
 import com.graduation.hp.repository.contact.AuthContact;
 import com.graduation.hp.repository.model.impl.UserModel;
 import com.graduation.hp.ui.auth.AuthActivity;
+import com.graduation.hp.utils.VerifyUtils;
 
 import javax.inject.Inject;
 
+import io.reactivex.Single;
+import io.reactivex.SingleEmitter;
+import io.reactivex.SingleOnSubscribe;
 import io.reactivex.functions.Consumer;
 
 public class AuthPresenter extends BasePresenter<AuthActivity, UserModel>
@@ -21,11 +25,12 @@ public class AuthPresenter extends BasePresenter<AuthActivity, UserModel>
     @Override
     public void onTryToLogin(String username, String password) {
         mMvpModel.addSubscribe(mMvpModel.login(username, password)
+                .doOnSuccess(result -> {
+
+                })
                 .subscribe(result -> {
 
-                }, throwable -> {
-
-                }));
+                }, this::handlerApiError));
     }
 
     @Override
@@ -39,12 +44,15 @@ public class AuthPresenter extends BasePresenter<AuthActivity, UserModel>
     }
 
     @Override
-    public void onTryToSignup() {
-//        mMvpModel.addSubscribe();
+    public void verifyPhoneNumber(String phoneNumber) {
+        mMvpModel.addSubscribe(Single.create((SingleOnSubscribe<Boolean>) emitter -> {
+            emitter.onSuccess(VerifyUtils.isPhoneVerified(phoneNumber));
+        }).subscribe(checkSuccess -> mMvpView.onVerifyPhoneNumberResult(checkSuccess?phoneNumber:"")));
     }
 
     @Override
-    public void verifyPhoneNumber(String phoneNumber) {
-
+    public void onTryToSignup(String username, String password, String repassword, String phoneNumber) {
+        mMvpModel.addSubscribe(mMvpModel.signup(username, password, repassword, phoneNumber)
+                .subscribe());
     }
 }

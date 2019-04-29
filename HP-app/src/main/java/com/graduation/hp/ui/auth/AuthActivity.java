@@ -7,6 +7,7 @@ import android.os.PersistableBundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.text.TextUtils;
 import android.view.View;
 
 import com.graduation.hp.R;
@@ -14,23 +15,30 @@ import com.graduation.hp.app.constant.Key;
 import com.graduation.hp.app.di.component.DaggerActivityComponent;
 import com.graduation.hp.app.di.module.ActivityModule;
 import com.graduation.hp.core.app.di.component.AppComponent;
+import com.graduation.hp.core.repository.http.bean.ResponseCode;
 import com.graduation.hp.core.ui.SingleFragmentActivity;
+import com.graduation.hp.core.utils.ToastUtils;
 import com.graduation.hp.presenter.AuthPresenter;
 import com.graduation.hp.repository.contact.AuthContact;
 import com.graduation.hp.ui.auth.login.LoginFragment;
 import com.graduation.hp.ui.auth.register.RegisterFragment;
 import com.graduation.hp.ui.auth.reset.InputPhoneFragment;
+import com.graduation.hp.ui.auth.reset.UpdatePasswordFragment;
+
+import org.greenrobot.eventbus.EventBus;
 
 public class AuthActivity extends SingleFragmentActivity<AuthPresenter>
         implements AuthContact.View, LoginFragment.LoginFragmentListener,
         RegisterFragment.RegisterFragmentListener,
-        InputPhoneFragment.InputPhoneFragmentListener {
+        InputPhoneFragment.InputPhoneFragmentListener,
+        UpdatePasswordFragment.UpdatePasswordFragmentListener {
 
     private static final String KEY_FIRST_FRAGMENT = "first_fragment";
 
     public static final int FRAGMENT_IS_SIGN_IN = 1;
     public static final int FRAGMENT_IS_SIGN_UP = 2;
     public static final int FRAGMENT_IS_INPUT_PHONE = 3;
+    private static final int FRAGMENT_IS_UPDATE_PASSWORD = 4;
 
     private int mCurFragment;
 
@@ -104,13 +112,8 @@ public class AuthActivity extends SingleFragmentActivity<AuthPresenter>
     }
 
     @Override
-    public void onTryToSignup() {
-
-    }
-
-    @Override
     public void verifyPhoneNumber(String phoneNumber) {
-
+        mPresenter.verifyPhoneNumber(phoneNumber);
     }
 
     @Override
@@ -130,5 +133,29 @@ public class AuthActivity extends SingleFragmentActivity<AuthPresenter>
         } else {
             finish();
         }
+    }
+
+    @Override
+    public void onRegisterInputError(ResponseCode responseCode) {
+        EventBus.getDefault().post(responseCode);
+    }
+
+    @Override
+    public void onVerifyPhoneNumberResult(String phoneNumber) {
+        if (!TextUtils.isEmpty(phoneNumber)) {
+            replaceMainContentFragment(UpdatePasswordFragment.newInstance(phoneNumber));
+        }else {
+//            EventBus.getDefault().post();
+        }
+    }
+
+    @Override
+    public void onTryToSignup(String username, String password, String repassword, String phoneNumber) {
+        mPresenter.onTryToSignup(username, password, repassword, phoneNumber);
+    }
+
+    @Override
+    public void updatePassword(String password, String repassword) {
+
     }
 }

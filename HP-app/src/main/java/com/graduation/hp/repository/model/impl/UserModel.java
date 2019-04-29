@@ -35,8 +35,9 @@ public class UserModel extends BaseModel implements IUserModel {
     }
 
     @Override
-    public Single<Boolean> login(String username, String password) {
+    public Single<User> login(String username, String password) { // 登录验证数据
         HttpHelper httpHelper = mRepositoryHelper.getHttpHelper();
+        PreferencesHelper preferencesHelper = mRepositoryHelper.getPreferencesHelper();
         return Single.create((SingleOnSubscribe<Boolean>) emitter -> {
             boolean usernamePassed = VerifyUtils.isLengthVerified(username, 6, 16);
             boolean passwordPassed = VerifyUtils.isLengthVerified(password, 6, 16);
@@ -47,30 +48,38 @@ public class UserModel extends BaseModel implements IUserModel {
                 emitter.onError(new ApiException(ResponseCode.INPUT_PASSWORD_ERROR));
             }
             emitter.onSuccess(Boolean.TRUE);
-        }).flatMap(result -> httpHelper.obtainRetrofitService(UserService.class)
-                .login()
-                .map(RxUtils.mappingResponseToResult(Boolean.class))
-                .compose(RxUtils.rxSchedulerHelper())
-                .compose(RxUtils.mappingResultToCheck()));
-    }
-
-    @Override
-    public Single<Result> saveCurrentUserInfo(User user) {
-        PreferencesHelper preferencesHelper = mRepositoryHelper.getPreferencesHelper();
-        return Single.create((SingleOnSubscribe<Result>) emitter -> {
-            preferencesHelper.saveCurrentUserInfo(user);
-            emitter.onSuccess(Result.ok());
-        }).compose(RxUtils.rxSchedulerHelper());
+        }).flatMap(result -> httpHelper.obtainRetrofitService(UserService.class)// 登录
+                .login(username, password)
+                .compose(RxUtils.transformResultToData(String.class))
+                .doOnSuccess(preferencesHelper::updateCurrentUserToken)
+        ).flatMap(isLoginSuccess -> Single.just(new User())
+//                httpHelper.obtainRetrofitService(UserService.class)// 请求用户数据
+//                .getUserInfo()
+//                .compose(RxUtils.transformResultToData(User.class))
+//                .compose(RxUtils.rxSchedulerHelper())
+//                .doOnSuccess(preferencesHelper::saveCurrentUserInfo)
+        ) .compose(RxUtils.rxSchedulerHelper());
     }
 
     @Override
     public Single<Boolean> signup(String username, String password, String repassword, String phone) {
         HttpHelper httpHelper = mRepositoryHelper.getHttpHelper();
         return Single.create((SingleOnSubscribe<Boolean>) emitter -> {
-            boolean usernamePassed = VerifyUtils.isLengthVerified(username, 6, 16);
-            boolean passwordPassed = VerifyUtils.isLengthVerified(password, 6, 16);
-            boolean repasswordPassed = VerifyUtils.isLengthVerified(repassword, 6, 16);
-            boolean phonePassed = VerifyUtils.isPhoneVerified(phone);
+            if(!VerifyUtils.isLengthVerified(username, 6, 16)){
+                emitter.onError(new ApiException(ResponseCode.INPUT_USERNAME_ERROR));
+            }
+            if(!VerifyUtils.isLengthVerified(password, 6, 16)){
+                emitter.onError(new ApiException(ResponseCode.INPUT_PASSWORD_ERROR));
+            }
+            if(!VerifyUtils.isLengthVerified(repassword, 6, 16)){
+                emitter.onError(new ApiException(ResponseCode.INPUT_REPASSWORD_ERROR));
+            }
+            if(!(!TextUtils.isEmpty(password) && password.equals(repassword))){
+                emitter.onError(new ApiException(ResponseCode.NOT_SAME_ERROR));
+            }
+            if(!VerifyUtils.isPhoneVerified(phone)){
+                emitter.onError(new ApiException(ResponseCode.INPUT_PHONENUMBER_ERROR));
+            }
         }).flatMap(result -> httpHelper.obtainRetrofitService(UserService.class)
                 .singup()
                 .map(RxUtils.mappingResponseToResult(Boolean.class))

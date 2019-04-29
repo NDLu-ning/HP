@@ -21,7 +21,7 @@ public class GlobalConfiguration implements ConfigModule {
                 .runUrlManager(true)
                 .debug(true)
                 .validate(true)
-                .startAdvancedUrl("http://192.168.43.124:8083/rest/")
+                .startAdvancedUrl("http://47.52.157.78:8080/")
                 .addParamsAdder(new TokenAdder())
                 .level(DebugInterceptor.Level.BASIC)
                 .okHttpConfiguration((context, builder) -> {

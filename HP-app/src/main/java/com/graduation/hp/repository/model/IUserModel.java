@@ -9,9 +9,7 @@ public interface IUserModel {
 
     Single<String> sendVerificationMessage(String phone);
 
-    Single<Boolean> login(String username, String password);
-
-    Single<Result> saveCurrentUserInfo(User user);
+    Single<User> login(String username, String password);
 
     Single<Boolean> signup(String username, String password, String repassword, String phone);
 

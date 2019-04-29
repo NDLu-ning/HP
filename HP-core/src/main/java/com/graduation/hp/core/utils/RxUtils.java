@@ -39,7 +39,7 @@ public class RxUtils {
         return s -> {
             LogUtils.d(s);
             Result result = Result.formatToPojo(s, clazz);
-            if (result.getStatus() != 2000) {
+            if (result.getStatus() != 200) {
                 throw new ApiException(result.getStatus(), result.getMsg());
             }
             return result;
@@ -49,20 +49,35 @@ public class RxUtils {
     public static <T> Function<String, Result> mappingResponseToResultList(final Class<T> clazz) {
         return s -> {
             Result result = Result.formatToList(s, clazz);
-            if (result.getStatus() != 2000) {
+            if (result.getStatus() != 200) {
                 throw new ApiException(result.getStatus(), result.getMsg());
             }
             return result;
         };
     }
 
-    public static <T> SingleTransformer<Result, T> transformResultToData() {
-        return upstream -> upstream.map((Function<Result, T>) result -> {
-            if (result.getStatus() != 2000) {
+    public static <T> SingleTransformer<String, T> transformResultToData(final Class<T> clazz) {
+        return upstream -> upstream.map((Function<String, T>) response -> {
+            Result result = Result.formatToPojo(response, clazz);
+            if (result.getStatus() != 200) {
                 throw new ApiException(result.getStatus(), result.getMsg());
             }
             if (result.getData() != null) {
                 return (T) result.getData();
+            } else {
+                throw new ApiException(ResponseCode.DATA_NULL);
+            }
+        });
+    }
+
+    public static <T> SingleTransformer<String, List<T>> transformResultToList(final Class<T> clazz) {
+        return upstream -> upstream.map((Function<String, List<T>>) response -> {
+            Result result = Result.formatToList(response, clazz);
+            if (result.getStatus() != 200) {
+                throw new ApiException(result.getStatus(), result.getMsg());
+            }
+            if (result.getData() != null) {
+                return (List<T>) result.getData();
             } else {
                 throw new ApiException(ResponseCode.DATA_NULL);
             }
@@ -81,7 +96,7 @@ public class RxUtils {
 
     public static SingleTransformer<Result, Boolean> mappingResultToCheck() {
         return upstream -> upstream.map((Function<Result, Boolean>) result -> {
-            if (result.getStatus() == 2000) {
+            if (result.getStatus() == 200) {
                 return Boolean.TRUE;
             } else {
                 throw new ApiException(result.getStatus(), result.getMsg());
