@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.ColorRes;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -52,6 +53,12 @@ public abstract class BaseFragment<P extends BasePresenter> extends BaseLazyLoad
     @Inject
     @Nullable
     protected P mPresenter; // 处理业务请求以及控制页面显示
+
+    private Toolbar mToolbar;
+    private AppCompatTextView mToolbarTitle;
+    private ImageButton mToolbarLeftBtn;
+    private ImageButton mToolbarRightBtn;
+    private AppCompatTextView mToolbarRightTv;
 
     @Override
     public void onAttach(Context context) {
@@ -136,24 +143,90 @@ public abstract class BaseFragment<P extends BasePresenter> extends BaseLazyLoad
         return false;
     }
 
+
+    private void initToolbar(View rootView) {
+        mToolbarLeftBtn = rootView.findViewById(R.id.toolbar_left_btn);
+        mToolbarRightBtn = rootView.findViewById(R.id.toolbar_right_btn);
+        mToolbarTitle = rootView.findViewById(R.id.toolbar_title);
+        mToolbar = rootView.findViewById(R.id.toolbar);
+        mToolbarRightTv = rootView.findViewById(R.id.toolbar_right_tv);
+        if (mToolbarLeftBtn != null) {
+            mToolbarLeftBtn.setOnClickListener(this::onToolbarLeftClickListener);
+        }
+        if (mToolbarRightBtn != null) {
+            mToolbarRightBtn.setOnClickListener(this::onToolbarRightClickListener);
+        }
+        if (mToolbarRightTv != null) {
+            mToolbarRightTv.setOnClickListener(this::onToolbarRightClickListener);
+        }
+    }
+
     protected void initToolbar(View rootView, String title, @DrawableRes int leftDrawable) {
         initToolbar(rootView, title, leftDrawable, 0);
     }
 
     protected void initToolbar(View rootView, String title, @DrawableRes int leftDrawable, @DrawableRes int rightDrawable) {
-        ImageButton tbLeftBtn = rootView.findViewById(R.id.toolbar_left_btn);
-        ImageButton tbRightBtn = rootView.findViewById(R.id.toolbar_right_btn);
-        TextView tbTitleTv = rootView.findViewById(R.id.toolbar_title);
-        if (tbTitleTv != null && !TextUtils.isEmpty(title)) {
-            tbTitleTv.setText(title);
+        initToolbar(rootView, title, leftDrawable, rightDrawable, 0);
+    }
+
+    protected void initToolbar(View rootView, String title, @DrawableRes int leftDrawable, String rightText, @ColorRes int rightTextColor) {
+        initToolbar(rootView, title, leftDrawable, rightText, rightTextColor, 0);
+    }
+
+    protected void initToolbar(View rootView, String title, @DrawableRes int leftDrawable, @DrawableRes int rightDrawable, @DrawableRes int backgroundRes) {
+        initToolbar(rootView);
+        setToolbarTitle(title);
+        setToolbarLeftDrawableRes(leftDrawable);
+        setToolbarRightDrawableRes(rightDrawable);
+        setToolbarBackgroundRes(backgroundRes);
+    }
+
+    protected void initToolbar(View rootView, String title, @DrawableRes int leftDrawable, String rightText, @ColorRes int rightTextColor, @DrawableRes int backgroundRes) {
+        initToolbar(rootView);
+        setToolbarTitle(title);
+        setToolbarLeftDrawableRes(leftDrawable);
+        setToolbarRightTvText(rightText);
+        setToolbarRightTvTextColor(rightTextColor);
+        setToolbarBackgroundRes(backgroundRes);
+    }
+
+    protected void setToolbarTitle(String title) {
+        if (mToolbarTitle != null && !TextUtils.isEmpty(title)) {
+            mToolbarTitle.setText(title);
         }
-        if (tbLeftBtn != null && leftDrawable != 0) {
-            tbLeftBtn.setImageResource(leftDrawable);
-            tbLeftBtn.setOnClickListener(v -> onToolbarLeftClickListener(v));
+    }
+
+    protected void setToolbarBackgroundRes(@DrawableRes int backgroundRes) {
+        if (mToolbar != null && backgroundRes != 0) {
+            mToolbar.setBackgroundResource(backgroundRes);
         }
-        if (tbRightBtn != null && rightDrawable != 0) {
-            tbRightBtn.setImageResource(rightDrawable);
-            tbRightBtn.setOnClickListener(v -> onToolbarRightClickListener(v));
+    }
+
+    protected void setToolbarRightTvText(String rightText) {
+        if (mToolbarRightTv != null && !TextUtils.isEmpty(rightText)) {
+            mToolbarRightTv.setText(rightText);
+        }
+    }
+
+    protected void setToolbarRightTvTextColor(@ColorRes int rightTextColor) {
+        if (mToolbarRightTv != null && rightTextColor != 0) {
+            mToolbarRightTv.setTextColor(getResources().getColor(rightTextColor));
+        }
+    }
+
+    protected void setToolbarRightDrawableRes(@DrawableRes int rightDrawable) {
+        if (mToolbarRightBtn != null && rightDrawable != 0) {
+            mToolbarRightBtn.setImageResource(rightDrawable);
+        }
+    }
+
+    protected void setToolbarLeftDrawableRes(@DrawableRes int leftDrawable) {
+        if (mToolbarLeftBtn != null) {
+            if (leftDrawable == 0) {
+                mToolbarLeftBtn.setImageDrawable(null);
+            } else {
+                mToolbarLeftBtn.setImageResource(leftDrawable);
+            }
         }
     }
 

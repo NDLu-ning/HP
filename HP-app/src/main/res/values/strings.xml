@@ -8,6 +8,7 @@
     <string name="tab_myself">我的</string>
 
     <string name="tips_attention_title">我的关注</string>
+
     <string name="tips_search">搜索你感兴趣的:</string>
     <string name="tips_myself_login">登录账号享受更多优质体验</string>
     <string name="tips_myself_message">我的消息</string>
@@ -58,7 +59,14 @@
     <string name="tips_register_repassword">请输入确认密码</string>
     <string name="tips_register_nickname">请输入用户昵称</string>
     <string name="tips_register_phone">请输入手机号码</string>
-    <string name="tips_show_more">查看更多</string>
 
+    <string name="tips_total_like_count_template">%d 人觉得很赞</string>
+
+    <string name="tips_total_views_template">游览 %d 次</string>
+
+    <string name="tips_more">查看更多</string>
+
+    <string name="comment_has_reply_object"><Data><![CDATA[<font color="#1C4C7A">%1$s</font> 回复 <font color="#1C4C7A">%2$s：</font> %3$s]]></Data></string>
+    <string name="comment_has_no_reply_object"><Data><![CDATA[<font color="#1C4C7A">%1$s：</font> %2$s]]></Data></string>
 
 </resources>

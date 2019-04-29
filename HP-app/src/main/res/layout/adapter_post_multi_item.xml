@@ -38,7 +38,7 @@
         android:textColor="@color/md_white"
         android:textSize="8sp"
         android:gravity="center"
-        android:background="@drawable/bg_healthy_tag_9"
+        android:background="@drawable/healthy_yang_xu_tag"
         app:layout_constraintStart_toEndOf="@+id/adapter_post_name_tv"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/adapter_post_content_tv"
@@ -74,7 +74,7 @@
         android:paddingStart="@dimen/dp_12"
         android:paddingEnd="@dimen/dp_12"
         android:textColor="@color/md_black_300"
-        android:textSize="@dimen/sp_16"
+        android:textSize="@dimen/sp_14"
         app:layout_constraintHorizontal_weight="1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/adapter_post_icon_iv"
@@ -94,7 +94,7 @@
         app:ngv_singleImageRatio="1"
         app:ngv_singleImageSize="250dp" />
 
-    <TextView
+    <android.support.v7.widget.AppCompatTextView
         android:id="@+id/adapter_post_reviews_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -106,7 +106,7 @@
         app:layout_constraintTop_toBottomOf="@id/adapter_post_image_container"
         tools:text="游览24次" />
 
-    <ImageView
+    <android.support.v7.widget.AppCompatImageView
         android:id="@+id/adapter_post_comment_iv"
         android:layout_width="@dimen/dp_30"
         android:layout_height="@dimen/dp_30"
@@ -121,7 +121,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/dp_40"
-        android:src="@mipmap/ic_launcher"
+        android:src="@drawable/selector_liked_btn"
         app:layout_constraintBottom_toBottomOf="@id/line"
         app:layout_constraintEnd_toStartOf="@id/adapter_post_comment_iv"
         app:layout_constraintTop_toBottomOf="@id/adapter_post_image_container" />
@@ -149,7 +149,7 @@
         android:paddingStart="@dimen/dp_12"
         android:paddingEnd="@dimen/dp_12"
         android:textColor="@color/md_blue_grey_900"
-        android:textSize="@dimen/sp_14"
+        android:textSize="@dimen/sp_12"
         app:layout_constraintTop_toBottomOf="@id/line"
         tools:text="3人觉得很赞" />
 
@@ -174,7 +174,7 @@
         android:paddingBottom="@dimen/dp_4"
         android:layout_marginStart="@dimen/dp_12"
         android:layout_marginEnd="@dimen/dp_12"
-        android:text="@string/tips_show_more"
+        android:text="@string/tips_more"
         android:textSize="@dimen/sp_14"
         android:textColor="@color/md_blue_grey_600"
         android:visibility="gone"

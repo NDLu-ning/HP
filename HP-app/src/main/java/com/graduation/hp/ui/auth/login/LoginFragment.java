@@ -57,6 +57,7 @@ public class LoginFragment extends BaseFragment {
     protected void init(Bundle savedInstanceState, View view) {
         view.findViewById(R.id.register_tv).setOnClickListener(v -> mCallback.goToRegister());
         view.findViewById(R.id.forget_tv).setOnClickListener(v -> mCallback.goToResetPassword());
+        view.findViewById(R.id.login_clear_iv).setOnClickListener(v -> loginUsernameEt.setText(""));
         view.findViewById(R.id.login_btn).setOnClickListener(v -> mCallback.onTryToLogin(loginUsernameEt.getText().toString(), loginPasswordEt.getText().toString()));
     }
 
@@ -66,6 +67,7 @@ public class LoginFragment extends BaseFragment {
         loginPasswordEt.setTransformationMethod(visible ? HideReturnsTransformationMethod.getInstance()
                 : PasswordTransformationMethod.getInstance());            //如果选中，显示密码
         loginPasswordEt.setSelection(pos);
+
     }
 
     @Override

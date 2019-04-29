@@ -5,6 +5,7 @@
     <string name="tips_empty">暂无相关数据</string>
     <string name="tips_retry">重试一次</string>
 
-    <string name="tips_error_general">糟糕，系统出错。请稍后再试。</string>
+    <string name="tips_error_general">糟糕，系统出错，请稍后再试。</string>
     <string name="tips_network_unavailable">健康养生：当前网络不可用</string>
+    <string name="tips_please_login_first">健康养生：请先登录</string>
 </resources>

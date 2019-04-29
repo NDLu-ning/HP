@@ -180,7 +180,7 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
     }
 
     protected void initToolbar(View rootView, String title, @DrawableRes int leftDrawable, String rightText, @ColorRes int rightTextColor) {
-        initToolbar(rootView, title, leftDrawable, rightText, 0, 0);
+        initToolbar(rootView, title, leftDrawable, rightText, rightTextColor, 0);
     }
 
     protected void initToolbar(View rootView, String title, @DrawableRes int leftDrawable, @DrawableRes int rightDrawable, @DrawableRes int backgroundRes) {

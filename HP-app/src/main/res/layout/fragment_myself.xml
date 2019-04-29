@@ -61,7 +61,7 @@
                 android:layout_width="@dimen/dp_30"
                 android:layout_height="@dimen/dp_30"
                 android:layout_marginTop="@dimen/dp_10"
-                android:background="@drawable/bg_healthy_tag_1"
+                android:background="@drawable/healthy_ping_he_tag"
                 android:gravity="center"
                 android:padding="@dimen/dp_6"
                 android:textColor="@color/md_white"

@@ -18,6 +18,7 @@ import com.graduation.hp.ui.auth.AuthActivity;
 import com.graduation.hp.ui.navigation.attention.AttentionTabFragment;
 import com.graduation.hp.ui.navigation.center.UserTabFragment;
 import com.graduation.hp.ui.navigation.news.NewsTabFragment;
+import com.graduation.hp.ui.navigation.post.PostTabFragment;
 import com.graduation.hp.widget.NavigationTabView;
 
 import org.jetbrains.annotations.NotNull;
@@ -267,7 +268,7 @@ public class NavigationTabActivity extends BaseActivity {
                     return fragment;
                 }
                 case TAB_ID_POST: {
-                    final AttentionTabFragment fragment = AttentionTabFragment.newInstance();
+                    final PostTabFragment fragment = PostTabFragment.newInstance();
                     return fragment;
                 }
                 case TAB_ID_MYSELF: {
