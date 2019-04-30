@@ -172,11 +172,11 @@ public class NewsListFragment extends RootFragment<NewsListPresenter>
 
     @Override
     protected boolean shouldShowNoDataView() {
-        return false;
+        return true;
     }
 
     @Override
     protected int getNoDataStringResId() {
-        return 0;
+        return R.string.tips_empty_news_list;
     }
 }

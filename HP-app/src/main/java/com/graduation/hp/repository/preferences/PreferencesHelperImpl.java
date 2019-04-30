@@ -25,16 +25,18 @@ public class PreferencesHelperImpl implements PreferencesHelper {
     }
 
     @Override
-    public void updateCurrentUserToken(String token) {
+    public void saveCurrentUserToken(String token) {
         mPreferences.edit().putString(SharedPrefsKey.APP_CURRENT_USER_TOKEN, token).apply();
     }
 
     @Override
     public void saveCurrentUserInfo(User user) {
-//        setCurrentUserIcon();
-//        setCurrentUserNickname();
-//        setCurrentUserBMI();
-//        setCurrentUserHealthyNum();
+        saveCurrentUserIcon(user.getHeadUrl());
+        saveCurrentUserNickname(user.getNickname());
+        saveCurrentUserHealthyNum(user.getPhysiquId());
+        saveCurrentUserToken(user.getToken());
+
+//        saveCurrentUserBMI(user.get);
     }
 
     @Override
@@ -43,7 +45,7 @@ public class PreferencesHelperImpl implements PreferencesHelper {
     }
 
     @Override
-    public void setCurrentUserIcon(String icon) {
+    public void saveCurrentUserIcon(String icon) {
         mPreferences.edit().putString(SharedPrefsKey.APP_CURRENT_USER_ICON, icon).apply();
     }
 
@@ -53,7 +55,7 @@ public class PreferencesHelperImpl implements PreferencesHelper {
     }
 
     @Override
-    public void setCurrentUserNickname(String nickname) {
+    public void saveCurrentUserNickname(String nickname) {
         mPreferences.edit().putString(SharedPrefsKey.APP_CURRENT_USER_NICKNAME, nickname).apply();
     }
 
@@ -63,19 +65,19 @@ public class PreferencesHelperImpl implements PreferencesHelper {
     }
 
     @Override
-    public void setCurrentUserBMI(float bmi) {
+    public void saveCurrentUserBMI(float bmi) {
         mPreferences.edit().putFloat(SharedPrefsKey.APP_CURRENT_USER_BMI, bmi).apply();
     }
 
     @Override
-    public int getCurrentUserHealthyNum() {
-        return mPreferences.getInt(SharedPrefsKey.APP_CURRENT_USER_HEALTHY_NUM, 1);
+    public long getCurrentUserHealthyNum() {
+        return mPreferences.getLong(SharedPrefsKey.APP_CURRENT_USER_HEALTHY_NUM, 0);
 
     }
 
     @Override
-    public void setCurrentUserHealthyNum(int num) {
-        mPreferences.edit().putInt(SharedPrefsKey.APP_CURRENT_USER_HEALTHY_NUM, num).apply();
+    public void saveCurrentUserHealthyNum(long num) {
+        mPreferences.edit().putLong(SharedPrefsKey.APP_CURRENT_USER_HEALTHY_NUM, num).apply();
     }
 
     @Override

@@ -67,7 +67,6 @@ public class LoginFragment extends BaseFragment {
         loginPasswordEt.setTransformationMethod(visible ? HideReturnsTransformationMethod.getInstance()
                 : PasswordTransformationMethod.getInstance());            //如果选中，显示密码
         loginPasswordEt.setSelection(pos);
-
     }
 
     @Override

@@ -10,25 +10,25 @@ public interface PreferencesHelper {
 
     String getCurrentUserToken();
 
-    void updateCurrentUserToken(String token);
+    void saveCurrentUserToken(String token);
 
     void saveCurrentUserInfo(User user);
 
     String getCurrentUserIcon();
 
-    void setCurrentUserIcon(String icon);
+    void saveCurrentUserIcon(String icon);
 
     String getCurrentUserNickname();
 
-    void setCurrentUserNickname(String nickname);
+    void saveCurrentUserNickname(String nickname);
 
     float getCurrentUserBMI();
 
-    void setCurrentUserBMI(float icon);
+    void saveCurrentUserBMI(float icon);
 
-    int getCurrentUserHealthyNum();
+    long getCurrentUserHealthyNum();
 
-    void setCurrentUserHealthyNum(int num);
+    void saveCurrentUserHealthyNum(long num);
 
     void clearUserInfo();
 }

@@ -4,6 +4,7 @@ import com.graduation.hp.core.repository.http.bean.ResponseCode;
 import com.graduation.hp.ui.auth.login.LoginFragment;
 import com.graduation.hp.ui.auth.register.RegisterFragment;
 import com.graduation.hp.ui.auth.reset.InputPhoneFragment;
+import com.graduation.hp.ui.auth.reset.UpdatePasswordFragment;
 
 public interface AuthContact {
 
@@ -11,11 +12,16 @@ public interface AuthContact {
         void onRegisterInputError(ResponseCode responseCode);
 
         void onVerifyPhoneNumberResult(String phoneNumber);
+
+        void onLoginSuccess();
+
+        void onRegisterSuccess();
+
     }
 
-    interface Presenter extends LoginFragment.LoginFragmentListener,
-            RegisterFragment.RegisterFragmentListener,
-            InputPhoneFragment.InputPhoneFragmentListener {
-
+    interface Presenter extends RegisterFragment.RegisterFragmentListener,
+            InputPhoneFragment.InputPhoneFragmentListener,
+            UpdatePasswordFragment.UpdatePasswordFragmentListener {
+        void onTryToLogin(String username, String password);
     }
 }

@@ -115,8 +115,9 @@ public class DebugInterceptor implements Interceptor {
         long tookMs = System.currentTimeMillis() - startMs;
         ResponseBody responseBody = response.body();
         if (logResponse) {
+            long contentLength = responseBody.contentLength();
             LogUtils.d(RESPONSE_UP_LINE);
-            logger.printResponse(tookMs, responseBody.contentLength(), response.code(), response.body().toString());
+            logger.printResponse(tookMs, contentLength != -1 ? contentLength + "-byte" : "unknown-length", response.code(), response.message());
         }
         LogUtils.d(END_LINE);
         return response;

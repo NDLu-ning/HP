@@ -15,6 +15,7 @@
     <string name="tips_myself_test">体质测试</string>
     <string name="tips_myself_attention">我的关注</string>
     <string name="tips_myself_post">我的帖子</string>
+    <string name="tips_myself_info">个人信息</string>
 
     <string name="template_skip">跳过 ( %d )</string>
 
@@ -50,23 +51,36 @@
     <string name="tips_register_subtitle_message">注册账号体验专业养生社区</string>
 
     <string name="action_register_send_code">发送验证码</string>
-    <string name="tips_register_code">验证码</string>
-
     <string name="action_login_with_space">&#032;登&#032;&#032;录&#032;</string>
     <string name="action_register_with_space">&#032;注&#032;&#032;册&#032;</string>
+    <string name="action_update_password_with_space">&#032;确&#032;认&#032;修&#032;改&#032;</string>
+
+
     <string name="hint_please_input_username">请输入账号</string>
     <string name="hint_please_input_password">请输入密码</string>
-    <string name="tips_register_repassword">请输入确认密码</string>
-    <string name="tips_register_nickname">请输入用户昵称</string>
-    <string name="tips_register_phone">请输入手机号码</string>
+    <string name="hint_please_input_repassword">请输入确认密码</string>
+    <string name="hint_please_input_nickname">请输入用户昵称</string>
+    <string name="hint_please_input_phone">请输入手机号码</string>
+    <string name="hint_please_input_code">请输入验证码</string>
 
+
+    <string name="tips_verify_phone_subtitle">验证手机号</string>
     <string name="tips_total_like_count_template">%d 人觉得很赞</string>
-
     <string name="tips_total_views_template">游览 %d 次</string>
 
-    <string name="tips_more">查看更多</string>
+
+    <string name="action_more">查看更多</string>
 
     <string name="comment_has_reply_object"><Data><![CDATA[<font color="#1C4C7A">%1$s</font> 回复 <font color="#1C4C7A">%2$s：</font> %3$s]]></Data></string>
     <string name="comment_has_no_reply_object"><Data><![CDATA[<font color="#1C4C7A">%1$s：</font> %2$s]]></Data></string>
+    <string name="tips_login_success">健康养生：登录成功</string>
+    <string name="tips_logging_in">正在登录…</string>
+    <string name="tips_updating">正在更新…</string>
+    <string name="tips_update_password_title">修改密码</string>
+
+
+    <string name="action_edit_user_info">编辑信息</string>
+    <string name="tips_empty_post_list">还没有发过帖子，去发个试试！</string>
+    <string name="tips_empty_news_list">该频道暂无新闻，看看其他频道吧~</string>
 
 </resources>

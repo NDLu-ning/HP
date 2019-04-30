@@ -11,6 +11,7 @@ public class Key {
 
     public static final String USERNAME = "username";
     public static final String PASSWORD = "password";
+    public static final String OWNER_ID = "owner_id";
     public static final String USER_ID = "user_id";
     public static final String USER_NICKNAME = "user_nickname";
     public static final String USER_ICON = "user_icon";

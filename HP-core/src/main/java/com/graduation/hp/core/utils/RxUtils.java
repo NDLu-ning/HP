@@ -6,11 +6,7 @@ import com.graduation.hp.core.repository.http.exception.ApiException;
 
 import java.util.List;
 
-import io.reactivex.Maybe;
-import io.reactivex.MaybeSource;
 import io.reactivex.MaybeTransformer;
-import io.reactivex.Single;
-import io.reactivex.SingleSource;
 import io.reactivex.SingleTransformer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Function;
@@ -113,5 +109,4 @@ public class RxUtils {
             }
         });
     }
-
 }

@@ -27,6 +27,7 @@ import com.graduation.hp.core.mvp.BasePresenter;
 import com.graduation.hp.core.utils.DaggerUtils;
 import com.graduation.hp.core.utils.DialogUtils;
 import com.graduation.hp.core.utils.NetworkUtils;
+import com.graduation.hp.core.utils.ToastUtils;
 import com.trello.rxlifecycle2.android.ActivityEvent;
 
 import javax.inject.Inject;
@@ -93,7 +94,7 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
 
     @Override
     public void showMessage(String msg) {
-
+        ToastUtils.show(this,msg);
     }
 
     @Override

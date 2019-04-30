@@ -7,6 +7,8 @@ import com.graduation.hp.core.app.di.scope.ActivityScope;
 import com.graduation.hp.repository.RepositoryHelper;
 import com.graduation.hp.ui.SplashActivity;
 import com.graduation.hp.ui.auth.AuthActivity;
+import com.graduation.hp.ui.navigation.user.center.UserCenterActivity;
+import com.graduation.hp.ui.navigation.user.info.UserInfoActivity;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import dagger.Component;
@@ -28,4 +30,8 @@ public interface ActivityComponent {
     void inject(SplashActivity splashActivity);
 
     void inject(AuthActivity authActivity);
+
+    void inject(UserCenterActivity userCenterActivity);
+
+    void inject(UserInfoActivity userInfoActivity);
 }

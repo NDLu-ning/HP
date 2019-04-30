@@ -80,8 +80,7 @@ public abstract class BasePresenter<V extends BaseContact.View
         mMvpView.showMessage(throwable.getMessage());
     }
 
-    protected
-    void handleConnectionException() {
+    protected void handleConnectionException() {
 
     }
 

@@ -16,7 +16,7 @@ import com.graduation.hp.core.widget.BaseViewPager;
 import com.graduation.hp.core.widget.RegisteredFragmentPagerAdapter;
 import com.graduation.hp.ui.auth.AuthActivity;
 import com.graduation.hp.ui.navigation.attention.AttentionTabFragment;
-import com.graduation.hp.ui.navigation.center.UserTabFragment;
+import com.graduation.hp.ui.navigation.user.UserTabFragment;
 import com.graduation.hp.ui.navigation.news.NewsTabFragment;
 import com.graduation.hp.ui.navigation.post.PostTabFragment;
 import com.graduation.hp.widget.NavigationTabView;

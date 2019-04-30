@@ -9,9 +9,13 @@ public interface IUserModel {
 
     Single<String> sendVerificationMessage(String phone);
 
+    Single<User> getUserInfo(long userId);
+
     Single<User> login(String username, String password);
 
     Single<Boolean> signup(String username, String password, String repassword, String phone);
+
+    Single<Boolean> updatePassword(String phoneNumber, String password, String repassword);
 
     Single<Boolean> isCurrentUserLogin();
 

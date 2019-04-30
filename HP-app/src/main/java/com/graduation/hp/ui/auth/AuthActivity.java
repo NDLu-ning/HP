@@ -3,7 +3,6 @@ package com.graduation.hp.ui.auth;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -11,19 +10,18 @@ import android.text.TextUtils;
 import android.view.View;
 
 import com.graduation.hp.R;
-import com.graduation.hp.app.constant.Key;
 import com.graduation.hp.app.di.component.DaggerActivityComponent;
 import com.graduation.hp.app.di.module.ActivityModule;
 import com.graduation.hp.core.app.di.component.AppComponent;
 import com.graduation.hp.core.repository.http.bean.ResponseCode;
 import com.graduation.hp.core.ui.SingleFragmentActivity;
-import com.graduation.hp.core.utils.ToastUtils;
 import com.graduation.hp.presenter.AuthPresenter;
 import com.graduation.hp.repository.contact.AuthContact;
 import com.graduation.hp.ui.auth.login.LoginFragment;
 import com.graduation.hp.ui.auth.register.RegisterFragment;
 import com.graduation.hp.ui.auth.reset.InputPhoneFragment;
 import com.graduation.hp.ui.auth.reset.UpdatePasswordFragment;
+import com.graduation.hp.ui.navigation.NavigationTabActivity;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -143,10 +141,20 @@ public class AuthActivity extends SingleFragmentActivity<AuthPresenter>
     @Override
     public void onVerifyPhoneNumberResult(String phoneNumber) {
         if (!TextUtils.isEmpty(phoneNumber)) {
-            replaceMainContentFragment(UpdatePasswordFragment.newInstance(phoneNumber));
-        }else {
+            replaceMainContentFragment(UpdatePasswordFragment.newInstance(phoneNumber), true);
+        } else {
 //            EventBus.getDefault().post();
         }
+    }
+
+    @Override
+    public void onLoginSuccess() {
+        startActivity(NavigationTabActivity.createIntent(this, true));
+    }
+
+    @Override
+    public void onRegisterSuccess() {
+        replaceMainContentFragment(LoginFragment.newInstance());
     }
 
     @Override
@@ -155,7 +163,7 @@ public class AuthActivity extends SingleFragmentActivity<AuthPresenter>
     }
 
     @Override
-    public void updatePassword(String password, String repassword) {
-
+    public void updatePassword(String phoneNumber, String password, String repassword) {
+        mPresenter.updatePassword(phoneNumber, password, repassword);
     }
 }

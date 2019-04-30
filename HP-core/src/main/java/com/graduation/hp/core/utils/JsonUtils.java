@@ -1,14 +1,21 @@
 package com.graduation.hp.core.utils;
 
 import com.alibaba.fastjson.JSON;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.util.List;
+import java.util.Map;
+
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
 
 /**
  * Created by Ning on 2019/2/8.
  */
 
 public class JsonUtils {
+
     private JsonUtils() {
     }
 
@@ -35,5 +42,21 @@ public class JsonUtils {
             e.printStackTrace();
         }
         return null;
+    }
+
+
+    public static RequestBody mapToRequestBody(Map<String, Object> map) {
+        LogUtils.d(objectToJson(map));
+        return RequestBody.create(MediaType.parse("application/json; charset=utf-8"), objectToJson(map));
+    }
+
+    /**
+     * map to json, checking symbol \"
+     *
+     * @param map
+     * @return
+     */
+    public static RequestBody mapToRequestBody2(Map<String, String> map) {
+        return RequestBody.create(MediaType.parse("application/json; charset=utf-8"), objectToJson(map));
     }
 }

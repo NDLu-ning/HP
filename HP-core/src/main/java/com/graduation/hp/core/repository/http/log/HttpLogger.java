@@ -15,7 +15,7 @@ public interface HttpLogger {
 
     void printRequest(String protocol, String method, String params);
 
-    void printResponse(long spendTime, long contentLength, int code, String message);
+    void printResponse(long spendTime, String contentLength, int code, String message);
 
 
     HttpLogger DEFAULT = new HttpLogger() {
@@ -41,7 +41,7 @@ public interface HttpLogger {
         }
 
         @Override
-        public void printResponse(long spendTime, long contentLength, int code, String message) {
+        public void printResponse(long spendTime, String contentLength, int code, String message) {
             LogUtils.d(String.format(STATUS_CODE, code));
             LogUtils.d(String.format(BODY, message));
         }

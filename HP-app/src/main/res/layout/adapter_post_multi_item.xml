@@ -174,7 +174,7 @@
         android:paddingBottom="@dimen/dp_4"
         android:layout_marginStart="@dimen/dp_12"
         android:layout_marginEnd="@dimen/dp_12"
-        android:text="@string/tips_more"
+        android:text="@string/action_more"
         android:textSize="@dimen/sp_14"
         android:textColor="@color/md_blue_grey_600"
         android:visibility="gone"
