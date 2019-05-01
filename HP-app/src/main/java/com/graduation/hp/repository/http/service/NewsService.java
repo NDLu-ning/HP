@@ -9,6 +9,6 @@ public interface NewsService {
 
     @Headers(value = {"Content-Type:application/json"})
     @POST("")
-    Single<String> getNewsListByCategory(String category, int page, int limit);
+    Single<String> getNewsListByCategory(long category, int page, int limit);
 
 }

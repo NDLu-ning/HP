@@ -6,6 +6,7 @@ import android.util.Log;
 import com.graduation.hp.HPApplication;
 import com.graduation.hp.R;
 import com.graduation.hp.core.mvp.BasePresenter;
+import com.graduation.hp.core.mvp.State;
 import com.graduation.hp.core.utils.RxUtils;
 import com.graduation.hp.repository.RepositoryHelper;
 import com.graduation.hp.repository.contact.PostTabContact;
@@ -47,14 +48,14 @@ public class PostTabPresenter extends BasePresenter<PostTabFragment, PostModel>
 
     @Override
     public void downloadInitialData() {
-        setCurRefreshError(false);
         mMvpView.showLoading();
-        downloadMoreData(true);
+        downloadMoreData(State.STATE_INIT);
     }
 
     @Override
-    public void downloadMoreData(boolean refresh) {
-        if (refresh) {
+    public void downloadMoreData(State state) {
+        setCurState(state);
+        if (isRefresh()) {
             pager = new Pager(1, 10);
         }
         if (!mMvpView.isNetworkAvailable()) {
@@ -69,8 +70,7 @@ public class PostTabPresenter extends BasePresenter<PostTabFragment, PostModel>
                     for (int i = 0; i < pager.getCount(); i++) {
                         list.add(BeanFactory.createPostItem());
                     }
-                    Log.d("TAG", "list.size():" + list.size());
-                    mMvpView.onDownloadDataSuccess(refresh, list);
+                    mMvpView.onDownloadDataSuccess(list);
                     mMvpView.showMain();
                 }));
     }

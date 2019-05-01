@@ -1,53 +1,85 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/md_grey_100">
 
-    <LinearLayout
-        android:id="@+id/view_loading"
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/view_base_refresh_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fitsSystemWindows="true"
-        android:layout_marginTop="@dimen/dp_100"
-        android:gravity="center"
-        android:visibility="gone">
+        android:layout_height="match_parent"
+        android:background="@color/md_grey_100"
+        app:layout_behavior="android.support.design.widget.AppBarLayout$ScrollingViewBehavior">
 
-        <ProgressBar
-            android:id="@+id/view_progress_loading"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center" />
+        <com.scwang.smartrefresh.header.MaterialHeader
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
 
-    </LinearLayout>
+            <LinearLayout
+                android:id="@+id/view_loading"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_100"
+                android:fitsSystemWindows="true"
+                android:gravity="center"
+                android:visibility="gone">
 
-    <include
-        layout="@layout/view_show_error"
-        android:visibility="gone" />
+                <ProgressBar
+                    android:id="@+id/view_progress_loading"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center" />
 
-    <LinearLayout
-        android:id="@+id/view_empty"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_50"
-        android:background="@android:color/transparent"
-        android:fitsSystemWindows="true"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:visibility="gone"> <!-- 避免状态透明上移 -->
 
-        <ImageView
-            android:id="@+id/empty_ic"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/ic_empty_comment" />
+            </LinearLayout>
 
-        <android.support.v7.widget.AppCompatTextView
-            android:id="@+id/empty_tv"
-            style="@style/Button.Green"
-            android:layout_marginTop="@dimen/dp_10"
-            android:gravity="center"
-            android:text="@string/tips_empty_post_list" />
-    </LinearLayout>
+            <include
+                layout="@layout/view_show_error"
+                android:visibility="gone" />
 
-    <include layout="@layout/view_base_xlist" />
+            <LinearLayout
+                android:id="@+id/view_empty"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_50"
+                android:background="@android:color/transparent"
+                android:fitsSystemWindows="true"
+                android:gravity="center"
+                android:orientation="vertical"> <!-- 避免状态透明上移 -->
+
+                <ImageView
+                    android:id="@+id/empty_ic"
+                    android:layout_width="@dimen/dp_250"
+                    android:layout_height="@dimen/dp_200"
+                    android:src="@mipmap/ic_empty_comment" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/empty_tv"
+                    style="@style/Button.Green"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:gravity="center"
+                    android:text="@string/tips_empty_post_list" />
+            </LinearLayout>
+
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/view_main"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/transparent"
+                android:overScrollMode="never" />
+
+        </FrameLayout>
+
+        <com.scwang.smartrefresh.layout.footer.ClassicsFooter
+            android:id="@+id/view_base_loadmore_footer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 </FrameLayout>

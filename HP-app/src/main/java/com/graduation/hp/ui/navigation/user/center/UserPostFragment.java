@@ -2,9 +2,9 @@ package com.graduation.hp.ui.navigation.user.center;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.graduation.hp.R;
@@ -12,23 +12,29 @@ import com.graduation.hp.app.constant.Key;
 import com.graduation.hp.app.di.component.DaggerFragmentComponent;
 import com.graduation.hp.app.di.module.FragmentModule;
 import com.graduation.hp.core.app.di.component.AppComponent;
-import com.graduation.hp.core.app.listener.OnItemClickListener;
-import com.graduation.hp.core.app.listener.SimpleItemClickListenerAdapter;
+import com.graduation.hp.core.mvp.State;
 import com.graduation.hp.core.ui.RootFragment;
 import com.graduation.hp.presenter.UserPostPresenter;
 import com.graduation.hp.repository.contact.UserPostContact;
 import com.graduation.hp.repository.http.entity.PostItem;
-import com.graduation.hp.ui.provider.UserPostItemAdapter;
-import com.jcodecraeer.xrecyclerview.ProgressStyle;
+import com.graduation.hp.ui.provider.UserPostItemProvider;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.constant.RefreshState;
+import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
+import me.drakeet.multitype.Items;
+import me.drakeet.multitype.MultiTypeAdapter;
 
 public class UserPostFragment extends RootFragment<UserPostPresenter>
-        implements UserPostContact.View, XRecyclerView.LoadingListener {
+        implements UserPostContact.View, OnLoadMoreListener, OnRefreshListener {
 
 
     public static UserPostFragment newInstance(long userId) {
@@ -39,12 +45,20 @@ public class UserPostFragment extends RootFragment<UserPostPresenter>
         return fragment;
     }
 
-    @BindView(R.id.view_main)
-    XRecyclerView mRecyclerView;
+    @Inject
+    MultiTypeAdapter mAdapter;
 
-    private UserPostItemAdapter mAdapter;
-    private List<PostItem> mList = new ArrayList<>();
+    @Inject
+    Items mItems;
+
+    @BindView(R.id.view_main)
+    RecyclerView mRecyclerView;
+
+    private RefreshLayout mRefreshLayout;
+
     private long mUserId;
+
+    private List<PostItem> mList = new ArrayList<>();
 
     @Override
     protected void init(Bundle savedInstanceState, View rootView) {
@@ -66,37 +80,29 @@ public class UserPostFragment extends RootFragment<UserPostPresenter>
     }
 
     private void initMultiTypeAdapter() {
-        mAdapter = new UserPostItemAdapter(listener, mList);
+        mAdapter.register(PostItem.class, new UserPostItemProvider(listener));
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        mRecyclerView.setRefreshProgressStyle(ProgressStyle.Pacman);
-        mRecyclerView.setLoadingMoreProgressStyle(ProgressStyle.BallBeat);
-        mRecyclerView.setLoadingMoreEnabled(true);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        mRecyclerView.setLoadingListener(this);
-        mAdapter.notifyDataSetChanged();
     }
 
-    private final UserPostItemAdapter.UserPostItemAdapterListener listener = new UserPostItemAdapter.UserPostItemAdapterListener() {
+    @Override
+    protected void onLazyLoad() {
+        mPresenter.downloadInitialPostList(mUserId);
+    }
+
+    private final UserCenterTabListener listener = new UserCenterTabListener() {
 
         @Override
-        public void onLikeClick(long postId, boolean liked) {
+        public void onItemClick(boolean post, long id) {
 
         }
 
         @Override
-        public void onPostClick(long postId) {
+        public void onLikeClick(boolean post, long id, boolean liked) {
 
         }
     };
-
-    @Override
-    public void onDestroyView() {
-        if (mRecyclerView != null) {
-            mRecyclerView.destroy();
-        }
-        super.onDestroyView();
-    }
 
     @Override
     protected boolean shouldShowNoDataView() {
@@ -123,13 +129,8 @@ public class UserPostFragment extends RootFragment<UserPostPresenter>
     }
 
     @Override
-    public void downloadInitialPostList(long userId) {
-        mPresenter.downloadInitialPostList(userId);
-    }
-
-    @Override
-    public void onGetPostListSuccess(boolean refresh, List<PostItem> list) {
-        if (refresh) {
+    public void onGetPostListSuccess(List<PostItem> list) {
+        if (mPresenter.isRefresh()) {
             mList.clear();
         }
         mList.addAll(list);
@@ -137,25 +138,31 @@ public class UserPostFragment extends RootFragment<UserPostPresenter>
     }
 
     @Override
-    public void onRefresh() {
-        if (!isAdded()) return;
-        mPresenter.setCurRefreshError(true);
-        mPresenter.loadMorePostList(true, mUserId);
-    }
-
-    @Override
-    public void onLoadMore() {
-        if (!isAdded()) return;
-        mPresenter.setCurRefreshError(true);
-        mPresenter.loadMorePostList(false, mUserId);
-    }
-
-    @Override
     public void dismissDialog() {
         super.dismissDialog();
-        if (mRecyclerView != null) {
-            mRecyclerView.refreshComplete();
-            mRecyclerView.loadMoreComplete();
+        if (mRefreshLayout != null && mRefreshLayout.getState() == RefreshState.Refreshing) {
+            mRefreshLayout.finishRefresh();
         }
+        if (mRefreshLayout != null && mRefreshLayout.getState() == RefreshState.Loading) {
+            mRefreshLayout.finishLoadMore();
+        }
+    }
+
+    @Override
+    public void onLoadMore(RefreshLayout refreshLayout) {
+        if (!isAdded()) return;
+        if (mRefreshLayout == null) {
+            mRefreshLayout = refreshLayout;
+        }
+        mPresenter.loadMorePostList(State.STATE_MORE, mUserId);
+    }
+
+    @Override
+    public void onRefresh(RefreshLayout refreshLayout) {
+        if (!isAdded()) return;
+        if (mRefreshLayout == null) {
+            mRefreshLayout = refreshLayout;
+        }
+        mPresenter.loadMorePostList(State.STATE_REFRESH, mUserId);
     }
 }

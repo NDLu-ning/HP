@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/md_white"
+    android:orientation="vertical">
+
+    <include layout="@layout/view_toolbar_both_right_text" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/md_grey_200" />
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_20"
+        android:layout_marginStart="@dimen/dp_20"
+        android:layout_marginEnd="@dimen/dp_20">
+
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/user_info_nickname_tv"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_40"
+            android:layout_marginTop="@dimen/dp_40"
+            android:background="@drawable/bg_update_et"
+            android:paddingStart="@dimen/dp_6"
+            android:textSize="@dimen/sp_14"
+            android:visibility="gone"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="@string/app_name"
+            tools:visibility="visible" />
+
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/user_info_signature_cl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_update_et"
+            android:gravity="top"
+            android:hint="@string/tips_edit_signature"
+            android:lines="5"
+            android:maxEms="120"
+            android:padding="@dimen/dp_6"
+            android:textSize="@dimen/sp_14"
+            android:visibility="gone"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:visibility="visible" />
+
+        <RadioGroup
+            android:id="@+id/user_info_gender_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/md_white"
+            android:orientation="vertical"
+            android:visibility="gone"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <RadioButton
+                android:id="@+id/user_update_male_rb"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_40"
+                android:text="@string/tips_user_male" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/md_grey_100" />
+
+            <RadioButton
+                android:id="@+id/user_update_female_rb"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_40"
+                android:text="@string/tips_user_female" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/md_grey_100" />
+        </RadioGroup>
+
+    </android.support.constraint.ConstraintLayout>
+
+</LinearLayout>

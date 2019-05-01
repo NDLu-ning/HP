@@ -3,20 +3,15 @@ package com.graduation.hp.presenter;
 import com.graduation.hp.HPApplication;
 import com.graduation.hp.R;
 import com.graduation.hp.core.mvp.BasePresenter;
-import com.graduation.hp.core.repository.http.bean.Result;
 import com.graduation.hp.repository.contact.AuthContact;
 import com.graduation.hp.repository.model.impl.UserModel;
 import com.graduation.hp.ui.auth.AuthActivity;
-import com.graduation.hp.utils.VerifyUtils;
+import com.graduation.hp.core.utils.VerifyUtils;
 
 import javax.inject.Inject;
 
 import io.reactivex.Single;
-import io.reactivex.SingleEmitter;
 import io.reactivex.SingleOnSubscribe;
-import io.reactivex.functions.Action;
-import io.reactivex.functions.Consumer;
-import okhttp3.logging.HttpLoggingInterceptor;
 
 public class AuthPresenter extends BasePresenter<AuthActivity, UserModel>
         implements AuthContact.Presenter {

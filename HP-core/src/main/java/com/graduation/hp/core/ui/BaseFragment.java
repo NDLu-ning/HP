@@ -1,44 +1,28 @@
 package com.graduation.hp.core.ui;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.ColorRes;
 import android.support.annotation.DrawableRes;
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageButton;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.graduation.hp.core.R;
-import com.graduation.hp.core.app.base.IFragment;
 import com.graduation.hp.core.app.base.lifecycleable.FragmentLifecycleable;
-import com.graduation.hp.core.app.di.component.AppComponent;
+import com.graduation.hp.core.app.event.TokenInvalidEvent;
 import com.graduation.hp.core.mvp.BaseContact;
 import com.graduation.hp.core.mvp.BasePresenter;
-import com.graduation.hp.core.utils.DaggerUtils;
 import com.graduation.hp.core.utils.DialogUtils;
 import com.graduation.hp.core.utils.NetworkUtils;
-import com.trello.rxlifecycle2.android.FragmentEvent;
-
-import org.greenrobot.eventbus.EventBus;
 
 import javax.inject.Inject;
 
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 import io.reactivex.annotations.Nullable;
-import io.reactivex.subjects.BehaviorSubject;
-import io.reactivex.subjects.Subject;
 
 /**
  * Created by Ning on 2019/4/24.
@@ -111,7 +95,7 @@ public abstract class BaseFragment<P extends BasePresenter> extends BaseLazyLoad
     }
 
     @Override
-    public void skipToLoginPage() {
+    public void skipToLoginPage(TokenInvalidEvent event) {
 
     }
 

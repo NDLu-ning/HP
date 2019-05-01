@@ -3,6 +3,7 @@ package com.graduation.hp.presenter;
 import com.graduation.hp.HPApplication;
 import com.graduation.hp.R;
 import com.graduation.hp.core.mvp.BasePresenter;
+import com.graduation.hp.core.mvp.State;
 import com.graduation.hp.core.repository.http.bean.Page;
 import com.graduation.hp.repository.contact.UserPostContact;
 import com.graduation.hp.repository.http.entity.PostItem;
@@ -34,14 +35,14 @@ public class UserPostPresenter extends BasePresenter<UserPostFragment, PostModel
 
     @Override
     public void downloadInitialPostList(long userId) {
-        setCurRefreshError(false);
         mMvpView.showLoading();
-        loadMorePostList(true, userId);
+        loadMorePostList(State.STATE_INIT, userId);
     }
 
     @Override
-    public void loadMorePostList(boolean refresh, long userId) {
-        if (refresh) {
+    public void loadMorePostList(State state, long userId) {
+        setCurState(state);
+        if (isRefresh()) {
             page = new Page();
         }
         if (!mMvpView.isNetworkAvailable()) {
@@ -70,10 +71,10 @@ public class UserPostPresenter extends BasePresenter<UserPostFragment, PostModel
                         .doFinally(() -> mMvpView.dismissDialog())
                         .subscribe(list -> {
                             if (list != null && list.size() > 0) {
-                                mMvpView.onGetPostListSuccess(refresh, list);
+                                mMvpView.onGetPostListSuccess(list);
                                 mMvpView.showMain();
                             } else {
-                                if (refresh) {
+                                if (isRefresh()) {
                                     mMvpView.showEmpty();
                                 } else {
                                     mMvpView.showMessage(HPApplication.getStringById(R.string.tips_load_all_data));

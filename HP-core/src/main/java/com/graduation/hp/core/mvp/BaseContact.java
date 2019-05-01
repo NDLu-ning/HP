@@ -1,5 +1,7 @@
 package com.graduation.hp.core.mvp;
 
+import com.graduation.hp.core.app.event.TokenInvalidEvent;
+
 import io.reactivex.disposables.Disposable;
 
 public interface BaseContact {
@@ -46,7 +48,7 @@ public interface BaseContact {
         /**
          * 跳转登录界面
          */
-        void skipToLoginPage();
+        void skipToLoginPage(TokenInvalidEvent event);
     }
 
     interface Presenter<V extends View, M extends Model> {

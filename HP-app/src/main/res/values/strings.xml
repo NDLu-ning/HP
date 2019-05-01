@@ -8,6 +8,7 @@
     <string name="tab_myself">我的</string>
 
     <string name="tips_attention_title">我的关注</string>
+    <string name="tips_constitution_title">体质中心</string>
 
     <string name="tips_search">搜索你感兴趣的:</string>
     <string name="tips_myself_login">登录账号享受更多优质体验</string>
@@ -21,9 +22,8 @@
 
     <string name="tips_myself_setting">设置</string>
 
-    <string name="action_subscribed">已关注</string>
-    <string name="action_not_subscribed">关注</string>
-
+    <string name="action_focused">关注</string>
+    <string name="action_not_focused">取消关注</string>
 
     <string name="tips_user_info">个人信息</string>
     <string name="tips_user_profile">头像</string>
@@ -67,6 +67,7 @@
     <string name="tips_verify_phone_subtitle">验证手机号</string>
     <string name="tips_total_like_count_template">%d 人觉得很赞</string>
     <string name="tips_total_views_template">游览 %d 次</string>
+    <string name="tips_total_attention_template">关注：%d</string>
 
 
     <string name="action_more">查看更多</string>
@@ -83,5 +84,18 @@
     <string name="tips_empty_post_list">还没有发过帖子，去发个试试！</string>
     <string name="tips_empty_news_list">该频道暂无新闻，看看其他频道吧~</string>
     <string name="tips_lack_of_important_params">缺少重要参数</string>
+    <string name="action_logout">注销</string>
+    <string name="tips_empty_attention_list">列表空空如也</string>
+
+    <string name="tips_over_maximum_articles">%s 文章</string>
+    <string name="a_hundred_million">%d亿</string>
+    <string name="ten_million">%d千万</string>
+    <string name="ten_thousand">%d万</string>
+
+    <string-array name="user_center_tab_titles">
+        <item>文章</item>
+        <item>动态</item>
+    </string-array>
+
 
 </resources>

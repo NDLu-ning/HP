@@ -23,14 +23,21 @@ public class UserCenterPresenter extends BasePresenter<UserCenterActivity, UserM
     public void onGetUserInfo(long id) {
         mMvpModel.addSubscribe(mMvpModel.getUserInfo(id)
                 .subscribe(
-                        result -> mMvpView.onGetUserSuccess(result)
-                        , throwable -> handlerApiError(throwable)
+                        result -> mMvpView.onGetUserSuccess(result),
+                        throwable -> handlerApiError(throwable)
                 )
         );
     }
 
     @Override
-    public void attentionUser(long ownerId, long userId) {
-
+    public void attentionUser(long authorId) {
+        mMvpModel.addSubscribe(attentionModel.getAttentionNumber(authorId)
+                .subscribe(
+                        result -> {
+                        },
+                        throwable -> {
+                            handlerApiError(throwable);
+                        }
+                ));
     }
 }

@@ -1,7 +1,6 @@
 package com.graduation.hp.core.ui;
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.ColorRes;
 import android.support.annotation.DrawableRes;
@@ -16,12 +15,12 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.TextView;
 
 import com.graduation.hp.core.R;
 import com.graduation.hp.core.app.base.IActivity;
 import com.graduation.hp.core.app.base.lifecycleable.ActivityLifecycleable;
 import com.graduation.hp.core.app.di.component.AppComponent;
+import com.graduation.hp.core.app.event.TokenInvalidEvent;
 import com.graduation.hp.core.mvp.BaseContact;
 import com.graduation.hp.core.mvp.BasePresenter;
 import com.graduation.hp.core.utils.DaggerUtils;
@@ -131,7 +130,7 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
     }
 
     @Override
-    public void skipToLoginPage() {
+    public void skipToLoginPage(TokenInvalidEvent event) {
 
     }
 

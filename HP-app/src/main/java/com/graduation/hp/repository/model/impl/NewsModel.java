@@ -27,7 +27,7 @@ public class NewsModel extends BaseModel
     }
 
     @Override
-    public Single<List<NewsList>> getNewsListByCategory(String category, int page, int limit) {
+    public Single<List<NewsList>> getNewsListByCategory(long category, int page, int limit) {
         HttpHelper httpHelper = mRepositoryHelper.getHttpHelper();
         return httpHelper.obtainRetrofitService(NewsService.class)
                 .getNewsListByCategory(category, page, limit)

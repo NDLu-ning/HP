@@ -155,7 +155,7 @@ public class Result {
             Result result = JSON.parseObject(jsonData, new
                     TypeReference<Result>() {
                     });
-            if (result.getData() == null || !TextUtils.isEmpty(result.getData().toString())) {
+            if (result.getData() != null && !TextUtils.isEmpty(result.getData().toString())) {
                 result.setData(JSON.parseArray(result.getData().toString(), clazz));
             }
             return result;

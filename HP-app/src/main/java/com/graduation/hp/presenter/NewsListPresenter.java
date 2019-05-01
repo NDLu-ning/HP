@@ -5,6 +5,7 @@ import android.util.Log;
 import com.graduation.hp.HPApplication;
 import com.graduation.hp.R;
 import com.graduation.hp.core.mvp.BasePresenter;
+import com.graduation.hp.core.mvp.State;
 import com.graduation.hp.core.utils.RxUtils;
 import com.graduation.hp.repository.contact.NewsListContact;
 import com.graduation.hp.repository.http.entity.NewsList;
@@ -33,15 +34,15 @@ public class NewsListPresenter extends BasePresenter<NewsListFragment, NewsModel
     }
 
     @Override
-    public void downloadInitialData(String category) {
-        setCurRefreshError(false);
+    public void downloadInitialData(long category) {
         mMvpView.showLoading();
-        downloadMoreData(true, category);
+        downloadMoreData(State.STATE_INIT, category);
     }
 
     @Override
-    public void downloadMoreData(boolean refresh, String category) {
-        if (refresh) {
+    public void downloadMoreData(State state, long category) {
+        setCurState(state);
+        if (isRefresh()) {
             pager = new Pager(1, 10);
         }
         if (!mMvpView.isNetworkAvailable()) {
@@ -57,7 +58,7 @@ public class NewsListPresenter extends BasePresenter<NewsListFragment, NewsModel
                         list.add(BeanFactory.createNewsList());
                     }
                     Log.d("TAG", "list.size():" + list.size());
-                    mMvpView.onDownloadDataSuccess(refresh, list);
+                    mMvpView.onDownloadDataSuccess(list);
                     mMvpView.showMain();
                 }));
 //        mMvpModel.addSubscribe(mMvpModel.getNewsListByCategory(category, pager.getPage(), pager.getCount())

@@ -5,9 +5,31 @@
     android:background="@color/md_grey_100"
     android:orientation="vertical">
 
-    <include
-        layout="@layout/view_show_empty"
-        android:visibility="gone" />
+    <LinearLayout
+        android:id="@+id/view_empty"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_100"
+        android:background="@android:color/transparent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone"
+        android:padding="30dp">
+
+        <ImageView
+            android:id="@+id/empty_ic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/ic_empty_article" />
+
+        <TextView
+            android:id="@+id/empty_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:lineSpacingMultiplier="1.4"
+            android:text="@string/tips_empty" />
+    </LinearLayout>
 
     <include
         layout="@layout/view_show_loading"

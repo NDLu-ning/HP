@@ -1,6 +1,5 @@
 package com.graduation.hp.repository.model.impl;
 
-import android.preference.PreferenceManager;
 import android.text.TextUtils;
 
 import com.graduation.hp.app.constant.Key;
@@ -13,10 +12,12 @@ import com.graduation.hp.core.utils.JsonUtils;
 import com.graduation.hp.core.utils.RxUtils;
 import com.graduation.hp.repository.RepositoryHelper;
 import com.graduation.hp.repository.http.entity.User;
+import com.graduation.hp.repository.http.entity.local.UserVo;
+import com.graduation.hp.repository.http.service.AttentionService;
 import com.graduation.hp.repository.http.service.UserService;
 import com.graduation.hp.repository.model.IUserModel;
 import com.graduation.hp.repository.preferences.PreferencesHelper;
-import com.graduation.hp.utils.VerifyUtils;
+import com.graduation.hp.core.utils.VerifyUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -26,7 +27,8 @@ import javax.inject.Inject;
 import io.reactivex.Single;
 import io.reactivex.SingleOnSubscribe;
 
-public class UserModel extends BaseModel implements IUserModel {
+public class UserModel extends BaseModel
+        implements IUserModel {
 
     private RepositoryHelper mRepositoryHelper;
 
@@ -41,18 +43,41 @@ public class UserModel extends BaseModel implements IUserModel {
     }
 
     @Override
-    public Single<User> getUserInfo(long userId) {
-//        HttpHelper httpHelper = mRepositoryHelper.getHttpHelper();
+    public Single<User> getCurrentInfo() {
+        PreferencesHelper preferencesHelper = mRepositoryHelper.getPreferencesHelper();
+        return Single.create((SingleOnSubscribe<User>) emitter -> {
+            if (!TextUtils.isEmpty(preferencesHelper.getCurrentUserToken())) {
+                User user = new User();
+                user.setId(preferencesHelper.getCurrentUserId());
+                user.setHeadUrl(preferencesHelper.getCurrentUserIcon());
+                user.setRemark(preferencesHelper.getCurrentUserRemark());
+                user.setUsername(preferencesHelper.getCurrentUserUsername());
+                user.setNickname(preferencesHelper.getCurrentUserNickname());
+                emitter.onSuccess(user);
+            }else {
+                emitter.onError(new ApiException(ResponseCode.TOKEN_ERROR));
+            }
+        });
+    }
+
+    @Override
+    public Single<UserVo> getUserInfo(long userId) {
+        HttpHelper httpHelper = mRepositoryHelper.getHttpHelper();
 //        return Single.create((SingleOnSubscribe<Map<String, Object>>) emitter -> {
 //            Map<String, Object> map = new HashMap<>();
 //            map.put(Key.ID, userId);
 //        }).flatMap(result -> httpHelper.obtainRetrofitService(UserService.class)
 //                .getUserInfo(JsonUtils.mapToRequestBody(result))
 //                .compose(RxUtils.transformResultToData(User.class))
+//                .subscribeOn(Schedulers.io())
+//        ).flatMap(result -> httpHelper.obtainRetrofitService(AttentionService.class)
+//                .countAttentionNumber(JsonUtils.mapToRequestBody3(new String[]{"authorId"}, new Long[]{userId}))
+//                .compose(RxUtils.transformResultToData(Long.class))
+//                .map(attentionNumber -> new UserVo(result, attentionNumber))
 //                .compose(RxUtils.rxSchedulerHelper())
 //        );
         PreferencesHelper preferencesHelper = mRepositoryHelper.getPreferencesHelper();
-        return Single.create(emitter -> {
+        return Single.create((SingleOnSubscribe<User>) emitter -> {
             User user = new User();
             user.setId(preferencesHelper.getCurrentUserId());
             user.setHeadUrl(preferencesHelper.getCurrentUserIcon());
@@ -60,7 +85,12 @@ public class UserModel extends BaseModel implements IUserModel {
             user.setUsername(preferencesHelper.getCurrentUserUsername());
             user.setNickname(preferencesHelper.getCurrentUserNickname());
             emitter.onSuccess(user);
-        });
+        }).flatMap(result -> httpHelper.obtainRetrofitService(AttentionService.class)
+                .countAttentionNumber(JsonUtils.mapToRequestBody3(new String[]{"authorId"}, new Long[]{userId}))
+                .compose(RxUtils.transformResultToData(Long.class))
+                .map(attentionNumber -> new UserVo(result, attentionNumber))
+                .compose(RxUtils.rxSchedulerHelper())
+        );
     }
 
     @Override
@@ -107,8 +137,8 @@ public class UserModel extends BaseModel implements IUserModel {
                 emitter.onError(new ApiException(ResponseCode.INPUT_PHONENUMBER_ERROR));
             }
             Map<String, String> params = new HashMap<>();
-            params.put("username", username);
-            params.put("password", password);
+            params.put(Key.USERNAME, username);
+            params.put(Key.PASSWORD, password);
             params.put("phone", phone);
             emitter.onSuccess(params);
         }).flatMap(result -> httpHelper.obtainRetrofitService(UserService.class)

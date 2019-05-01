@@ -7,7 +7,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -16,7 +15,7 @@ import com.graduation.hp.app.constant.Key;
 import com.graduation.hp.core.app.di.component.AppComponent;
 import com.graduation.hp.core.ui.BaseFragment;
 import com.graduation.hp.core.utils.LogUtils;
-import com.graduation.hp.repository.http.entity.FavouriteChannel;
+import com.graduation.hp.repository.http.entity.local.ChannelVo;
 import com.graduation.hp.ui.navigation.news.list.NewsListFragment;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -64,23 +63,21 @@ public class NewsTabFragment extends BaseFragment
     }
 
 
-    private class NewsTabAdapter extends FragmentPagerAdapter {
+    public static class NewsTabAdapter extends FragmentPagerAdapter {
 
-        private final FavouriteChannel[] favouriteChannels;
-        //    private final String token;
+        private final ChannelVo[] channelVos;
         private NewsListFragment[] mFragments;
         private int curPosition;
 
-        public NewsTabAdapter(FragmentManager fm, FavouriteChannel[] favouriteChannels) {
+        public NewsTabAdapter(FragmentManager fm, ChannelVo[] channelVos) {
             super(fm);
-//        this.token = token;
-            this.favouriteChannels = favouriteChannels;
-            this.mFragments = new NewsListFragment[favouriteChannels.length];
+            this.channelVos = channelVos;
+            this.mFragments = new NewsListFragment[channelVos.length];
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
-            return favouriteChannels[position].getChannel_name();
+            return channelVos[position].getTitile();
         }
 
         @Override
@@ -92,14 +89,14 @@ public class NewsTabFragment extends BaseFragment
         @Override
         public Fragment getItem(int position) {
             if (mFragments[position] == null) {
-                mFragments[position] = NewsListFragment.newInstance(position, favouriteChannels[position]);
+                mFragments[position] = NewsListFragment.newInstance(position, channelVos[position]);
             }
             return mFragments[position];
         }
 
         @Override
         public int getCount() {
-            return this.favouriteChannels.length;
+            return this.channelVos.length;
         }
 
         public NewsListFragment getCurrentItem() {

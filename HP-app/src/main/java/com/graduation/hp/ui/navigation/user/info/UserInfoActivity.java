@@ -13,7 +13,8 @@ import com.graduation.hp.presenter.UserInfoPresenter;
 import com.graduation.hp.repository.contact.UserInfoContact;
 
 public class UserInfoActivity extends SingleFragmentActivity<UserInfoPresenter>
-        implements UserInfoContact.View {
+        implements UserInfoContact.View,
+        UserInfoFragment.UserInfoFragmentListener {
 
     public static Intent createIntent(Context context) {
         return new Intent(context, UserInfoActivity.class);
@@ -36,5 +37,15 @@ public class UserInfoActivity extends SingleFragmentActivity<UserInfoPresenter>
     @Override
     public boolean useEventBus() {
         return false;
+    }
+
+    @Override
+    public void getCurrentUserInfo() {
+        mPresenter.getCurrentUserInfo();
+    }
+
+    @Override
+    public void logout() {
+
     }
 }

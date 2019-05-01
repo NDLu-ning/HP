@@ -9,6 +9,7 @@ import com.graduation.hp.ui.navigation.attention.AttentionTabFragment;
 import com.graduation.hp.ui.navigation.user.UserTabFragment;
 import com.graduation.hp.ui.navigation.news.list.NewsListFragment;
 import com.graduation.hp.ui.navigation.post.PostTabFragment;
+import com.graduation.hp.ui.navigation.user.center.UserNewsFragment;
 import com.graduation.hp.ui.navigation.user.center.UserPostFragment;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
@@ -41,4 +42,6 @@ public interface FragmentComponent {
     void inject(PostTabFragment postTabFragment);
 
     void inject(UserPostFragment userPostFragment);
+
+    void inject(UserNewsFragment userNewsFragment);
 }

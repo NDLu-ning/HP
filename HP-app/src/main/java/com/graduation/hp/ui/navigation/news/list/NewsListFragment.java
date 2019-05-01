@@ -14,12 +14,14 @@ import com.graduation.hp.app.di.component.DaggerFragmentComponent;
 import com.graduation.hp.app.di.module.FragmentModule;
 import com.graduation.hp.core.app.di.component.AppComponent;
 import com.graduation.hp.core.app.listener.SimpleItemClickListenerAdapter;
+import com.graduation.hp.core.mvp.BasePresenter;
+import com.graduation.hp.core.mvp.State;
 import com.graduation.hp.core.ui.RootFragment;
 import com.graduation.hp.core.utils.LogUtils;
 import com.graduation.hp.presenter.NewsListPresenter;
 import com.graduation.hp.repository.contact.NewsListContact;
-import com.graduation.hp.repository.http.entity.FavouriteChannel;
 import com.graduation.hp.repository.http.entity.NewsList;
+import com.graduation.hp.repository.http.entity.local.ChannelVo;
 import com.graduation.hp.ui.provider.NewsItemBigProvider;
 import com.graduation.hp.ui.provider.NewsItemMultiProvider;
 import com.graduation.hp.ui.provider.NewsItemSingleProvider;
@@ -50,10 +52,10 @@ public class NewsListFragment extends RootFragment<NewsListPresenter>
 
     private RefreshLayout mRefreshLayout;
 
-    private FavouriteChannel mFavouriteChannel;
+    private ChannelVo mChannelVo;
     private int position;
 
-    public static NewsListFragment newInstance(int position, FavouriteChannel channel) {
+    public static NewsListFragment newInstance(int position, ChannelVo channel) {
         NewsListFragment fragment = new NewsListFragment();
         Bundle args = new Bundle();
         args.putInt(Key.POSITION, position);
@@ -67,8 +69,8 @@ public class NewsListFragment extends RootFragment<NewsListPresenter>
         super.init(savedInstanceState, rootView);
         Bundle args = getArguments();
         position = args.getInt(Key.POSITION, 0);
-        mFavouriteChannel = args.getParcelable(Key.CHANNEL);
-        if (mFavouriteChannel == null) {
+        mChannelVo = args.getParcelable(Key.CHANNEL);
+        if (mChannelVo == null) {
             throw new IllegalArgumentException("You must pass the parameter that indicate the channel of news");
         }
         initMultiTypeAdapter();
@@ -77,7 +79,7 @@ public class NewsListFragment extends RootFragment<NewsListPresenter>
     @Override
     protected void onLazyLoad() {
         if (mPresenter != null) {
-            mPresenter.downloadInitialData(mFavouriteChannel.getChannel_name());
+            mPresenter.downloadInitialData(mChannelVo.getId());
         }
     }
 
@@ -122,8 +124,8 @@ public class NewsListFragment extends RootFragment<NewsListPresenter>
     }
 
     @Override
-    public void onDownloadDataSuccess(boolean refresh, List<NewsList> newsList) {
-        if (refresh) {
+    public void onDownloadDataSuccess(List<NewsList> newsList) {
+        if (mPresenter.isRefresh()) {
             mItems.clear();
         }
         mItems.addAll(newsList);
@@ -157,8 +159,7 @@ public class NewsListFragment extends RootFragment<NewsListPresenter>
         if (mRefreshLayout == null) {
             mRefreshLayout = refreshLayout;
         }
-        mPresenter.setCurRefreshError(true);
-        mPresenter.downloadMoreData(false, mFavouriteChannel.getChannel_name());
+        mPresenter.downloadMoreData(State.STATE_MORE, mChannelVo.getId());
     }
 
     @Override
@@ -167,8 +168,7 @@ public class NewsListFragment extends RootFragment<NewsListPresenter>
         if (mRefreshLayout == null) {
             mRefreshLayout = refreshLayout;
         }
-        mPresenter.setCurRefreshError(true);
-        mPresenter.downloadMoreData(true, mFavouriteChannel.getChannel_name());
+        mPresenter.downloadMoreData(State.STATE_REFRESH, mChannelVo.getId());
     }
 
     @Override

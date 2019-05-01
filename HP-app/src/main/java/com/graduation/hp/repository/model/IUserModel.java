@@ -2,6 +2,7 @@ package com.graduation.hp.repository.model;
 
 import com.graduation.hp.core.repository.http.bean.Result;
 import com.graduation.hp.repository.http.entity.User;
+import com.graduation.hp.repository.http.entity.local.UserVo;
 
 import io.reactivex.Single;
 
@@ -9,7 +10,9 @@ public interface IUserModel {
 
     Single<String> sendVerificationMessage(String phone);
 
-    Single<User> getUserInfo(long userId);
+    Single<User> getCurrentInfo();
+
+    Single<UserVo> getUserInfo(long userId);
 
     Single<User> login(String username, String password);
 

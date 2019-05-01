@@ -2,6 +2,7 @@ package com.graduation.hp.ui.provider;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
@@ -13,12 +14,12 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.graduation.hp.R;
-import com.graduation.hp.core.app.listener.OnItemClickListener;
 import com.graduation.hp.core.utils.DateUtils;
 import com.graduation.hp.core.utils.GlideUtils;
 import com.graduation.hp.core.utils.ToastUtils;
 import com.graduation.hp.repository.http.entity.CommentItem;
 import com.graduation.hp.repository.http.entity.PostItem;
+import com.graduation.hp.ui.navigation.user.center.UserCenterTabListener;
 import com.graduation.hp.utils.BeanFactory;
 import com.graduation.hp.widget.LikeButton;
 import com.lzy.ninegrid.ImageInfo;
@@ -30,32 +31,25 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import me.drakeet.multitype.ItemViewBinder;
 
-public class UserPostItemAdapter extends RecyclerView.Adapter<UserPostItemAdapter.ViewHolder> {
+public class UserPostItemProvider extends ItemViewBinder<PostItem, UserPostItemProvider.ViewHolder> {
 
-    private final UserPostItemAdapterListener mListener;
-    private final List<PostItem> mList;
+    private final UserCenterTabListener mListener;
 
-    public UserPostItemAdapter(UserPostItemAdapterListener listener, List<PostItem> list) {
+    public UserPostItemProvider(UserCenterTabListener listener) {
         this.mListener = listener;
-        this.mList = list;
     }
 
-    public interface UserPostItemAdapterListener {
-        void onLikeClick(long postId, boolean liked);
-
-        void onPostClick(long postId);
-    }
-
+    @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    protected ViewHolder onCreateViewHolder(@NonNull LayoutInflater inflater, @NonNull ViewGroup parent) {
         return new ViewHolder(LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.adapter_post_multi_item, parent, false));
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
-        PostItem item = mList.get(position);
+    protected void onBindViewHolder(@NonNull ViewHolder holder, @NonNull PostItem item) {
         Resources resources = holder.itemView.getResources();
         GlideUtils.loadUserHead(holder.adapterPostIconIv, item.getAuthorIcon());
         holder.adapterPostNameTv.setText(item.getAuthor());
@@ -89,8 +83,22 @@ public class UserPostItemAdapter extends RecyclerView.Adapter<UserPostItemAdapte
                 holder.adapterPostCommentContainer.addView(createCommentView(holder.itemView.getContext(), commentItems.get(i)));
             }
         }
+        holder.itemView.setOnClickListener(v -> {
+            if (mListener != null) {
+                mListener.onItemClick(false, 1L);
+            }
+        });
+        holder.adapterPostCommentIv.setOnClickListener(v -> {
+            if (mListener != null) {
+                mListener.onItemClick(false, 1L);
+            }
+        });
+        holder.adapterPostLikeBtn.setLikeButtonClickListener((v, liked) -> {
+            if (mListener != null) {
+                mListener.onLikeClick(false, 1L, liked);
+            }
+        });
     }
-
 
     private View createCommentView(Context context, CommentItem commentItem) {
         View rootView = LayoutInflater.from(context).inflate(R.layout.adapter_post_reply_item, null);
@@ -103,11 +111,6 @@ public class UserPostItemAdapter extends RecyclerView.Adapter<UserPostItemAdapte
         }
         replyTv.setText(Html.fromHtml(content));
         return replyTv;
-    }
-
-    @Override
-    public int getItemCount() {
-        return mList.size();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {

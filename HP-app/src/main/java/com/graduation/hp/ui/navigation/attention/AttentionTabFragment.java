@@ -15,9 +15,13 @@ import com.graduation.hp.app.di.module.FragmentModule;
 import com.graduation.hp.core.app.di.component.AppComponent;
 import com.graduation.hp.core.app.listener.OnItemClickListener;
 import com.graduation.hp.core.app.listener.SimpleItemClickListenerAdapter;
+import com.graduation.hp.core.mvp.State;
 import com.graduation.hp.core.ui.RootFragment;
 import com.graduation.hp.presenter.AttentionTabPresenter;
+import com.graduation.hp.repository.contact.AttentionTabContact;
+import com.graduation.hp.repository.http.entity.FocusPO;
 import com.graduation.hp.repository.http.entity.NewsList;
+import com.graduation.hp.ui.provider.AttentionItemProvider;
 import com.graduation.hp.ui.provider.NewsItemBigProvider;
 import com.graduation.hp.ui.provider.NewsItemMultiProvider;
 import com.graduation.hp.ui.provider.NewsItemSingleProvider;
@@ -26,6 +30,8 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -38,7 +44,7 @@ import me.drakeet.multitype.MultiTypeAdapter;
  */
 
 public class AttentionTabFragment extends RootFragment<AttentionTabPresenter>
-        implements OnRefreshListener, OnLoadMoreListener {
+        implements AttentionTabContact.View, OnRefreshListener, OnLoadMoreListener {
 
     @BindView(R.id.view_base_refresh_layout)
     SmartRefreshLayout mRefreshLayout;
@@ -52,8 +58,6 @@ public class AttentionTabFragment extends RootFragment<AttentionTabPresenter>
     @Inject
     Items mItems;
 
-    private String mUserId;
-
     public static AttentionTabFragment newInstance() {
         AttentionTabFragment fragment = new AttentionTabFragment();
         return fragment;
@@ -61,50 +65,35 @@ public class AttentionTabFragment extends RootFragment<AttentionTabPresenter>
 
     @Override
     protected void init(Bundle savedInstanceState, View view) {
-        if (savedInstanceState != null) {
-            mUserId = savedInstanceState.getString(Key.USER_ID);
-        }
+        super.init(savedInstanceState, view);
         initMultiTypeAdapter();
     }
 
-    @Override
-    public void onSaveInstanceState(@NonNull Bundle outState) {
-        outState.putString(Key.USER_ID, mUserId); // TODO 加密
-        super.onSaveInstanceState(outState);
-    }
-
     private void initMultiTypeAdapter() {
-        mAdapter.register(NewsList.class).to(
-                new NewsItemSingleProvider(listener),
-                new NewsItemMultiProvider(listener),
-                new NewsItemBigProvider(listener)
-        ).withClassLinker((position, newsList) -> {
-            String image = newsList.getImages();
-            if (!TextUtils.isEmpty(image)) {
-                String[] images = image.split(",");
-                if (images.length >= 3) {
-                    if (position % 2 == 0) {
-                        return NewsItemSingleProvider.class;
-                    }
-                    return NewsItemMultiProvider.class;
-                }
-            }
-            if (position % 2 == 0) {
-                return NewsItemSingleProvider.class;
-            } else {
-                return NewsItemBigProvider.class;
-            }
-        });
+        mAdapter.setItems(mItems);
+        mAdapter.register(FocusPO.class, new AttentionItemProvider(mListener));
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mAdapter.notifyDataSetChanged();
     }
 
+    private AttentionItemProvider.AttentionItemClickListener mListener = new AttentionItemProvider.AttentionItemClickListener() {
+        @Override
+        public void onAttentionCbClick(long authorId, boolean focusOn) {
+
+        }
+
+        @Override
+        public void onItemClick(long authorId) {
+
+        }
+    };
+
 
     @Override
     protected void onLazyLoad() {
-//        mPresenter.
+        mPresenter.initialAttentionList();
     }
 
     @Override
@@ -123,7 +112,7 @@ public class AttentionTabFragment extends RootFragment<AttentionTabPresenter>
 
     @Override
     protected int getNoDataStringResId() {
-        return 0;
+        return R.string.tips_empty_attention_list;
     }
 
     @Override
@@ -144,23 +133,27 @@ public class AttentionTabFragment extends RootFragment<AttentionTabPresenter>
 
     @Override
     public void onLoadMore(RefreshLayout refreshLayout) {
-
+        if (!isAdded()) return;
+        mPresenter.downloadMoreData(State.STATE_MORE);
     }
 
     @Override
     public void onRefresh(RefreshLayout refreshLayout) {
-
+        if (!isAdded()) return;
+        mPresenter.downloadMoreData(State.STATE_REFRESH);
     }
 
-    private final OnItemClickListener listener = new SimpleItemClickListenerAdapter() {
-        @Override
-        public void OnItemClick(View view, Object object) {
-            if (object instanceof String) {
-                // 关注与否
-            } else if (object instanceof NewsList) {
-                // TODO
-                // 点击新闻
-            }
+    @Override
+    public void onDownloadDataSuccess(List<FocusPO> newsLists) {
+        if (mPresenter.isRefresh()) {
+            mItems.clear();
         }
-    };
+        mItems.addAll(newsLists);
+        mAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    protected void onRetryClick() {
+        mPresenter.initialAttentionList();
+    }
 }

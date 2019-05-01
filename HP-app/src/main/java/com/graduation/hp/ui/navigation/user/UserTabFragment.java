@@ -88,7 +88,7 @@ public class UserTabFragment extends BaseFragment<UserTabPresenter>
         int id = view.getId();
         if (mUser == null &&
                 (id == R.id.my_info_cl || id == R.id.my_message_cl)) {
-            ((NavigationTabActivity) getActivity()).skipToLoginPage();
+            ((NavigationTabActivity) getActivity()).skipToLoginPage(null);
             showMessage(getString(R.string.tips_please_login_first));
         }else {
             switch (id) {
@@ -115,7 +115,7 @@ public class UserTabFragment extends BaseFragment<UserTabPresenter>
         if (isAdded()) {
             if (mUser == null) {
                 myNameTv.setText(getString(R.string.tips_myself_login));
-                myCenterCl.setOnClickListener(v -> ((NavigationTabActivity) getActivity()).skipToLoginPage());
+                myCenterCl.setOnClickListener(v -> ((NavigationTabActivity) getActivity()).skipToLoginPage(null));
             } else {
                 int width = ScreenUtils.dip2px(getContext(), 80);
                 GlideUtils.loadUserHead(myPhotoIv, mUser.getHeadUrl(), width, width);

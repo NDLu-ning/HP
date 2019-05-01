@@ -53,17 +53,14 @@
                     app:layout_constraintBottom_toBottomOf="@+id/user_center_icon_iv"
                     app:layout_constraintStart_toEndOf="@+id/user_center_icon_iv" />
 
-                <android.support.v7.widget.AppCompatCheckBox
+                <com.graduation.hp.widget.AttentionButton
                     android:id="@+id/user_center_sub_cb"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/dp_12"
-                    android:background="@drawable/selector_sub_cb"
                     android:button="@null"
                     android:gravity="center"
                     android:minWidth="@dimen/dp_80"
-                    android:text="@string/action_not_subscribed"
-                    android:textColor="@color/selector_sub_tv"
                     android:textSize="@dimen/sp_14"
                     android:visibility="gone"
                     app:layout_constraintBottom_toBottomOf="@+id/user_center_icon_iv"
@@ -150,14 +147,57 @@
 
         </android.support.design.widget.CollapsingToolbarLayout>
 
+        <android.support.design.widget.TabLayout
+            android:id="@+id/user_center_tab_tl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/md_white"
+            android:gravity="center"
+            android:minHeight="@dimen/dp_30"
+            app:layout_collapseMode="pin"
+            app:tabIndicatorColor="@color/md_blue_500"
+            app:tabIndicatorHeight="2dp"
+            app:tabMode="scrollable"
+            app:tabMaxWidth="60dp"
+            app:tabSelectedTextColor="@color/md_blue_500"
+            app:tabTextColor="@color/md_grey_400" >
+
+            <android.support.design.widget.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="文章"
+                />
+
+            <android.support.design.widget.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="动态"
+                />
+
+        </android.support.design.widget.TabLayout>
+
     </android.support.design.widget.AppBarLayout>
 
 
-    <FrameLayout
-        android:id="@+id/content_frame"
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/view_base_refresh_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="android.support.design.widget.AppBarLayout$ScrollingViewBehavior">
-    </FrameLayout>
+        android:layout_height="wrap_content"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <com.scwang.smartrefresh.header.MaterialHeader
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/user_center_pager_vp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <com.scwang.smartrefresh.layout.footer.ClassicsFooter
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
 </android.support.design.widget.CoordinatorLayout>

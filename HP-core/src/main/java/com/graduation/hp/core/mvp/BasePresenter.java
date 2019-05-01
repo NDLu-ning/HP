@@ -1,6 +1,6 @@
 package com.graduation.hp.core.mvp;
 
-import com.graduation.hp.core.app.event.TokenInvaildEvent;
+import com.graduation.hp.core.app.event.TokenInvalidEvent;
 import com.graduation.hp.core.repository.http.bean.ResponseCode;
 import com.graduation.hp.core.repository.http.exception.ApiException;
 
@@ -22,7 +22,7 @@ public abstract class BasePresenter<V extends BaseContact.View
 
     protected M mMvpModel;
 
-    protected boolean isCurRefreshError = true;
+    protected State mState = State.STATE_REFRESH;
 
     boolean debug = true;
 
@@ -68,13 +68,21 @@ public abstract class BasePresenter<V extends BaseContact.View
                 return;
             }
             if (apiException.getCode() == ResponseCode.TOKEN_ERROR.getStatus()) {
-                EventBus.getDefault().post(TokenInvaildEvent.INSTANCE);
+                EventBus.getDefault().post(TokenInvalidEvent.INSTANCE);
+                mMvpView.showError("");
                 return;
             }
-            if (!isCurRefreshError) {
-                mMvpView.showError(throwable.getMessage());
-                isCurRefreshError = true;
+            if (apiException.getCode() == ResponseCode.DATA_EMPTY.getStatus()) {
+                if (isRefresh()) {
+                    mMvpView.showEmpty();
+                } else {
+                    mMvpView.showMessage("已加载全部数据");
+                    mState = State.STATE_REFRESH;
+                }
+                return;
             }
+            mMvpView.showError(throwable.getMessage());
+            mState = State.STATE_REFRESH;
         }
         mMvpView.dismissDialog();
         mMvpView.showMessage(throwable.getMessage());
@@ -89,7 +97,11 @@ public abstract class BasePresenter<V extends BaseContact.View
     }
 
 
-    public void setCurRefreshError(boolean curRefreshError) {
-        this.isCurRefreshError = curRefreshError;
+    public void setCurState(State curState) {
+        this.mState = curState;
+    }
+
+    public boolean isRefresh() {
+        return this.mState != State.STATE_MORE;
     }
 }

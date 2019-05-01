@@ -11,16 +11,20 @@ import android.support.v4.app.FragmentManager;
 
 import com.graduation.hp.R;
 import com.graduation.hp.app.constant.Key;
+import com.graduation.hp.core.app.event.TokenInvalidEvent;
 import com.graduation.hp.core.ui.BaseActivity;
 import com.graduation.hp.core.widget.BaseViewPager;
 import com.graduation.hp.core.widget.RegisteredFragmentPagerAdapter;
 import com.graduation.hp.ui.auth.AuthActivity;
 import com.graduation.hp.ui.navigation.attention.AttentionTabFragment;
+import com.graduation.hp.ui.navigation.constitution.ConstitutionTabFragment;
 import com.graduation.hp.ui.navigation.user.UserTabFragment;
 import com.graduation.hp.ui.navigation.news.NewsTabFragment;
 import com.graduation.hp.ui.navigation.post.PostTabFragment;
 import com.graduation.hp.widget.NavigationTabView;
 
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
@@ -264,7 +268,7 @@ public class NavigationTabActivity extends BaseActivity {
                     return fragment;
                 }
                 case TAB_ID_CONSTITUTION: {
-                    final AttentionTabFragment fragment = AttentionTabFragment.newInstance();
+                    final ConstitutionTabFragment fragment = ConstitutionTabFragment.newInstance();
                     return fragment;
                 }
                 case TAB_ID_POST: {
@@ -300,8 +304,15 @@ public class NavigationTabActivity extends BaseActivity {
         }
     }
 
+
     @Override
-    public void skipToLoginPage() {
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void skipToLoginPage(TokenInvalidEvent event) {
         startActivity(AuthActivity.createIntent(this));
+    }
+
+    @Override
+    public boolean useEventBus() {
+        return true;
     }
 }

@@ -8,6 +8,6 @@ import io.reactivex.Single;
 
 public interface INewsModel {
 
-    Single<List<NewsList>> getNewsListByCategory(String category, int page, int limit);
+    Single<List<NewsList>> getNewsListByCategory(long category, int page, int limit);
 
 }

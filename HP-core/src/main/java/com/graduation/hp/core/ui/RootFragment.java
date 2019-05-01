@@ -8,6 +8,7 @@ import android.view.InflateException;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.graduation.hp.core.R;
@@ -29,6 +30,7 @@ public abstract class RootFragment<P extends BasePresenter>
 
     private static final int ID_ERROR_RETRY_BUTTON = R.id.view_retry;
     private static final int ID_EMPTY_TEXT = R.id.empty_tv;
+    private static final int ID_EMPTY_IMAGE = R.id.empty_ic;
 
     private ViewStateManager mViewStateManager;
 
@@ -93,8 +95,24 @@ public abstract class RootFragment<P extends BasePresenter>
         if (noDataMsgTextView == null) {
             throw new InflateException("The id of TextView in EmptyView must be \"empty_tv\"");
         }
+        final ImageView noDataMsgImageView = layout.findViewById(ID_EMPTY_IMAGE);
+        if (noDataMsgImageView == null) {
+            throw new InflateException("The id of ImageView in EmptyView must be \"empty_ic\"");
+        }
         noDataMsgTextView.setText(getNoDataStringResId());
+        if (getNoDataDrawableResId() != 0) {
+            noDataMsgImageView.setImageResource(getNoDataDrawableResId());
+        }
+        noDataMsgTextView.setOnClickListener(v -> onEmptyClick());
 
+    }
+
+    protected void onEmptyClick() {
+
+    }
+
+    protected int getNoDataDrawableResId() {
+        return 0;
     }
 
     private ViewStateManager getViewStateManager(View layout) {

@@ -3,7 +3,7 @@
     android:id="@+id/view_error"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_gravity="center"
+    android:layout_marginTop="@dimen/dp_100"
     android:background="@android:color/transparent"
     android:fitsSystemWindows="true"
     android:gravity="center"
@@ -11,8 +11,9 @@
 
     <ImageView
         android:id="@+id/view_error_iv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_width="@dimen/dp_250"
+        android:layout_height="@dimen/dp_200"
+        android:src="@mipmap/ic_empty"/>
 
     <Button
         android:id="@+id/view_retry"

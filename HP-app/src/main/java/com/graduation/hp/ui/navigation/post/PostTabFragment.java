@@ -13,6 +13,7 @@ import com.graduation.hp.app.di.module.FragmentModule;
 import com.graduation.hp.core.app.di.component.AppComponent;
 import com.graduation.hp.core.app.listener.OnItemClickListener;
 import com.graduation.hp.core.app.listener.SimpleItemClickListenerAdapter;
+import com.graduation.hp.core.mvp.State;
 import com.graduation.hp.core.ui.RootFragment;
 import com.graduation.hp.core.utils.ToastUtils;
 import com.graduation.hp.presenter.PostTabPresenter;
@@ -121,8 +122,9 @@ public class PostTabFragment extends RootFragment<PostTabPresenter>
     }
 
     @Override
-    public void onDownloadDataSuccess(boolean refresh, List<PostItem> newsLists) {
-        if (refresh) {
+    public void onDownloadDataSuccess(List<PostItem> newsLists) {
+        if (!isAdded()) return;
+        if (mPresenter.isRefresh()) {
             mItems.clear();
         }
         mItems.addAll(newsLists);
@@ -143,13 +145,12 @@ public class PostTabFragment extends RootFragment<PostTabPresenter>
     @Override
     public void onLoadMore(RefreshLayout refreshLayout) {
         if (!isAdded()) return;
-        mPresenter.setCurRefreshError(true);
-        mPresenter.downloadMoreData(false);
+        mPresenter.downloadMoreData(State.STATE_MORE);
     }
 
     @Override
     public void onRefresh(RefreshLayout refreshLayout) {
         if (!isAdded()) return;
-        mPresenter.downloadMoreData(true);
+        mPresenter.downloadMoreData(State.STATE_REFRESH);
     }
 }

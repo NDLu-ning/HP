@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingStart="@dimen/dp_12"
+    android:paddingEnd="@dimen/dp_12"
+    android:background="@color/md_white"
+    android:layout_marginTop="@dimen/dp_3"
+    android:layout_marginBottom="@dimen/dp_3">
+
+    <android.support.v7.widget.AppCompatImageView
+        android:id="@+id/adapter_attention_item_image_iv"
+        android:layout_width="@dimen/dp_50"
+        android:layout_height="@dimen/dp_50"
+        android:layout_marginTop="@dimen/dp_12"
+        android:layout_marginBottom="@dimen/dp_12"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@mipmap/ic_user_default_photo" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/adapter_attention_item_name_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_16"
+        android:layout_marginTop="@dimen/dp_12"
+        android:gravity="center"
+        android:textColor="@color/md_black_300"
+        android:textSize="@dimen/sp_16"
+        android:typeface="serif"
+        app:layout_constraintStart_toEndOf="@id/adapter_attention_item_image_iv"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="听我默默道来啊" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/adapter_attention_item_article_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_16"
+        android:layout_marginTop="@dimen/dp_14"
+        android:gravity="center"
+        android:textColor="@color/secondary_text"
+        android:textSize="@dimen/sp_12"
+        android:typeface="serif"
+        app:layout_constraintStart_toEndOf="@id/adapter_attention_item_name_tv"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="99+文章" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/adapter_attention_item_remark_tv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_16"
+        android:layout_marginEnd="@dimen/dp_16"
+        android:layout_marginBottom="@dimen/dp_12"
+        android:ellipsize="marquee"
+        android:gravity="start"
+        android:textColor="@color/secondary_text"
+        android:textSize="@dimen/sp_14"
+        android:typeface="serif"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/adapter_attention_item_sub_btn"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintStart_toEndOf="@id/adapter_attention_item_image_iv"
+        tools:text="听我默默道来啊" />
+
+
+    <com.graduation.hp.widget.AttentionButton
+        android:id="@+id/adapter_attention_item_sub_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:button="@null"
+        android:text="@string/tab_attention"
+        android:textSize="@dimen/sp_14"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/md_grey_100"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+</android.support.constraint.ConstraintLayout>
