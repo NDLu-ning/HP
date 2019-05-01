@@ -84,10 +84,9 @@
                     android:text="@string/action_edit_user_info"
                     android:textSize="@dimen/sp_14"
                     android:visibility="visible"
-                    app:layout_constraintBottom_toBottomOf="@+id/user_center_icon_iv"
+                    app:layout_constraintBottom_toBottomOf="@id/user_center_icon_iv"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/user_center_icon_iv" />
-
+                    app:layout_constraintTop_toTopOf="@id/user_center_icon_iv" />
 
                 <android.support.v7.widget.AppCompatTextView
                     android:id="@+id/user_center_summary_tv"
@@ -112,9 +111,17 @@
                     android:layout_height="@dimen/dp_15"
                     android:layout_marginTop="@dimen/dp_10"
                     android:layout_marginEnd="@dimen/dp_12"
-                    android:scaleType="centerCrop"
+                    android:scaleType="fitCenter"
+                    app:layout_constraintBottom_toBottomOf="@id/user_center_summary_tv"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/user_center_icon_iv" />
+                    app:layout_constraintTop_toBottomOf="@id/user_center_icon_iv" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_1"
+                    android:background="@color/md_grey_200"
+                    app:layout_constraintBottom_toBottomOf="parent
+"/>
 
             </android.support.constraint.ConstraintLayout>
 
@@ -126,78 +133,31 @@
                 app:contentInsetStart="0dp"
                 app:layout_collapseMode="pin">
 
-                <android.support.v7.widget.AppCompatImageView
+
+                <android.support.v7.widget.AppCompatImageButton
                     android:id="@+id/toolbar_left_btn"
-                    android:layout_width="@dimen/dp_40"
-                    android:layout_height="@dimen/dp_40"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="start"
                     android:adjustViewBounds="true"
+                    android:scaleType="fitCenter"
+                    android:background="@null"
+                    android:maxHeight="@dimen/dp_40"
+                    android:maxWidth="@dimen/dp_40"
                     android:padding="@dimen/dp_10"
-                    android:src="@mipmap/ic_navigation_back" />
-
+                    android:src="@mipmap/ic_navigation_back"/>
             </android.support.v7.widget.Toolbar>
 
         </android.support.design.widget.CollapsingToolbarLayout>
 
     </android.support.design.widget.AppBarLayout>
 
-    <com.scwang.smartrefresh.layout.SmartRefreshLayout
-        android:id="@+id/view_base_refresh_layout"
+
+    <FrameLayout
+        android:id="@+id/content_frame"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-        <com.scwang.smartrefresh.header.MaterialHeader
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <include layout="@layout/view_show_loading" />
-
-            <include layout="@layout/view_show_error" />
-
-            <LinearLayout
-                android:id="@+id/view_empty"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@android:color/transparent"
-                android:layout_marginTop="@dimen/dp_50"
-                android:fitsSystemWindows="true"
-                android:gravity="center"
-                android:orientation="vertical"> <!-- 避免状态透明上移 -->
-
-                <ImageView
-                    android:id="@+id/empty_ic"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/ic_empty_comment"/>
-
-                <android.support.v7.widget.AppCompatTextView
-                    android:id="@+id/empty_tv"
-                    style="@style/Button.Green"
-                    android:layout_marginTop="@dimen/dp_10"
-                    android:gravity="center"
-                    android:text="@string/tips_empty_post_list" />
-
-            </LinearLayout>
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/view_main"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@android:color/transparent"
-                android:overScrollMode="never" />
-
-        </FrameLayout>
-
-        <com.scwang.smartrefresh.layout.footer.ClassicsFooter
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
-
+        app:layout_behavior="android.support.design.widget.AppBarLayout$ScrollingViewBehavior">
+    </FrameLayout>
 
 </android.support.design.widget.CoordinatorLayout>

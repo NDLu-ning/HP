@@ -12,7 +12,7 @@ import com.graduation.hp.core.ui.BaseFragment;
 
 import butterknife.BindView;
 
-public class UserInfoFragment extends BaseFragment {
+public class UserInfoFragment extends BaseFragment   {
 
     public interface UserInfoFragmentListener {
         void getUserInfo();
@@ -46,10 +46,5 @@ public class UserInfoFragment extends BaseFragment {
 
     @Override
     public void setupFragmentComponent(@NonNull AppComponent appComponent) {
-    }
-
-    @Override
-    public boolean useEventBus() {
-        return true;
     }
 }

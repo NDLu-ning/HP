@@ -14,6 +14,20 @@ public interface PreferencesHelper {
 
     void saveCurrentUserInfo(User user);
 
+    String getCurrentUserRemark();
+
+    int getCurrentUserGender();
+
+    void saveCurrentUserRemark(String remark);
+
+    void saveCurrentUserGender(Integer gender);
+
+    User getCurrentUserInfo();
+
+    void saveCurrentUserUsername(String username);
+
+    String getCurrentUserUsername();
+
     String getCurrentUserIcon();
 
     void saveCurrentUserIcon(String icon);
@@ -22,13 +36,13 @@ public interface PreferencesHelper {
 
     void saveCurrentUserNickname(String nickname);
 
-    float getCurrentUserBMI();
+    long getCurrentUserPhysiquId();
 
-    void saveCurrentUserBMI(float icon);
+    void saveCurrentUserPhysiquId(long num);
 
-    long getCurrentUserHealthyNum();
+    long getCurrentUserId();
 
-    void saveCurrentUserHealthyNum(long num);
+    void saveCurrentUserId(long userId);
 
     void clearUserInfo();
 }

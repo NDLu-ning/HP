@@ -2,7 +2,6 @@ package com.graduation.hp.ui.provider;
 
 import android.content.Context;
 import android.content.res.Resources;
-import android.support.annotation.NonNull;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
@@ -31,24 +30,32 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import me.drakeet.multitype.ItemViewBinder;
 
-public class PostItemProvider extends ItemViewBinder<PostItem, PostItemProvider.ViewHolder> {
+public class UserPostItemAdapter extends RecyclerView.Adapter<UserPostItemAdapter.ViewHolder> {
 
-    private final OnItemClickListener mListener;
+    private final UserPostItemAdapterListener mListener;
+    private final List<PostItem> mList;
 
-    public PostItemProvider(OnItemClickListener listener) {
+    public UserPostItemAdapter(UserPostItemAdapterListener listener, List<PostItem> list) {
         this.mListener = listener;
+        this.mList = list;
     }
 
-    @NonNull
-    @Override
-    protected ViewHolder onCreateViewHolder(@NonNull LayoutInflater inflater, @NonNull ViewGroup parent) {
-        return new ViewHolder(inflater.inflate(R.layout.adapter_post_multi_item, parent, false));
+    public interface UserPostItemAdapterListener {
+        void onLikeClick(long postId, boolean liked);
+
+        void onPostClick(long postId);
     }
 
     @Override
-    protected void onBindViewHolder(@NonNull ViewHolder holder, @NonNull PostItem item) {
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        return new ViewHolder(LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.adapter_post_multi_item, parent, false));
+    }
+
+    @Override
+    public void onBindViewHolder(ViewHolder holder, int position) {
+        PostItem item = mList.get(position);
         Resources resources = holder.itemView.getResources();
         GlideUtils.loadUserHead(holder.adapterPostIconIv, item.getAuthorIcon());
         holder.adapterPostNameTv.setText(item.getAuthor());
@@ -84,6 +91,7 @@ public class PostItemProvider extends ItemViewBinder<PostItem, PostItemProvider.
         }
     }
 
+
     private View createCommentView(Context context, CommentItem commentItem) {
         View rootView = LayoutInflater.from(context).inflate(R.layout.adapter_post_reply_item, null);
         AppCompatTextView replyTv = rootView.findViewById(R.id.adapter_post_reply_tv);
@@ -95,6 +103,11 @@ public class PostItemProvider extends ItemViewBinder<PostItem, PostItemProvider.
         }
         replyTv.setText(Html.fromHtml(content));
         return replyTv;
+    }
+
+    @Override
+    public int getItemCount() {
+        return mList.size();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {

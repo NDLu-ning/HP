@@ -25,16 +25,16 @@ import com.graduation.hp.repository.contact.UserCenterContact;
 import com.graduation.hp.repository.http.entity.User;
 import com.graduation.hp.ui.navigation.user.info.UserInfoActivity;
 import com.graduation.hp.widget.TriangleView;
+import com.jcodecraeer.xrecyclerview.XRecyclerView;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 public class UserCenterActivity extends SingleFragmentActivity<UserCenterPresenter>
-        implements UserCenterContact.View {
-    @BindView(R.id.view_main)
-    RecyclerView mRecyclerView;
+        implements UserCenterContact.View{
 
     @BindView(R.id.user_center_arrow_iv)
     TriangleView mTriangleView;
@@ -46,7 +46,7 @@ public class UserCenterActivity extends SingleFragmentActivity<UserCenterPresent
     AppCompatImageView mUserCenterIconIv;
 
     @BindView(R.id.user_center_edit_tv)
-    AppCompatImageView mUserCenterEditTv;
+    AppCompatTextView mUserCenterEditTv;
 
     @BindView(R.id.user_center_sub_cb)
     AppCompatCheckBox mUserCenterSubCb;
@@ -59,6 +59,10 @@ public class UserCenterActivity extends SingleFragmentActivity<UserCenterPresent
 
     private long mUserId;
     private long mOwnerId;
+
+    public static Intent createIntent(Context context, long ownerId) {
+        return createIntent(context, ownerId, ownerId);
+    }
 
     public static Intent createIntent(Context context, long ownerId, long userId) {
         Intent intent = new Intent(context, UserCenterActivity.class);
@@ -81,6 +85,12 @@ public class UserCenterActivity extends SingleFragmentActivity<UserCenterPresent
         if (mUserId == -1L) {
             throw new IllegalArgumentException("You must to pass user's id into UserCenterActivity");
         }
+        initToolbar(mRootView, "", R.mipmap.ic_navigation_back);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         mPresenter.onGetUserInfo(mUserId);
     }
 
@@ -106,7 +116,7 @@ public class UserCenterActivity extends SingleFragmentActivity<UserCenterPresent
     @Override
     public void onGetUserSuccess(User user) {
         setUserData(user);
-        ((UserPostFragment) getMainContentFragment()).downloadInitialPostList();
+        ((UserPostFragment)getMainContentFragment()).downloadInitialPostList(user.getId());
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -121,11 +131,22 @@ public class UserCenterActivity extends SingleFragmentActivity<UserCenterPresent
             mUserCenterSubCb.setVisibility(View.VISIBLE);
             mUserCenterSubCb.setOnCheckedChangeListener((compoundButton, checked) -> mPresenter.attentionUser(mOwnerId, mUserId));
         }
+//        mUserCenterAttentionTv.setText();
         mUserCenterSummaryTv.setText(user.getRemark());
         mUserCenterCollapsingTl.setTitle(user.getNickname());
         mTriangleView.setTriangleViewClickListener((v, down) -> {
             int maxLine = mUserCenterSummaryTv.getMaxLines();
             mUserCenterSummaryTv.setMaxLines(maxLine > 1 ? 1 : 4);
         });
+    }
+
+    @OnClick({R.id.user_center_edit_tv})
+    public void onClick(View view){
+
+    }
+
+    @Override
+    public void onToolbarLeftClickListener(View v) {
+        finish();
     }
 }

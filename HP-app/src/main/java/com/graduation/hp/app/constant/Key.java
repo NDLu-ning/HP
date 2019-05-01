@@ -25,4 +25,6 @@ public class Key {
     public static final String USER_BMI = "user_bmi";
 
     public static final String PHONE_NUMBER = "phone_number";
+    public static final String ID = "id";
+    public static final String USER = "user";
 }

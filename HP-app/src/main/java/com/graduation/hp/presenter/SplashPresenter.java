@@ -22,13 +22,9 @@ public class SplashPresenter extends BasePresenter<SplashActivity, UserModel>
     @Override
     public void checkUserLoginStatus() {
         mMvpModel.addSubscribe(mMvpModel.isCurrentUserLogin()
-                .flatMap(isCurUserLogin -> {
-                    if (isCurUserLogin) {
-                        return mMvpModel.clearUserInfo();
-                    }
-                    return Single.just(Result.build(ResponseCode.ERROR));
-                }).subscribe(result -> {
-                    mMvpView.goToNextPage(result.getStatus().equals(ResponseCode.SUCCESS.getStatus()));
-                }));
+                .flatMap(isCurUserLogin
+                        -> Single.just(Result.build(isCurUserLogin ? ResponseCode.SUCCESS : ResponseCode.ERROR))
+                ).subscribe(result
+                        -> mMvpView.goToNextPage(result.getStatus().equals(ResponseCode.SUCCESS.getStatus()))));
     }
 }

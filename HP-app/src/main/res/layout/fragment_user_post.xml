@@ -2,9 +2,23 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <include
-        layout="@layout/view_show_loading"
-        android:visibility="gone" />
+    <LinearLayout
+        android:id="@+id/view_loading"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true"
+        android:layout_marginTop="@dimen/dp_100"
+        android:gravity="center"
+        android:visibility="gone">
+
+        <ProgressBar
+            android:id="@+id/view_progress_loading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" />
+
+
+    </LinearLayout>
 
     <include
         layout="@layout/view_show_error"
@@ -33,14 +47,7 @@
             android:layout_marginTop="@dimen/dp_10"
             android:gravity="center"
             android:text="@string/tips_empty_post_list" />
-
     </LinearLayout>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/view_main"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@android:color/transparent"
-        android:overScrollMode="never" />
-
+    <include layout="@layout/view_base_xlist" />
 </FrameLayout>

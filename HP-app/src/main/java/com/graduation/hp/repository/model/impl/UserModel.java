@@ -1,5 +1,6 @@
 package com.graduation.hp.repository.model.impl;
 
+import android.preference.PreferenceManager;
 import android.text.TextUtils;
 
 import com.graduation.hp.app.constant.Key;
@@ -41,14 +42,25 @@ public class UserModel extends BaseModel implements IUserModel {
 
     @Override
     public Single<User> getUserInfo(long userId) {
-        HttpHelper httpHelper = mRepositoryHelper.getHttpHelper();
-        return Single.create((SingleOnSubscribe<Map<String, Object>>) emitter -> {
-            Map<String,Object> map = new HashMap<>();
-        }).flatMap(result -> httpHelper.obtainRetrofitService(UserService.class)
-                .getUserInfo(JsonUtils.mapToRequestBody(result))
-                .compose(RxUtils.transformResultToData(User.class))
-                .compose(RxUtils.rxSchedulerHelper())
-        );
+//        HttpHelper httpHelper = mRepositoryHelper.getHttpHelper();
+//        return Single.create((SingleOnSubscribe<Map<String, Object>>) emitter -> {
+//            Map<String, Object> map = new HashMap<>();
+//            map.put(Key.ID, userId);
+//        }).flatMap(result -> httpHelper.obtainRetrofitService(UserService.class)
+//                .getUserInfo(JsonUtils.mapToRequestBody(result))
+//                .compose(RxUtils.transformResultToData(User.class))
+//                .compose(RxUtils.rxSchedulerHelper())
+//        );
+        PreferencesHelper preferencesHelper = mRepositoryHelper.getPreferencesHelper();
+        return Single.create(emitter -> {
+            User user = new User();
+            user.setId(preferencesHelper.getCurrentUserId());
+            user.setHeadUrl(preferencesHelper.getCurrentUserIcon());
+            user.setRemark("越过山丘，才发现无人等候；喋喋不休，再也唤不回温柔。为何记不得上一次是谁给的拥抱，在什么时候~~~");
+            user.setUsername(preferencesHelper.getCurrentUserUsername());
+            user.setNickname(preferencesHelper.getCurrentUserNickname());
+            emitter.onSuccess(user);
+        });
     }
 
     @Override
@@ -108,7 +120,14 @@ public class UserModel extends BaseModel implements IUserModel {
 
     @Override
     public Single<Boolean> updatePassword(String phoneNumber, String password, String repassword) {
-        return null;
+        HttpHelper httpHelper = mRepositoryHelper.getHttpHelper();
+        return Single.create((SingleOnSubscribe<Map<String, Object>>) emitter -> {
+
+        }).flatMap(result -> httpHelper.obtainRetrofitService(UserService.class)
+                .updatePassword(JsonUtils.mapToRequestBody(result))
+                .map(RxUtils.mappingResponseToResult(Boolean.class))
+                .compose(RxUtils.rxSchedulerHelper())
+                .compose(RxUtils.mappingResultToCheck()));
     }
 
     @Override

@@ -82,5 +82,6 @@
     <string name="action_edit_user_info">编辑信息</string>
     <string name="tips_empty_post_list">还没有发过帖子，去发个试试！</string>
     <string name="tips_empty_news_list">该频道暂无新闻，看看其他频道吧~</string>
+    <string name="tips_lack_of_important_params">缺少重要参数</string>
 
 </resources>

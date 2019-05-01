@@ -1,5 +1,6 @@
 package com.graduation.hp.widget;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
@@ -7,6 +8,11 @@ import android.view.View;
 
 import com.graduation.hp.R;
 import com.graduation.hp.core.utils.AnimUtils;
+import com.jakewharton.rxbinding2.view.RxView;
+
+import java.util.concurrent.TimeUnit;
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
 
 public class TriangleView extends AppCompatImageView {
 
@@ -40,15 +46,19 @@ public class TriangleView extends AppCompatImageView {
         this.listener = listener;
     }
 
+    @SuppressLint("CheckResult")
     private void init() {
         setImageResource(R.mipmap.ic_triangle_down);
-        setOnClickListener(v -> {
-            toggleAnimation();
-            if (listener != null) {
-                listener.onClick(v, down);
-            }
-            down = !down;
-        });
+        RxView.clicks(this)
+                .throttleFirst(2, TimeUnit.SECONDS)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(consume -> {
+                    toggleAnimation();
+                    if (listener != null) {
+                        listener.onClick(this, down);
+                    }
+                    down = !down;
+                });
     }
 
     private void toggleAnimation() {

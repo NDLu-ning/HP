@@ -7,5 +7,5 @@
     android:layout_marginTop="@dimen/dp_6"
     android:layout_marginBottom="@dimen/dp_6"
     android:textColor="@color/md_black_300"
-    android:textSize="@dimen/sp_14"
+    android:textSize="@dimen/sp_12"
     tools:contentDescription="// TODO 添加背景" />

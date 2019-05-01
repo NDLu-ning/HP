@@ -32,4 +32,9 @@ public class UserInfoActivity extends SingleFragmentActivity<UserInfoPresenter>
                 .build()
                 .inject(this);
     }
+
+    @Override
+    public boolean useEventBus() {
+        return false;
+    }
 }

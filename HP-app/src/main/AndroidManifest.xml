@@ -38,7 +38,8 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.auth.AuthActivity">
+        <activity android:name=".ui.auth.AuthActivity"
+            android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.AUTH" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -48,6 +49,29 @@
         <activity android:name=".ui.navigation.news.detail.NewsDetailActivity">
             <intent-filter>
                 <action android:name="android.intent.action.NEWS_DETAIL" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".ui.navigation.user.center.UserCenterActivity"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.USER_CENTER" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".ui.setting.SettingActivity"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.SETTING" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".ui.navigation.user.info.UserInfoActivity"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.USER_INFO" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>

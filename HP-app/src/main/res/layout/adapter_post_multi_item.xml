@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/md_white"
     android:layout_marginBottom="@dimen/dp_4"
+    android:background="@color/md_white"
     android:paddingBottom="@dimen/dp_6">
 
     <android.support.v7.widget.AppCompatImageView
@@ -35,13 +35,13 @@
         android:layout_width="@dimen/dp_30"
         android:layout_height="@dimen/dp_30"
         android:layout_marginStart="@dimen/dp_10"
+        android:background="@drawable/healthy_yang_xu_tag"
+        android:gravity="center"
         android:textColor="@color/md_white"
         android:textSize="8sp"
-        android:gravity="center"
-        android:background="@drawable/healthy_yang_xu_tag"
+        app:layout_constraintBottom_toTopOf="@id/adapter_post_content_tv"
         app:layout_constraintStart_toEndOf="@+id/adapter_post_name_tv"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/adapter_post_content_tv"
         tools:text="良好" />
 
     <android.support.v7.widget.AppCompatImageView
@@ -98,7 +98,7 @@
         android:id="@+id/adapter_post_reviews_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/dp_12"
+        android:layout_marginStart="@dimen/dp_16"
         android:textColor="@color/secondary_text"
         android:textSize="@dimen/sp_12"
         app:layout_constraintBottom_toTopOf="@id/line"
@@ -108,8 +108,8 @@
 
     <android.support.v7.widget.AppCompatImageView
         android:id="@+id/adapter_post_comment_iv"
-        android:layout_width="@dimen/dp_30"
-        android:layout_height="@dimen/dp_30"
+        android:layout_width="@dimen/dp_25"
+        android:layout_height="@dimen/dp_25"
         android:layout_marginEnd="@dimen/dp_12"
         android:src="@mipmap/ic_comment_48"
         app:layout_constraintBottom_toBottomOf="@id/line"
@@ -118,10 +118,11 @@
 
     <com.graduation.hp.widget.LikeButton
         android:id="@+id/adapter_post_like_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/dp_25"
+        android:layout_height="@dimen/dp_25"
+        android:scaleType="centerInside"
         android:layout_marginEnd="@dimen/dp_40"
-        android:src="@drawable/selector_liked_btn"
+        android:src="@drawable/selector_unliked_btn"
         app:layout_constraintBottom_toBottomOf="@id/line"
         app:layout_constraintEnd_toStartOf="@id/adapter_post_comment_iv"
         app:layout_constraintTop_toBottomOf="@id/adapter_post_image_container" />
@@ -136,21 +137,31 @@
         android:background="@color/md_grey_200"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/adapter_post_comment_iv" />
+        app:layout_constraintTop_toBottomOf="@id/adapter_post_comment_iv"
+        />
 
-    <TextView
-        android:id="@+id/adapter_post_like_num_tv"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+
+    <android.support.v7.widget.AppCompatImageView
+        android:id="@+id/adapter_post_like_num_iv"
+        android:layout_width="@dimen/dp_20"
+        android:layout_height="@dimen/dp_20"
+        android:layout_marginStart="@dimen/dp_12"
         android:layout_marginTop="@dimen/dp_8"
-        android:drawableStart="@mipmap/ic_like_deep_blue"
-        android:drawablePadding="@dimen/dp_10"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/line"
+        app:srcCompat="@drawable/ic_like_deep_blue" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/adapter_post_like_num_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:paddingStart="@dimen/dp_12"
         android:paddingEnd="@dimen/dp_12"
-        android:textColor="@color/md_blue_grey_900"
         android:textSize="@dimen/sp_12"
-        app:layout_constraintTop_toBottomOf="@id/line"
+        app:layout_constraintTop_toBottomOf="@id/adapter_post_like_num_iv"
+        app:layout_constraintStart_toEndOf="@id/adapter_post_like_num_iv"
+        app:layout_constraintBottom_toTopOf="@id/adapter_post_like_num_iv"
         tools:text="3人觉得很赞" />
 
     <LinearLayout
@@ -161,25 +172,24 @@
         android:orientation="vertical"
         android:paddingStart="@dimen/dp_12"
         android:paddingEnd="@dimen/dp_12"
-        app:layout_constraintTop_toBottomOf="@id/adapter_post_like_num_tv">
-    </LinearLayout>
+        app:layout_constraintTop_toBottomOf="@id/adapter_post_like_num_tv"/>
 
     <TextView
         android:id="@+id/adapter_post_more_tv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
+        android:layout_marginStart="@dimen/dp_12"
         android:layout_marginTop="@dimen/dp_6"
+        android:layout_marginEnd="@dimen/dp_12"
+        android:background="@color/md_grey_100"
+        android:gravity="center"
         android:paddingTop="@dimen/dp_4"
         android:paddingBottom="@dimen/dp_4"
-        android:layout_marginStart="@dimen/dp_12"
-        android:layout_marginEnd="@dimen/dp_12"
         android:text="@string/action_more"
-        android:textSize="@dimen/sp_14"
         android:textColor="@color/md_blue_grey_600"
+        android:textSize="@dimen/sp_14"
         android:visibility="gone"
-        tools:visibility="visible"
-        android:background="@color/md_grey_100"
-        app:layout_constraintTop_toBottomOf="@id/adapter_post_comment_container" />
+        app:layout_constraintTop_toBottomOf="@id/adapter_post_comment_container"
+        tools:visibility="visible" />
 
 </android.support.constraint.ConstraintLayout>

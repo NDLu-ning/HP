@@ -17,8 +17,12 @@ import com.graduation.hp.core.utils.GlideUtils;
 import com.graduation.hp.core.utils.ScreenUtils;
 import com.graduation.hp.presenter.UserTabPresenter;
 import com.graduation.hp.repository.contact.UserTabContact;
+import com.graduation.hp.repository.http.entity.User;
 import com.graduation.hp.ui.navigation.NavigationTabActivity;
 import com.graduation.hp.ui.navigation.user.center.UserCenterActivity;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -41,12 +45,7 @@ public class UserTabFragment extends BaseFragment<UserTabPresenter>
     @BindView(R.id.my_center_cl)
     ConstraintLayout myCenterCl;
 
-    private boolean isCurUserLogin;
-
-    private String mUserNickname;
-    private String mUserIcon;
-    private long mUserHealthyNum;
-    private double mUserBMI;
+    private User mUser;
 
 
     public static UserTabFragment newInstance() {
@@ -57,24 +56,16 @@ public class UserTabFragment extends BaseFragment<UserTabPresenter>
     @Override
     protected void init(Bundle savedInstanceState, View view) {
         if (savedInstanceState != null) {
-            isCurUserLogin = savedInstanceState.getBoolean(Key.IS_CURRENT_USER_LOGIN, false);
-            mUserIcon = savedInstanceState.getString(Key.USER_ICON);
-            mUserBMI = savedInstanceState.getDouble(Key.USER_BMI, 0D);
-            mUserNickname = savedInstanceState.getString(Key.USER_NICKNAME);
-            mUserHealthyNum = savedInstanceState.getInt(Key.USER_HEALTHY_NUM, 0);
+            mUser = savedInstanceState.getParcelable(Key.USER);
+            setViewByLoginState();
         } else {
             mPresenter.getCurrentUserInfo();
         }
-        setViewByLoginState();
     }
 
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
-        outState.putBoolean(Key.IS_CURRENT_USER_LOGIN, isCurUserLogin);
-        outState.putString(Key.USER_ICON, mUserIcon);
-        outState.putDouble(Key.USER_BMI, mUserBMI);
-        outState.putString(Key.USER_NICKNAME, mUserNickname);
-        outState.putLong(Key.USER_HEALTHY_NUM, mUserHealthyNum);
+        outState.putParcelable(Key.USER, mUser);
         super.onSaveInstanceState(outState);
     }
 
@@ -95,48 +86,48 @@ public class UserTabFragment extends BaseFragment<UserTabPresenter>
     @OnClick({R.id.my_setting_cl, R.id.my_message_cl, R.id.my_info_cl, R.id.my_test_cl})
     public void onFunctionLayoutClick(View view) {
         int id = view.getId();
-        if (!isCurUserLogin && id == R.id.my_setting_cl) {
+        if (mUser == null &&
+                (id == R.id.my_info_cl || id == R.id.my_message_cl)) {
             ((NavigationTabActivity) getActivity()).skipToLoginPage();
             showMessage(getString(R.string.tips_please_login_first));
-            return;
-        }
-        switch (id) {
-            case R.id.my_setting_cl:
-                break;
-            case R.id.my_message_cl:
-                break;
-            case R.id.my_info_cl:
-
-                break;
-            case R.id.my_test_cl:
-                break;
+        }else {
+            switch (id) {
+                case R.id.my_setting_cl:
+                    break;
+                case R.id.my_message_cl:
+                    break;
+                case R.id.my_info_cl:
+                    break;
+                case R.id.my_test_cl:
+                    break;
+            }
         }
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
     @Override
-    public void getCurrentUserInfoSuccess(boolean isCurrentUserLogin, String icon, String nickname, float bmi, long healthyNum) {
-        isCurUserLogin = isCurrentUserLogin;
-        mUserIcon = icon;
-        mUserNickname = nickname;
-        mUserHealthyNum = healthyNum;
-        mUserBMI = bmi;
+    public void getCurrentUserInfoSuccess(User user) {
+        this.mUser = user;
+        setViewByLoginState();
     }
 
     private void setViewByLoginState() {
-        int width = ScreenUtils.dip2px(getContext(), 80);
-        GlideUtils.loadUserHead(myPhotoIv, mUserIcon, width, width);
-        if (!isCurUserLogin) {
-            myNameTv.setText(getString(R.string.tips_myself_login));
-            myCenterCl.setOnClickListener(v -> ((NavigationTabActivity) getActivity()).skipToLoginPage());
-        } else {
-            myNameTv.setText(mUserNickname);
-            myHealthyTitleTv.setVisibility(View.VISIBLE);
-            myHealthyTagTv.setText(mUserHealthyNum + "");
-            myCenterCl.setOnClickListener(v -> skipToUserDetailPage());
+        if (isAdded()) {
+            if (mUser == null) {
+                myNameTv.setText(getString(R.string.tips_myself_login));
+                myCenterCl.setOnClickListener(v -> ((NavigationTabActivity) getActivity()).skipToLoginPage());
+            } else {
+                int width = ScreenUtils.dip2px(getContext(), 80);
+                GlideUtils.loadUserHead(myPhotoIv, mUser.getHeadUrl(), width, width);
+                myNameTv.setText(mUser.getNickname());
+                myHealthyTitleTv.setVisibility(View.VISIBLE);
+                myHealthyTagTv.setText(mUser.getPhysiquId() + "");
+                myCenterCl.setOnClickListener(v -> skipToUserDetailPage());
+            }
         }
     }
 
     private void skipToUserDetailPage() {
-        startActivity(UserCenterActivity.createIntent(getContext()));
+        startActivity(UserCenterActivity.createIntent(getContext(), mUser.getId()));
     }
 }

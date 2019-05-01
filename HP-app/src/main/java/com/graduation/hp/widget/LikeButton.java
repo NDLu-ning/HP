@@ -1,12 +1,21 @@
 package com.graduation.hp.widget;
 
 import android.content.Context;
-import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
+import android.view.View;
 
 import com.graduation.hp.R;
+import com.graduation.hp.core.utils.AnimUtils;
 
-public class LikeButton extends BaseMessageFooterButton {
+public class LikeButton extends AppCompatImageView {
+
+    private boolean liked = true;
+    private LikeButtonClickListener listener;
+
+    public interface LikeButtonClickListener {
+        void onClick(View v, boolean down);
+    }
 
     public LikeButton(Context context) {
         this(context, null);
@@ -18,31 +27,34 @@ public class LikeButton extends BaseMessageFooterButton {
 
     public LikeButton(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        init();
     }
 
-    public void toggleLikeStatus(int likeCount, boolean isLiked) {
-        if (likeCount > 0) {
-            setText(String.valueOf(likeCount));
-        } else {
-            setText("");
-        }
+    public void setLikeButtonClickListener(LikeButtonClickListener listener) {
+        this.listener = listener;
+    }
 
-        final Context context = getContext();
-        if (isLiked) {
-            setTextColor(ContextCompat.getColorStateList(context, COLOR_SELECTED));
-            setCompoundDrawablesWithIntrinsicBounds(
-                    ContextCompat.getDrawable(getContext(), R.drawable.selector_liked_btn), null,
-                    null, null);
+    private void init() {
+        setImageResource(R.drawable.selector_unliked_btn);
+        setOnClickListener(v -> {
+            AnimUtils.setScaleAnimation(this, 600);
+            setLiked(!liked);
+            if (listener != null) {
+                listener.onClick(this, liked);
+            }
+            liked = !liked;
+        });
+    }
+
+    public void setLiked(boolean liked){
+        if (liked) {
+            setImageResource(R.drawable.selector_liked_btn);
         } else {
-            setTextColor(ContextCompat.getColorStateList(context, COLOR_UNSELECTED));
-            setCompoundDrawablesWithIntrinsicBounds(
-                    ContextCompat.getDrawable(getContext(), R.drawable.selector_unliked_btn), null,
-                    null, null);
+            setImageResource(R.drawable.selector_unliked_btn);
         }
     }
 
-    @Override
-    protected int getIconResId() {
-        return R.drawable.selector_unliked_btn;
+    public boolean isLiked(){
+        return liked;
     }
 }

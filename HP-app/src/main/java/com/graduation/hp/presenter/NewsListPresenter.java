@@ -61,20 +61,17 @@ public class NewsListPresenter extends BasePresenter<NewsListFragment, NewsModel
                     mMvpView.showMain();
                 }));
 //        mMvpModel.addSubscribe(mMvpModel.getNewsListByCategory(category, pager.getPage(), pager.getCount())
-//                .doOnSuccess(newsLists -> {
+//                .doFinally(newsLists -> {
 //
 //                })
 //                .subscribe(newsList -> {
-//                    mMvpView.dismissDialog();
 //                    if (newsList != null && newsList.size() > 0) {
 //                        mMvpView.onDownloadDataSuccess(refresh, newsList);
 //                        mMvpView.showMain();
 //                    } else {
-//
 //                    }
 //                }, throwable -> {
 //                    handlerApiError(throwable);
-//                    mMvpView.dismissDialog();
 //                    mMvpView.showError(HPApplication.getStringById(R.string.tips_error_general));
 //                }));
     }

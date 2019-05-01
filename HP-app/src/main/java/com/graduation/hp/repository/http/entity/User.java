@@ -1,5 +1,8 @@
 package com.graduation.hp.repository.http.entity;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.graduation.hp.core.repository.http.bean.Page;
 
 import java.util.Date;
@@ -9,7 +12,7 @@ import java.util.Date;
  *
  * @author shengting_wang
  */
-public class User extends Page {
+public class User extends Page implements Parcelable {
 
     /**
      * 用户id
@@ -65,6 +68,45 @@ public class User extends Page {
      * 修改时间
      */
     private Date updateTime;
+
+    public User() {
+    }
+
+    protected User(Parcel in) {
+        if (in.readByte() == 0) {
+            id = null;
+        } else {
+            id = in.readLong();
+        }
+        username = in.readString();
+        password = in.readString();
+        nickname = in.readString();
+        if (in.readByte() == 0) {
+            physiquId = null;
+        } else {
+            physiquId = in.readLong();
+        }
+        if (in.readByte() == 0) {
+            sex = null;
+        } else {
+            sex = in.readInt();
+        }
+        headUrl = in.readString();
+        token = in.readString();
+        remark = in.readString();
+    }
+
+    public static final Creator<User> CREATOR = new Creator<User>() {
+        @Override
+        public User createFromParcel(Parcel in) {
+            return new User(in);
+        }
+
+        @Override
+        public User[] newArray(int size) {
+            return new User[size];
+        }
+    };
 
     public Long getId() {
         return id;
@@ -152,5 +194,38 @@ public class User extends Page {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        if (id == null) {
+            parcel.writeByte((byte) 0);
+        } else {
+            parcel.writeByte((byte) 1);
+            parcel.writeLong(id);
+        }
+        parcel.writeString(username);
+        parcel.writeString(password);
+        parcel.writeString(nickname);
+        if (physiquId == null) {
+            parcel.writeByte((byte) 0);
+        } else {
+            parcel.writeByte((byte) 1);
+            parcel.writeLong(physiquId);
+        }
+        if (sex == null) {
+            parcel.writeByte((byte) 0);
+        } else {
+            parcel.writeByte((byte) 1);
+            parcel.writeInt(sex);
+        }
+        parcel.writeString(headUrl);
+        parcel.writeString(token);
+        parcel.writeString(remark);
     }
 }

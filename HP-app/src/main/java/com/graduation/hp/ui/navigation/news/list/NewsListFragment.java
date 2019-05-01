@@ -167,6 +167,7 @@ public class NewsListFragment extends RootFragment<NewsListPresenter>
         if (mRefreshLayout == null) {
             mRefreshLayout = refreshLayout;
         }
+        mPresenter.setCurRefreshError(true);
         mPresenter.downloadMoreData(true, mFavouriteChannel.getChannel_name());
     }
 

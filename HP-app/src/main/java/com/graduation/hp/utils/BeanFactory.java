@@ -31,7 +31,7 @@ public class BeanFactory {
     private static final String[] post_images = {"http://p1.pstatp.com/large/pgc-image/8b1a1de054124e709b16d8c2c3bca3c5", "http://p3.pstatp.com/large/pgc-image/48d5136ccab147678b2b684edc599442"
             , "http://p3.pstatp.com/large/pgc-image/dbdc355a31c741f4a28eba8e9f27af00", "http://p1.pstatp.com/large/pgc-image/98fee463d6c84f1fa62970454b180e89", "http://p1.pstatp.com/large/pgc-image/edefadbbd9f049b1a4e8732c0b65ef56"
             , "http://p9.pstatp.com/large/pgc-image/8818942829a8429093de035c45bbe312", "http://p9.pstatp.com/large/pgc-image/784f9ed0e8674704846cad82052089a8"};
-    private static final String[] names = {"Ken.Dion", "", "BossCat", "为了她，忘了她!", "等风来", "卖鞋的有志青年", "逐月", "追风筝的人"};
+    private static final String[] names = {"Ken.Dion",  "BossCat", "为了她，忘了她!", "等风来", "卖鞋的有志青年", "逐月", "追风筝的人"};
     private static final String[] comments = {"别放糖也挺甜的，我以前做不放油和淀粉，回头试着放点，看口感怎么样？",
             "甜上加甜谁还敢做着吃[捂脸][捂脸]",
             "其实能吃什么？只有胃知道，吃下去舒服就可以了，不必强调一定要吃什么才好，我的胃不能吃面食，吃了就难受，但能吃糯米东西，吃了舒服，所以说各人各胃么，只要胃舒服，爱吃就吃呗。[可爱]",
@@ -81,6 +81,29 @@ public class BeanFactory {
         }
         int authorIndex = random.nextInt(post_author.length);
         PostItem item = new PostItem(post_author[authorIndex], post_author_icon[authorIndex], random.nextInt(constitutions.length) + "", post_titles[random.nextInt(post_titles.length)],
+                image, random.nextInt(100), random.nextInt(100) + 100, new Date(), commentList);
+        return item;
+    }
+
+    public static PostItem createPost(String author,String authorIcon){
+        Random random = new Random();
+        int imageSize = random.nextInt(post_images.length);
+        StringBuilder sb = new StringBuilder();
+        String image = "";
+        if (imageSize > 0) {
+            for (int i = 0; i < imageSize; i++) {
+                int index = random.nextInt(post_images.length);
+                sb.append(post_images[index]).append(",");
+            }
+            image = sb.toString();
+            image = image.substring(0, image.length() - 1);
+        }
+        int commentCount = random.nextInt(3);
+        List<CommentItem> commentList = new ArrayList<>();
+        for (int i = 0; i < commentCount; i++) {
+            commentList.addAll(createCommentItem());
+        }
+        PostItem item = new PostItem(author, authorIcon, random.nextInt(constitutions.length) + "", post_titles[random.nextInt(post_titles.length)],
                 image, random.nextInt(100), random.nextInt(100) + 100, new Date(), commentList);
         return item;
     }

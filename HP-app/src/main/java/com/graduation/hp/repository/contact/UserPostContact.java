@@ -7,7 +7,7 @@ import java.util.List;
 public interface UserPostContact {
 
     interface View {
-        void downloadInitialPostList();
+        void downloadInitialPostList(long userId);
 
         void onGetPostListSuccess(boolean refresh, List<PostItem> list);
     }

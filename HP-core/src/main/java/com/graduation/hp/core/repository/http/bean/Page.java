@@ -1,5 +1,8 @@
 package com.graduation.hp.core.repository.http.bean;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.Date;
 
 /**
@@ -8,7 +11,8 @@ import java.util.Date;
  * @author wst
  * @date 2018/12/26 21:11
  **/
-public class Page {
+
+public class Page implements Parcelable {
 
     /**
      * 一页有几个
@@ -29,6 +33,36 @@ public class Page {
      * 结束时间
      */
     private Date createTimeEnd;
+
+    public Page() {
+        offset = 0;
+        limit = 10;
+    }
+
+    protected Page(Parcel in) {
+        if (in.readByte() == 0) {
+            limit = null;
+        } else {
+            limit = in.readInt();
+        }
+        if (in.readByte() == 0) {
+            offset = null;
+        } else {
+            offset = in.readInt();
+        }
+    }
+
+    public static final Creator<Page> CREATOR = new Creator<Page>() {
+        @Override
+        public Page createFromParcel(Parcel in) {
+            return new Page(in);
+        }
+
+        @Override
+        public Page[] newArray(int size) {
+            return new Page[size];
+        }
+    };
 
     public Integer getLimit() {
         return limit;
@@ -60,5 +94,26 @@ public class Page {
 
     public void setCreateTimeEnd(Date createTimeEnd) {
         this.createTimeEnd = createTimeEnd;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        if (limit == null) {
+            parcel.writeByte((byte) 0);
+        } else {
+            parcel.writeByte((byte) 1);
+            parcel.writeInt(limit);
+        }
+        if (offset == null) {
+            parcel.writeByte((byte) 0);
+        } else {
+            parcel.writeByte((byte) 1);
+            parcel.writeInt(offset);
+        }
     }
 }

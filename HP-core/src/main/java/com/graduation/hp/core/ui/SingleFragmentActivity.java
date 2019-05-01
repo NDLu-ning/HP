@@ -12,7 +12,7 @@ import com.graduation.hp.core.utils.LifecycleUtil;
 public abstract class SingleFragmentActivity<P extends BasePresenter> extends BaseActivity<P> {
 
     private static final int LAYOUT_ID = R.layout.activity_single_fragment;
-    private static final int CONTENT_FRAME_ID = R.id.content_frame;
+    public static final int CONTENT_FRAME_ID = R.id.content_frame;
 
     @Override
     protected void initData(Bundle savedInstanceState) {
