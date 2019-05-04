@@ -15,7 +15,7 @@ import com.graduation.hp.core.mvp.State;
 import com.graduation.hp.core.ui.RootFragment;
 import com.graduation.hp.presenter.UserNewsPresenter;
 import com.graduation.hp.repository.contact.UserNewsContact;
-import com.graduation.hp.repository.http.entity.NewsList;
+import com.graduation.hp.repository.http.entity.ArticleVO;
 import com.graduation.hp.ui.provider.UserNewsItemProvider;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
@@ -74,7 +74,7 @@ public class UserNewsFragment extends RootFragment<UserNewsPresenter>
     }
 
     private void initMultiTypeAdapter() {
-        mAdapter.register(NewsList.class, new UserNewsItemProvider(listener));
+        mAdapter.register(ArticleVO.class, new UserNewsItemProvider(listener));
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -135,7 +135,7 @@ public class UserNewsFragment extends RootFragment<UserNewsPresenter>
     }
 
     @Override
-    public void onGetNewsListSuccess(List<NewsList> list) {
+    public void onGetNewsListSuccess(List<ArticleVO> list) {
         if (mPresenter.isRefresh()) {
             mItems.clear();
         }

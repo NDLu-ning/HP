@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/md_white"
+    android:orientation="vertical"
+    android:paddingTop="@dimen/dp_4">
+
+    <include layout="@layout/adapter_list_subtitle_item" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="@dimen/dp_140">
+
+        <include layout="@layout/view_show_loading" />
+
+        <LinearLayout
+            android:id="@+id/view_empty"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:fitsSystemWindows="true"
+            android:gravity="center"
+            android:orientation="vertical"> <!-- 避免状态透明上移 -->
+
+            <ImageView
+                android:id="@+id/empty_iv"
+                android:layout_width="@dimen/dp_250"
+                android:layout_height="@dimen/dp_140"
+                android:src="@mipmap/ic_empty_comment" />
+
+            <TextView
+                android:id="@+id/empty_retry"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_common_circle_btn"
+                android:gravity="center"
+                android:padding="@dimen/dp_6"
+                android:paddingStart="@dimen/dp_24"
+                android:paddingEnd="@dimen/dp_24"
+                android:text="@string/tips_retry"
+                android:textSize="@dimen/sp_12" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/view_error"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:fitsSystemWindows="true"
+            android:gravity="center"
+            android:orientation="vertical"> <!-- 避免状态透明上移 -->
+
+            <ImageView
+                android:id="@+id/error_iv"
+                android:layout_width="@dimen/dp_250"
+                android:layout_height="@dimen/dp_140"
+                android:src="@mipmap/ic_empty_comment" />
+
+            <TextView
+                android:id="@+id/error_retry"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_common_circle_btn"
+                android:gravity="center"
+                android:padding="@dimen/dp_6"
+                android:paddingStart="@dimen/dp_24"
+                android:paddingEnd="@dimen/dp_24"
+                android:text="@string/tips_retry"
+                android:textSize="@dimen/sp_12" />
+
+        </LinearLayout>
+
+
+        <com.jcodecraeer.xrecyclerview.XRecyclerView
+            android:id="@+id/view_main"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:overScrollMode="never"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+    </FrameLayout>
+</LinearLayout>

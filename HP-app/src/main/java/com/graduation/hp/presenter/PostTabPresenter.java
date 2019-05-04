@@ -1,7 +1,6 @@
 package com.graduation.hp.presenter;
 
 import android.text.TextUtils;
-import android.util.Log;
 
 import com.graduation.hp.HPApplication;
 import com.graduation.hp.R;
@@ -10,7 +9,6 @@ import com.graduation.hp.core.mvp.State;
 import com.graduation.hp.core.utils.RxUtils;
 import com.graduation.hp.repository.RepositoryHelper;
 import com.graduation.hp.repository.contact.PostTabContact;
-import com.graduation.hp.repository.http.entity.NewsList;
 import com.graduation.hp.repository.http.entity.Pager;
 import com.graduation.hp.repository.http.entity.PostItem;
 import com.graduation.hp.repository.model.impl.PostModel;

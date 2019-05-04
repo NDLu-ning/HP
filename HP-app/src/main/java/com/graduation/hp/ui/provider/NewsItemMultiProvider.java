@@ -17,11 +17,11 @@ import com.graduation.hp.R;
 import com.graduation.hp.core.app.listener.OnItemClickListener;
 import com.graduation.hp.core.utils.DateUtils;
 import com.graduation.hp.core.utils.GlideUtils;
-import com.graduation.hp.repository.http.entity.NewsList;
+import com.graduation.hp.repository.http.entity.ArticleVO;
 
 import me.drakeet.multitype.ItemViewBinder;
 
-public class NewsItemMultiProvider extends ItemViewBinder<NewsList, NewsItemMultiProvider.ViewHolder> {
+public class NewsItemMultiProvider extends ItemViewBinder<ArticleVO, NewsItemMultiProvider.ViewHolder> {
     private final OnItemClickListener mListener;
 
     public NewsItemMultiProvider(OnItemClickListener listener) {
@@ -35,13 +35,12 @@ public class NewsItemMultiProvider extends ItemViewBinder<NewsList, NewsItemMult
     }
 
     @Override
-    protected void onBindViewHolder(@NonNull ViewHolder holder, @NonNull NewsList item) {
-        Log.d("TAG","onBindViewHolder");
+    protected void onBindViewHolder(@NonNull ViewHolder holder, @NonNull ArticleVO item) {
         Resources resources = holder.itemView.getResources();
         holder.adapterNewsMultiTitleTv.setText(Html.fromHtml(item.getTitle()));
-        holder.adapterNewsMultiCommentTv.setText(resources.getString(R.string.news_comment_num_template, item.getComment()));
-        holder.adapterNewsMultiDateTv.setText(DateUtils.formatPublishDate(item.getDate()));
-        holder.adapterNewsMultiAuthorTv.setText(item.getAuthor());
+        holder.adapterNewsMultiCommentTv.setText(resources.getString(R.string.news_comment_num_template, item.getDiscussNum()));
+        holder.adapterNewsMultiDateTv.setText(DateUtils.formatPublishDate(item.getCreateTime()));
+        holder.adapterNewsMultiAuthorTv.setText(item.getNickname());
         final String image = item.getImages();
         if (!TextUtils.isEmpty(image)) {
             holder.adapterNewsMultiLl.setVisibility(View.VISIBLE);

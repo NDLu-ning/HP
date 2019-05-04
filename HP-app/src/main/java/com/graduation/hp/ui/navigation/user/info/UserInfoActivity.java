@@ -11,10 +11,15 @@ import com.graduation.hp.core.app.di.component.AppComponent;
 import com.graduation.hp.core.ui.SingleFragmentActivity;
 import com.graduation.hp.presenter.UserInfoPresenter;
 import com.graduation.hp.repository.contact.UserInfoContact;
+import com.graduation.hp.repository.http.entity.User;
+
+import org.greenrobot.eventbus.EventBus;
 
 public class UserInfoActivity extends SingleFragmentActivity<UserInfoPresenter>
         implements UserInfoContact.View,
-        UserInfoFragment.UserInfoFragmentListener {
+        UserInfoFragment.UserInfoFragmentListener,
+        UserUpdateFragment.UserUpdateFragmentListener {
+
 
     public static Intent createIntent(Context context) {
         return new Intent(context, UserInfoActivity.class);
@@ -47,5 +52,19 @@ public class UserInfoActivity extends SingleFragmentActivity<UserInfoPresenter>
     @Override
     public void logout() {
 
+    }
+
+    @Override
+    public void skipToUserUpdateView(int type, User user) {
+        replaceMainContentFragment(UserUpdateFragment.newInstance(type, user));
+    }
+
+    @Override
+    public void onGetUserInfoSuccess(User user) {
+        EventBus.getDefault().post(user);
+    }
+
+    @Override
+    public void updateUserInfo(int type, User user) {
     }
 }

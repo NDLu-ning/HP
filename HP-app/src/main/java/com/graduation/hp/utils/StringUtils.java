@@ -9,7 +9,7 @@ import com.graduation.hp.R;
 public class StringUtils {
 
 
-    public static String getFormattedOverMaximunString(int value, int maxValue, @StringRes int templateId) {
+    public static String getFormattedOverMaximumString(int value, int maxValue, @StringRes int templateId) {
         String templateStr = HPApplication.getStringById(templateId);
         if (TextUtils.isEmpty(templateStr) || (!templateStr.contains("%1$s")
                 && !templateStr.contains("%s"))) {

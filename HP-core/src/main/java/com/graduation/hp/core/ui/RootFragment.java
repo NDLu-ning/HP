@@ -28,9 +28,9 @@ public abstract class RootFragment<P extends BasePresenter>
     private static final int ID_EMPTY = R.id.view_empty;
     private static final int ID_MAIN = R.id.view_main;
 
-    private static final int ID_ERROR_RETRY_BUTTON = R.id.view_retry;
-    private static final int ID_EMPTY_TEXT = R.id.empty_tv;
-    private static final int ID_EMPTY_IMAGE = R.id.empty_ic;
+    private static final int ID_ERROR_RETRY_BUTTON = R.id.error_retry;
+    private static final int ID_EMPTY_TEXT = R.id.empty_retry;
+    private static final int ID_EMPTY_IMAGE = R.id.empty_iv;
 
     private ViewStateManager mViewStateManager;
 
@@ -93,11 +93,11 @@ public abstract class RootFragment<P extends BasePresenter>
     protected void setupNoDataView(View layout) {
         final TextView noDataMsgTextView = layout.findViewById(ID_EMPTY_TEXT);
         if (noDataMsgTextView == null) {
-            throw new InflateException("The id of TextView in EmptyView must be \"empty_tv\"");
+            throw new InflateException("The id of TextView in EmptyView must be \"empty_retry\"");
         }
         final ImageView noDataMsgImageView = layout.findViewById(ID_EMPTY_IMAGE);
         if (noDataMsgImageView == null) {
-            throw new InflateException("The id of ImageView in EmptyView must be \"empty_ic\"");
+            throw new InflateException("The id of ImageView in EmptyView must be \"empty_iv\"");
         }
         noDataMsgTextView.setText(getNoDataStringResId());
         if (getNoDataDrawableResId() != 0) {

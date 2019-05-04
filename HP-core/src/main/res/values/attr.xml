@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="hpTint" format="reference|color" />
+
+    <declare-styleable name="ProgressButton">
+        <attr name="progressButtonStyle" format="reference" />
+        <attr name="android:text" />
+        <attr name="android:textColor" />
+        <attr name="android:textSize" />
+        <attr name="android:src" />
+        <attr name="android:drawableLeft" />
+        <attr name="progressIndicatorPadding" format="dimension" />
+        <attr name="progressIndicatorSize" format="dimension" />
+        <attr name="showProgressIndicator" format="boolean" />
+        <attr name="hpTint" />
+    </declare-styleable>
+
+</resources>

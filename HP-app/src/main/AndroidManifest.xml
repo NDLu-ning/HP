@@ -46,7 +46,8 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.navigation.news.detail.NewsDetailActivity">
+        <activity android:name=".ui.navigation.news.detail.NewsDetailActivity"
+            android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.NEWS_DETAIL" />
                 <category android:name="android.intent.category.DEFAULT" />

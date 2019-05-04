@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="MessageBottomRightButton">
+        <attr name="messageRightDownStyle" format="reference" />
+        <attr name="messageTextColor" format="color" />
+        <attr name="messageDefaultValue" format="string" />
+        <attr name="messageTextSize" format="dimension" />
+        <attr name="imageSrc" format="reference" />
+        <attr name="imageSize" format="dimension|reference" />
+    </declare-styleable>
+
+</resources>

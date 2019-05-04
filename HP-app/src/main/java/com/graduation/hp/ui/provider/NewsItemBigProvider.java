@@ -15,11 +15,11 @@ import com.graduation.hp.R;
 import com.graduation.hp.core.app.listener.OnItemClickListener;
 import com.graduation.hp.core.utils.DateUtils;
 import com.graduation.hp.core.utils.GlideUtils;
-import com.graduation.hp.repository.http.entity.NewsList;
+import com.graduation.hp.repository.http.entity.ArticleVO;
 
 import me.drakeet.multitype.ItemViewBinder;
 
-public class NewsItemBigProvider extends ItemViewBinder<NewsList, NewsItemBigProvider.ViewHolder> {
+public class NewsItemBigProvider extends ItemViewBinder<ArticleVO, NewsItemBigProvider.ViewHolder> {
 
     private final OnItemClickListener mListener;
 
@@ -34,20 +34,18 @@ public class NewsItemBigProvider extends ItemViewBinder<NewsList, NewsItemBigPro
     }
 
     @Override
-    protected void onBindViewHolder(@NonNull ViewHolder holder, @NonNull NewsList item) {
+    protected void onBindViewHolder(@NonNull ViewHolder holder, @NonNull ArticleVO item) {
         Resources resources = holder.itemView.getResources();
-        holder.adapterNewsBigAuthorTv.setText(item.getAuthor());
-        holder.adapterNewsBigCommentTv.setText(resources.getString(R.string.news_comment_num_template, item.getComment()));
-        holder.adapterNewsBigDateTv.setText(DateUtils.formatPublishDate(item.getDate()));
+        holder.adapterNewsBigAuthorTv.setText(item.getNickname());
+        holder.adapterNewsBigCommentTv.setText(resources.getString(R.string.news_comment_num_template, item.getDiscussNum()));
+        holder.adapterNewsBigDateTv.setText(DateUtils.formatPublishDate(item.getCreateTime()));
         holder.adapterNewsBigTitleTv.setText(Html.fromHtml(item.getTitle()));
         String image = item.getImages();
         if (TextUtils.isEmpty(image)) {
             holder.adapterNewsBigImageIv.setVisibility(View.GONE);
-            holder.adapterNewsBigIsVideoIv.setVisibility(View.GONE);
         } else {
             String[] images = image.split(",");
             GlideUtils.loadImage(holder.adapterNewsBigImageIv, images[0]);
-            holder.adapterNewsBigIsVideoIv.setVisibility(item.isVideo() ? View.VISIBLE : View.GONE);
         }
         holder.itemView.setOnClickListener(view -> {
             if (mListener != null) {
@@ -57,7 +55,6 @@ public class NewsItemBigProvider extends ItemViewBinder<NewsList, NewsItemBigPro
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        AppCompatImageView adapterNewsBigIsVideoIv;
         AppCompatTextView adapterNewsBigTitleTv;
         AppCompatImageView adapterNewsBigImageIv;
         AppCompatTextView adapterNewsBigDateTv;
@@ -66,7 +63,6 @@ public class NewsItemBigProvider extends ItemViewBinder<NewsList, NewsItemBigPro
 
         ViewHolder(View itemView) {
             super(itemView);
-            adapterNewsBigIsVideoIv = itemView.findViewById(R.id.adapter_news_big_isvideo_iv);
             adapterNewsBigTitleTv = itemView.findViewById(R.id.adapter_news_big_title_tv);
             adapterNewsBigImageIv = itemView.findViewById(R.id.adapter_news_big_image_iv);
             adapterNewsBigDateTv = itemView.findViewById(R.id.adapter_news_big_date_tv);

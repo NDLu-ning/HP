@@ -6,6 +6,8 @@ import com.graduation.hp.core.app.di.component.AppComponent;
 import com.graduation.hp.core.app.di.scope.FragmentScope;
 import com.graduation.hp.repository.RepositoryHelper;
 import com.graduation.hp.ui.navigation.attention.AttentionTabFragment;
+import com.graduation.hp.ui.navigation.news.comment.NewsCommentFragment;
+import com.graduation.hp.ui.navigation.news.detail.NewsDetailFragment;
 import com.graduation.hp.ui.navigation.user.UserTabFragment;
 import com.graduation.hp.ui.navigation.news.list.NewsListFragment;
 import com.graduation.hp.ui.navigation.post.PostTabFragment;
@@ -44,4 +46,8 @@ public interface FragmentComponent {
     void inject(UserPostFragment userPostFragment);
 
     void inject(UserNewsFragment userNewsFragment);
+
+    void inject(NewsDetailFragment newsDetailFragment);
+
+    void inject(NewsCommentFragment newsCommentFragment);
 }

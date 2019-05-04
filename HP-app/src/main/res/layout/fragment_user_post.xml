@@ -53,13 +53,13 @@
                 android:orientation="vertical"> <!-- 避免状态透明上移 -->
 
                 <ImageView
-                    android:id="@+id/empty_ic"
+                    android:id="@+id/empty_iv"
                     android:layout_width="@dimen/dp_250"
                     android:layout_height="@dimen/dp_200"
                     android:src="@mipmap/ic_empty_comment" />
 
                 <android.support.v7.widget.AppCompatTextView
-                    android:id="@+id/empty_tv"
+                    android:id="@+id/empty_retry"
                     style="@style/Button.Green"
                     android:layout_marginTop="@dimen/dp_10"
                     android:gravity="center"

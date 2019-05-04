@@ -22,7 +22,7 @@
         android:layout_marginEnd="@dimen/dp_20">
 
         <android.support.v7.widget.AppCompatEditText
-            android:id="@+id/user_info_nickname_tv"
+            android:id="@+id/user_update_nickname_tv"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_40"
             android:layout_marginTop="@dimen/dp_40"
@@ -35,7 +35,7 @@
             tools:visibility="visible" />
 
         <android.support.v7.widget.AppCompatEditText
-            android:id="@+id/user_info_signature_cl"
+            android:id="@+id/user_update_signature_cl"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/bg_update_et"
@@ -50,7 +50,7 @@
             tools:visibility="visible" />
 
         <RadioGroup
-            android:id="@+id/user_info_gender_tv"
+            android:id="@+id/user_update_gender_tv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/md_white"

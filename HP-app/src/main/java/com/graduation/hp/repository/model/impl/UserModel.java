@@ -12,7 +12,7 @@ import com.graduation.hp.core.utils.JsonUtils;
 import com.graduation.hp.core.utils.RxUtils;
 import com.graduation.hp.repository.RepositoryHelper;
 import com.graduation.hp.repository.http.entity.User;
-import com.graduation.hp.repository.http.entity.local.UserVo;
+import com.graduation.hp.repository.http.entity.local.UserVO;
 import com.graduation.hp.repository.http.service.AttentionService;
 import com.graduation.hp.repository.http.service.UserService;
 import com.graduation.hp.repository.model.IUserModel;
@@ -61,7 +61,7 @@ public class UserModel extends BaseModel
     }
 
     @Override
-    public Single<UserVo> getUserInfo(long userId) {
+    public Single<UserVO> getUserInfo(long userId) {
         HttpHelper httpHelper = mRepositoryHelper.getHttpHelper();
 //        return Single.create((SingleOnSubscribe<Map<String, Object>>) emitter -> {
 //            Map<String, Object> map = new HashMap<>();
@@ -73,7 +73,7 @@ public class UserModel extends BaseModel
 //        ).flatMap(result -> httpHelper.obtainRetrofitService(AttentionService.class)
 //                .countAttentionNumber(JsonUtils.mapToRequestBody3(new String[]{"authorId"}, new Long[]{userId}))
 //                .compose(RxUtils.transformResultToData(Long.class))
-//                .map(attentionNumber -> new UserVo(result, attentionNumber))
+//                .map(attentionNumber -> new UserVO(result, attentionNumber))
 //                .compose(RxUtils.rxSchedulerHelper())
 //        );
         PreferencesHelper preferencesHelper = mRepositoryHelper.getPreferencesHelper();
@@ -88,7 +88,7 @@ public class UserModel extends BaseModel
         }).flatMap(result -> httpHelper.obtainRetrofitService(AttentionService.class)
                 .countAttentionNumber(JsonUtils.mapToRequestBody3(new String[]{"authorId"}, new Long[]{userId}))
                 .compose(RxUtils.transformResultToData(Long.class))
-                .map(attentionNumber -> new UserVo(result, attentionNumber))
+                .map(attentionNumber -> new UserVO(result, attentionNumber))
                 .compose(RxUtils.rxSchedulerHelper())
         );
     }

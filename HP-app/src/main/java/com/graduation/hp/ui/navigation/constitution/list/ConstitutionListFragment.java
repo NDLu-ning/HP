@@ -8,7 +8,6 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 
-import com.graduation.hp.HPApplication;
 import com.graduation.hp.R;
 import com.graduation.hp.app.constant.Key;
 import com.graduation.hp.core.app.di.component.AppComponent;
@@ -17,7 +16,7 @@ import com.graduation.hp.core.app.listener.SimpleItemClickListenerAdapter;
 import com.graduation.hp.core.ui.RootFragment;
 import com.graduation.hp.presenter.ConstitutionListPresenter;
 import com.graduation.hp.repository.contact.ConstitutionListContact;
-import com.graduation.hp.repository.http.entity.NewsList;
+import com.graduation.hp.repository.http.entity.ArticleVO;
 import com.graduation.hp.ui.provider.NewsItemBigProvider;
 import com.graduation.hp.ui.provider.NewsItemMultiProvider;
 import com.graduation.hp.ui.provider.NewsItemSingleProvider;
@@ -55,7 +54,7 @@ public class ConstitutionListFragment extends RootFragment<ConstitutionListPrese
     }
 
     private void initMultiTypeAdapter() {
-        mAdapter.register(NewsList.class).to(
+        mAdapter.register(ArticleVO.class).to(
                 new NewsItemSingleProvider(listener),
                 new NewsItemMultiProvider(listener),
                 new NewsItemBigProvider(listener)

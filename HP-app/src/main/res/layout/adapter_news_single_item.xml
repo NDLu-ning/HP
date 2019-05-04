@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="@dimen/dp_4"
+    android:layout_marginBottom="@dimen/dp_5"
     android:background="@color/md_white"
     android:maxHeight="@dimen/dp_100"
     android:orientation="horizontal"
@@ -81,20 +81,5 @@
         app:layout_constraintStart_toEndOf="@id/adapter_news_single_title_tv"
         app:layout_constraintTop_toTopOf="parent"
         tools:src="@mipmap/ic_heizhima" />
-
-    <android.support.v7.widget.AppCompatImageView
-        android:id="@+id/adapter_news_single_isvideo_iv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:adjustViewBounds="true"
-        android:maxWidth="@dimen/dp_20"
-        android:maxHeight="@dimen/dp_20"
-        android:src="@mipmap/ic_video_play"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@id/adapter_news_single_image_iv"
-        app:layout_constraintEnd_toEndOf="@id/adapter_news_single_image_iv"
-        app:layout_constraintStart_toStartOf="@id/adapter_news_single_image_iv"
-        app:layout_constraintTop_toTopOf="@id/adapter_news_single_image_iv" />
-
 
 </android.support.constraint.ConstraintLayout>

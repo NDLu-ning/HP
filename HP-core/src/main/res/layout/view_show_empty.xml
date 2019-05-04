@@ -10,13 +10,13 @@
     android:padding="30dp">
 
     <ImageView
-        android:id="@+id/empty_ic"
+        android:id="@+id/empty_iv"
         android:layout_width="@dimen/dp_250"
         android:layout_height="@dimen/dp_200"
         android:src="@mipmap/ic_empty"/>
 
     <TextView
-        android:id="@+id/empty_tv"
+        android:id="@+id/empty_retry"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"

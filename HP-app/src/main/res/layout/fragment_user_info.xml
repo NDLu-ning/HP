@@ -20,10 +20,12 @@
             android:elevation="0dp">
 
             <LinearLayout
+                android:id="@+id/user_info_container_ll"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/md_white"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:visibility="visible">
 
                 <android.support.constraint.ConstraintLayout
                     android:id="@+id/user_info_profile_cl"
@@ -121,7 +123,8 @@
                     android:layout_height="@dimen/dp_50"
                     android:background="@android:color/transparent"
                     android:paddingStart="@dimen/dp_14"
-                    android:paddingEnd="@dimen/dp_14">
+                    android:paddingEnd="@dimen/dp_14"
+                    android:visibility="visible">
 
                     <android.support.v7.widget.AppCompatTextView
                         android:layout_width="wrap_content"
@@ -203,15 +206,15 @@
         </android.support.v4.widget.NestedScrollView>
     </LinearLayout>
 
-    <Button
+    <com.graduation.hp.core.widget.ProgressTextButton
         android:id="@+id/user_info_logout_btn"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_50"
         android:layout_gravity="bottom"
-        android:background="@drawable/selector_login_btn"
         android:layout_marginStart="@dimen/dp_14"
         android:layout_marginEnd="@dimen/dp_14"
         android:layout_marginBottom="@dimen/dp_18"
-        android:textColor="@color/md_white"
-        android:text="@string/action_logout" />
+        android:background="@drawable/selector_login_btn"
+        android:text="@string/action_logout"
+        android:textColor="@color/md_white" />
 </FrameLayout>

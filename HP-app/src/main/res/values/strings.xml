@@ -87,15 +87,35 @@
     <string name="action_logout">注销</string>
     <string name="tips_empty_attention_list">列表空空如也</string>
 
+    <string name="tips_over_maximum">%s</string>
+
     <string name="tips_over_maximum_articles">%s 文章</string>
+
     <string name="a_hundred_million">%d亿</string>
     <string name="ten_million">%d千万</string>
     <string name="ten_thousand">%d万</string>
+    <string name="tips_update_save">保存</string>
+    <string name="tips_news_content_original">原创</string>
+    <string name="hint_write_comment">写评论</string>
+    <string name="tips_put_first_comment">快来抢沙发</string>
+
+
+    <string name="tips_news_author">
+        <Data><![CDATA[<b>%1s</b>]]></Data>
+    </string>
+    <string name="tips_publish_comment">发表</string>
+    <string name="tips_content_not_null">评论内容不能为空</string>
+
 
     <string-array name="user_center_tab_titles">
         <item>文章</item>
         <item>动态</item>
     </string-array>
 
+    <string-array name="user_update_titles">
+        <item>@string/tips_user_nickname</item>
+        <item>@string/tips_user_gender</item>
+        <item>@string/tips_user_signature</item>
+    </string-array>
 
 </resources>

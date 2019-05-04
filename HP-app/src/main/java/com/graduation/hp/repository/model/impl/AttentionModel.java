@@ -8,6 +8,7 @@ import com.graduation.hp.app.constant.Key;
 import com.graduation.hp.core.mvp.BaseModel;
 import com.graduation.hp.core.repository.http.HttpHelper;
 import com.graduation.hp.core.repository.http.bean.ResponseCode;
+import com.graduation.hp.core.repository.http.bean.Result;
 import com.graduation.hp.core.repository.http.exception.ApiException;
 import com.graduation.hp.core.utils.JsonUtils;
 import com.graduation.hp.core.utils.RxUtils;
@@ -25,6 +26,7 @@ import javax.inject.Inject;
 
 import io.reactivex.Single;
 import io.reactivex.SingleOnSubscribe;
+import io.reactivex.functions.Function;
 
 public class AttentionModel extends BaseModel
         implements IAttentionModel {
@@ -38,12 +40,11 @@ public class AttentionModel extends BaseModel
     }
 
     @Override
-    public Single<Object> focusUser(long authorId) {
+    public Single<Boolean> focusUser(long authorId) {
         HttpHelper httpHelper = mRepositoryHelper.getHttpHelper();
         return Single.create((SingleOnSubscribe<Map<String, Object>>) emitter -> {
             if (authorId == -1) {
-                emitter.onError(new ApiException(ResponseCode.UNKNOW_ERROR.getStatus()
-                        , HPApplication.getStringById(R.string.tips_lack_of_important_params)));
+                emitter.onError(new ApiException(ResponseCode.ILLEGAL_ARGUMENT));
             }
             Map<String, Object> map = new HashMap<>();
             map.put(Key.AUTHOR_ID, authorId);
@@ -51,13 +52,7 @@ public class AttentionModel extends BaseModel
         }).flatMap(params -> httpHelper.obtainRetrofitService(AttentionService.class)
                 .focusUser(JsonUtils.mapToRequestBody(params))
                 .map(RxUtils.mappingResponseToResultWithNoException(Object.class))
-                .map(result -> {
-                    if (result.getStatus() == ResponseCode.TOKEN_ERROR.getStatus()) {
-                        throw new ApiException(ResponseCode.TOKEN_ERROR);
-                    } else {
-                        return result;
-                    }
-                })
+                .map(checkAttentionStatus())
                 .compose(RxUtils.rxSchedulerHelper()));
     }
 
@@ -66,8 +61,7 @@ public class AttentionModel extends BaseModel
         HttpHelper httpHelper = mRepositoryHelper.getHttpHelper();
         return Single.create((SingleOnSubscribe<Map<String, Object>>) emitter -> {
             if (userId == -1) {
-                emitter.onError(new ApiException(ResponseCode.UNKNOW_ERROR.getStatus()
-                        , HPApplication.getStringById(R.string.tips_lack_of_important_params)));
+                emitter.onError(new ApiException(ResponseCode.ILLEGAL_ARGUMENT));
             }
             Map<String, Object> map = new HashMap<>();
             map.put(Key.AUTHOR_ID, userId);
@@ -90,5 +84,33 @@ public class AttentionModel extends BaseModel
                 .focusDataGrid(JsonUtils.mapToRequestBody(params))
                 .compose(RxUtils.transformResultToList(FocusPO.class))
                 .compose(RxUtils.rxSchedulerHelper()));
+    }
+
+    @Override
+    public Single<Boolean> isFocusOn(long authorId) {
+        HttpHelper httpHelper = mRepositoryHelper.getHttpHelper();
+        return Single.create((SingleOnSubscribe<Map<String, Object>>) emitter -> {
+            if (authorId == 0L) {
+                throw new ApiException(ResponseCode.ILLEGAL_ARGUMENT);
+            }
+            Map<String, Object> map = new HashMap<>();
+            map.put(Key.AUTHOR_ID, authorId);
+            emitter.onSuccess(map);
+        }).flatMap(params -> httpHelper.obtainRetrofitService(AttentionService.class)
+                .isFocus(JsonUtils.mapToRequestBody(params))
+                .map(RxUtils.mappingResponseToResultWithNoException(Result.class))
+                .map(checkAttentionStatus())
+                .compose(RxUtils.rxSchedulerHelper()));
+    }
+
+    private Function<Result, Boolean> checkAttentionStatus() {
+        return result -> {
+            if (result.getStatus() == ResponseCode.FOCUS_ON.getStatus()) {
+                return true;
+            } else if (result.getStatus() == ResponseCode.UN_FOCUS_ON.getStatus()) {
+                return false;
+            }
+            throw new ApiException(result.getStatus(), result.getMsg());
+        };
     }
 }

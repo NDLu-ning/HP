@@ -2,15 +2,15 @@ package com.graduation.hp.repository.http.entity.local;
 
 import com.graduation.hp.repository.http.entity.User;
 
-public class UserVo {
+public class UserVO {
 
     private User user;
     private long attentionCount;
 
-    public UserVo() {
+    public UserVO() {
     }
 
-    public UserVo(User user, long attentionCount) {
+    public UserVO(User user, long attentionCount) {
         this.user = user;
         this.attentionCount = attentionCount;
     }

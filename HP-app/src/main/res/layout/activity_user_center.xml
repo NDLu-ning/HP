@@ -61,7 +61,7 @@
                     android:button="@null"
                     android:gravity="center"
                     android:minWidth="@dimen/dp_80"
-                    android:textSize="@dimen/sp_14"
+                    android:textSize="@dimen/sp_12"
                     android:visibility="gone"
                     app:layout_constraintBottom_toBottomOf="@+id/user_center_icon_iv"
                     app:layout_constraintEnd_toEndOf="parent"

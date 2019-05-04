@@ -2,6 +2,7 @@ package com.graduation.hp.presenter;
 
 import com.graduation.hp.core.mvp.BasePresenter;
 import com.graduation.hp.repository.contact.UserInfoContact;
+import com.graduation.hp.repository.http.entity.User;
 import com.graduation.hp.repository.model.impl.UserModel;
 import com.graduation.hp.ui.navigation.user.info.UserInfoActivity;
 
@@ -19,15 +20,19 @@ public class UserInfoPresenter extends BasePresenter<UserInfoActivity, UserModel
     @Override
     public void getCurrentUserInfo() {
         mMvpModel.addSubscribe(mMvpModel.getCurrentInfo()
-                .subscribe(user -> {
-
-                }, throwable -> {
-                    handlerApiError(throwable);
-                }));
+                .subscribe(
+                        user -> mMvpView.onGetUserInfoSuccess(user),
+                        throwable -> handlerApiError(throwable))
+        );
     }
 
     @Override
     public void logout() {
+
+    }
+
+    @Override
+    public void skipToUserUpdateView(int type, User user) {
 
     }
 }

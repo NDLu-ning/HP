@@ -21,4 +21,7 @@ public interface AttentionService {
     @POST("focus/dataGrid")
     Single<String> focusDataGrid(@Body RequestBody requestBody);
 
+    @Headers(value = {"Content-Type:application/json", "Cookie-Name:token"})
+    @POST("focus/isFocus")
+    Single<String> isFocus(@Body RequestBody requestBody);
 }

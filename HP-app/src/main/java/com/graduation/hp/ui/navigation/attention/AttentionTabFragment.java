@@ -5,26 +5,20 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.View;
 
 import com.graduation.hp.R;
-import com.graduation.hp.app.constant.Key;
 import com.graduation.hp.app.di.component.DaggerFragmentComponent;
 import com.graduation.hp.app.di.module.FragmentModule;
 import com.graduation.hp.core.app.di.component.AppComponent;
-import com.graduation.hp.core.app.listener.OnItemClickListener;
-import com.graduation.hp.core.app.listener.SimpleItemClickListenerAdapter;
 import com.graduation.hp.core.mvp.State;
 import com.graduation.hp.core.ui.RootFragment;
 import com.graduation.hp.presenter.AttentionTabPresenter;
 import com.graduation.hp.repository.contact.AttentionTabContact;
 import com.graduation.hp.repository.http.entity.FocusPO;
-import com.graduation.hp.repository.http.entity.NewsList;
+import com.graduation.hp.repository.preferences.PreferencesHelperImpl;
+import com.graduation.hp.ui.navigation.user.center.UserCenterActivity;
 import com.graduation.hp.ui.provider.AttentionItemProvider;
-import com.graduation.hp.ui.provider.NewsItemBigProvider;
-import com.graduation.hp.ui.provider.NewsItemMultiProvider;
-import com.graduation.hp.ui.provider.NewsItemSingleProvider;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
@@ -86,7 +80,9 @@ public class AttentionTabFragment extends RootFragment<AttentionTabPresenter>
 
         @Override
         public void onItemClick(long authorId) {
-
+            if (!isAdded()) return;
+            long userId = PreferencesHelperImpl.getInstance().getCurrentUserId();
+            getActivity().startActivity(UserCenterActivity.createIntent(getContext(), userId, authorId));
         }
     };
 

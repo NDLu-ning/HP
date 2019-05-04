@@ -1,14 +1,14 @@
 package com.graduation.hp.repository.contact;
 
 import com.graduation.hp.core.mvp.State;
-import com.graduation.hp.repository.http.entity.NewsList;
+import com.graduation.hp.repository.http.entity.ArticleVO;
 
 import java.util.List;
 
 public interface NewsListContact {
 
     interface View {
-        void onDownloadDataSuccess(List<NewsList> newsLists);
+        void onDownloadDataSuccess(List<ArticleVO> newsLists);
     }
 
     interface Presenter {

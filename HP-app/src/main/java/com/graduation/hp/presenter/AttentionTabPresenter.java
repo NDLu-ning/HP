@@ -56,4 +56,6 @@ public class AttentionTabPresenter extends BasePresenter<AttentionTabFragment, A
                     mMvpView.showMain();
                 }, throwable -> handlerApiError(throwable)));
     }
+
+
 }

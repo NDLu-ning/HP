@@ -7,6 +7,7 @@ import com.graduation.hp.core.app.di.scope.ActivityScope;
 import com.graduation.hp.repository.RepositoryHelper;
 import com.graduation.hp.ui.SplashActivity;
 import com.graduation.hp.ui.auth.AuthActivity;
+import com.graduation.hp.ui.navigation.news.detail.NewsDetailActivity;
 import com.graduation.hp.ui.navigation.user.center.UserCenterActivity;
 import com.graduation.hp.ui.navigation.user.info.UserInfoActivity;
 import com.tbruyelle.rxpermissions2.RxPermissions;
@@ -34,4 +35,5 @@ public interface ActivityComponent {
     void inject(UserCenterActivity userCenterActivity);
 
     void inject(UserInfoActivity userInfoActivity);
+
 }

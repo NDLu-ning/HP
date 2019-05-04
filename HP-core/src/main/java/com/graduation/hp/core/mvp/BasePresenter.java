@@ -104,4 +104,8 @@ public abstract class BasePresenter<V extends BaseContact.View
     public boolean isRefresh() {
         return this.mState != State.STATE_MORE;
     }
+
+    public M getModel() {
+        return mMvpModel;
+    }
 }

@@ -18,7 +18,6 @@ import com.graduation.hp.presenter.UserPostPresenter;
 import com.graduation.hp.repository.contact.UserPostContact;
 import com.graduation.hp.repository.http.entity.PostItem;
 import com.graduation.hp.ui.provider.UserPostItemProvider;
-import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;

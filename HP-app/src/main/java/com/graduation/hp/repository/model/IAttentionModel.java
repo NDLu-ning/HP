@@ -9,11 +9,11 @@ import io.reactivex.Single;
 public interface IAttentionModel {
 
 
-    Single<Object> focusUser(long authorId);
+    Single<Boolean> focusUser(long authorId);
 
     Single<Long> getAttentionNumber(long userId);
 
     Single<List<FocusPO>> getAttentionList(int offset, int limit);
 
-
+    Single<Boolean> isFocusOn(long authorId);
 }

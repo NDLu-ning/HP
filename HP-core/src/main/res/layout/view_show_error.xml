@@ -10,15 +10,14 @@
     android:orientation="vertical"> <!-- 避免状态透明上移 -->
 
     <ImageView
-        android:id="@+id/view_error_iv"
+        android:id="@+id/error_iv"
         android:layout_width="@dimen/dp_250"
         android:layout_height="@dimen/dp_200"
         android:src="@mipmap/ic_empty"/>
 
     <Button
-        android:id="@+id/view_retry"
+        android:id="@+id/error_retry"
         style="@style/Button.Green"
-        android:layout_marginTop="@dimen/dp_10"
         android:gravity="center"
         android:text="@string/tips_retry" />
 

@@ -38,7 +38,7 @@ public class AttentionItemProvider extends ItemViewBinder<FocusPO, AttentionItem
         GlideUtils.loadUserHead(holder.adapterAttentionTabIconIv, item.getHeadUrl());
         holder.adapterAttentionItemNameTv.setText(item.getNickname());
         holder.adapterAttentionItemRemarkTv.setText(item.getRemark());
-        holder.adapterAttentionItemArticleTv.setText(StringUtils.getFormattedOverMaximunString(item.getArticleNum(), 99, R.string.tips_over_maximum_articles));
+        holder.adapterAttentionItemArticleTv.setText(StringUtils.getFormattedOverMaximumString(item.getArticleNum(), 99, R.string.tips_over_maximum_articles));
         holder.adapterAttentionItemSubBtn.setFocusOn(true);
         holder.adapterAttentionItemSubBtn.setAttentionButtonClickListener((v, focusOn) -> {
             if (mListener != null) {

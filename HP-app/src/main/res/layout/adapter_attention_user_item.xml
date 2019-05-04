@@ -4,21 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingStart="@dimen/dp_12"
-    android:paddingEnd="@dimen/dp_12"
-    android:background="@color/md_white"
-    android:layout_marginTop="@dimen/dp_3"
-    android:layout_marginBottom="@dimen/dp_3">
+    android:background="@color/md_white">
 
     <android.support.v7.widget.AppCompatImageView
         android:id="@+id/adapter_attention_item_image_iv"
         android:layout_width="@dimen/dp_50"
         android:layout_height="@dimen/dp_50"
-        android:layout_marginTop="@dimen/dp_12"
-        android:layout_marginBottom="@dimen/dp_12"
+        android:layout_marginTop="@dimen/dp_14"
+        android:layout_marginBottom="@dimen/dp_14"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginStart="@dimen/dp_14"
         tools:src="@mipmap/ic_user_default_photo" />
 
     <android.support.v7.widget.AppCompatTextView
@@ -73,6 +70,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:button="@null"
+        android:layout_marginEnd="@dimen/dp_14"
         android:text="@string/tab_attention"
         android:textSize="@dimen/sp_14"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -81,7 +79,7 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="0.5dp"
+        android:layout_height="1.5dp"
         android:background="@color/md_grey_100"
         app:layout_constraintBottom_toBottomOf="parent" />
 

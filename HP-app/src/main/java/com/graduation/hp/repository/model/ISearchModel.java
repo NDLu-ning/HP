@@ -1,6 +1,4 @@
 package com.graduation.hp.repository.model;
 
-public interface ICollectModel {
-
-
+public interface ISearchModel {
 }

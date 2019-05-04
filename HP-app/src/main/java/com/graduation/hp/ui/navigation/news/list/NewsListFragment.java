@@ -14,14 +14,14 @@ import com.graduation.hp.app.di.component.DaggerFragmentComponent;
 import com.graduation.hp.app.di.module.FragmentModule;
 import com.graduation.hp.core.app.di.component.AppComponent;
 import com.graduation.hp.core.app.listener.SimpleItemClickListenerAdapter;
-import com.graduation.hp.core.mvp.BasePresenter;
 import com.graduation.hp.core.mvp.State;
 import com.graduation.hp.core.ui.RootFragment;
 import com.graduation.hp.core.utils.LogUtils;
 import com.graduation.hp.presenter.NewsListPresenter;
 import com.graduation.hp.repository.contact.NewsListContact;
-import com.graduation.hp.repository.http.entity.NewsList;
-import com.graduation.hp.repository.http.entity.local.ChannelVo;
+import com.graduation.hp.repository.http.entity.ArticleVO;
+import com.graduation.hp.repository.http.entity.local.ChannelVO;
+import com.graduation.hp.ui.navigation.news.detail.NewsDetailActivity;
 import com.graduation.hp.ui.provider.NewsItemBigProvider;
 import com.graduation.hp.ui.provider.NewsItemMultiProvider;
 import com.graduation.hp.ui.provider.NewsItemSingleProvider;
@@ -52,10 +52,10 @@ public class NewsListFragment extends RootFragment<NewsListPresenter>
 
     private RefreshLayout mRefreshLayout;
 
-    private ChannelVo mChannelVo;
+    private ChannelVO mChannelVo;
     private int position;
 
-    public static NewsListFragment newInstance(int position, ChannelVo channel) {
+    public static NewsListFragment newInstance(int position, ChannelVO channel) {
         NewsListFragment fragment = new NewsListFragment();
         Bundle args = new Bundle();
         args.putInt(Key.POSITION, position);
@@ -84,7 +84,7 @@ public class NewsListFragment extends RootFragment<NewsListPresenter>
     }
 
     private void initMultiTypeAdapter() {
-        mAdapter.register(NewsList.class).to(
+        mAdapter.register(ArticleVO.class).to(
                 new NewsItemSingleProvider(listener),
                 new NewsItemMultiProvider(listener),
                 new NewsItemBigProvider(listener)
@@ -124,7 +124,7 @@ public class NewsListFragment extends RootFragment<NewsListPresenter>
     }
 
     @Override
-    public void onDownloadDataSuccess(List<NewsList> newsList) {
+    public void onDownloadDataSuccess(List<ArticleVO> newsList) {
         if (mPresenter.isRefresh()) {
             mItems.clear();
         }
@@ -135,7 +135,9 @@ public class NewsListFragment extends RootFragment<NewsListPresenter>
 
     private final SimpleItemClickListenerAdapter listener = new SimpleItemClickListenerAdapter() {
         @Override
-        public void OnItemClick(View view, Object object) {
+        public void OnItemClick(View view, Object object, int position) {
+            ArticleVO articleVO = (ArticleVO) object;
+            startActivity(NewsDetailActivity.createIntent(getContext(), articleVO.getId()));
         }
     };
 

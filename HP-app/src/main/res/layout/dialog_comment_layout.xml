@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dp_150"
+    android:background="@color/md_white"
+    android:paddingStart="@dimen/dp_12"
+    android:paddingTop="@dimen/dp_8"
+    android:paddingEnd="@dimen/dp_12"
+    android:paddingBottom="@dimen/dp_6">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginBottom="@dimen/dp_6"
+        android:background="@drawable/bg_comment_reply_fl"
+        android:paddingStart="@dimen/dp_12"
+        android:paddingTop="@dimen/dp_4"
+        android:paddingEnd="@dimen/dp_12"
+        android:paddingBottom="@dimen/dp_4"
+        app:layout_constraintBottom_toTopOf="@id/dialog_publish_btn"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_weight="1">
+
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/dialog_input_et"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@null"
+            android:gravity="top"
+            android:padding="@dimen/dp_2"
+            android:scrollbars="vertical"
+            android:textIsSelectable="true"
+            android:textSize="@dimen/sp_14"
+            tools:text="123123" />
+    </FrameLayout>
+
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/dialog_publish_btn"
+        android:layout_width="@dimen/dp_70"
+        android:layout_height="@dimen/dp_30"
+        android:background="@drawable/selector_publish_btn"
+        android:enabled="false"
+        android:text="@string/tips_publish_comment"
+        android:textColor="@color/selector_publish_tv"
+        android:textSize="13sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</android.support.constraint.ConstraintLayout>

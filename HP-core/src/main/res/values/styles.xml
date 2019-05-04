@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+
+
     <style name="MyDialog" parent="android:style/Theme.Dialog">
         <item name="android:windowBackground">@android:color/transparent</item> <!-- 背景颜色及和透明程度 -->
         <item name="android:windowNoTitle">true</item>  <!-- 是否去除标题 -->

@@ -1,11 +1,11 @@
 package com.graduation.hp.repository.contact;
 
-import com.graduation.hp.repository.http.entity.local.UserVo;
+import com.graduation.hp.repository.http.entity.local.UserVO;
 
 public interface UserCenterContact {
 
     interface View {
-        void onGetUserSuccess(UserVo user);
+        void onGetUserSuccess(UserVO user);
     }
 
     interface Presenter {

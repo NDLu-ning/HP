@@ -9,8 +9,6 @@ import com.graduation.hp.core.mvp.State;
 import com.graduation.hp.core.repository.http.bean.Page;
 import com.graduation.hp.core.utils.RxUtils;
 import com.graduation.hp.repository.contact.UserNewsContact;
-import com.graduation.hp.repository.http.entity.NewsList;
-import com.graduation.hp.repository.http.entity.Pager;
 import com.graduation.hp.repository.model.impl.NewsModel;
 import com.graduation.hp.ui.navigation.user.center.UserNewsFragment;
 import com.graduation.hp.utils.BeanFactory;
@@ -51,31 +49,14 @@ public class UserNewsPresenter extends BasePresenter<UserNewsFragment, NewsModel
             mMvpView.showError(HPApplication.getStringById(R.string.tips_network_unavailable));
             return;
         }
-        mMvpModel.addSubscribe(Single.timer(2000L, TimeUnit.MILLISECONDS)
-                .compose(RxUtils.rxSchedulerHelper())
-                .subscribe(aLong -> {
-                    mMvpView.dismissDialog();
-                    List<NewsList> list = new ArrayList<>();
-                    for (int i = 0; i < page.getLimit(); i++) {
-                        list.add(BeanFactory.createNewsList());
-                    }
-                    Log.d("TAG", "list.size():" + list.size());
-                    mMvpView.onGetNewsListSuccess(list);
+        mMvpModel.addSubscribe(mMvpModel.getNewsListByUserId(userId, page.getOffset(), page.getLimit())
+                .doFinally(() -> mMvpView.dismissDialog())
+                .subscribe(newsList -> {
+                    mMvpView.onGetNewsListSuccess(newsList);
                     mMvpView.showMain();
+                }, throwable -> {
+                    handlerApiError(throwable);
+                    mMvpView.showError(HPApplication.getStringById(R.string.tips_error_general));
                 }));
-//        mMvpModel.addSubscribe(mMvpModel.getNewsListByCategory(category, pager.getPage(), pager.getCount())
-//                .doFinally(newsLists -> {
-//
-//                })
-//                .subscribe(newsList -> {
-//                    if (newsList != null && newsList.size() > 0) {
-//                        mMvpView.onDownloadDataSuccess(refresh, newsList);
-//                        mMvpView.showMain();
-//                    } else {
-//                    }
-//                }, throwable -> {
-//                    handlerApiError(throwable);
-//                    mMvpView.showError(HPApplication.getStringById(R.string.tips_error_general));
-//                }));
     }
 }

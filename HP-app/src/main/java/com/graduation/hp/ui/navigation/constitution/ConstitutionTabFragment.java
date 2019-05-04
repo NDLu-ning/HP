@@ -15,7 +15,7 @@ import com.graduation.hp.app.constant.Key;
 import com.graduation.hp.core.app.di.component.AppComponent;
 import com.graduation.hp.core.ui.BaseFragment;
 import com.graduation.hp.core.utils.LogUtils;
-import com.graduation.hp.repository.http.entity.local.ChannelVo;
+import com.graduation.hp.repository.http.entity.local.ChannelVO;
 import com.graduation.hp.ui.navigation.news.list.NewsListFragment;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -66,11 +66,11 @@ public class ConstitutionTabFragment extends BaseFragment implements OnRefreshLi
 
     static class ConstitutionTabAdapter extends FragmentPagerAdapter {
 
-        private final ChannelVo[] channelVos;
+        private final ChannelVO[] channelVos;
         private NewsListFragment[] mFragments;
         private int curPosition;
 
-        ConstitutionTabAdapter(FragmentManager fm, ChannelVo[] channelVos) {
+        ConstitutionTabAdapter(FragmentManager fm, ChannelVO[] channelVos) {
             super(fm);
 //        this.token = token;
             this.channelVos = channelVos;

@@ -23,6 +23,7 @@ import com.graduation.hp.ui.navigation.news.NewsTabFragment;
 import com.graduation.hp.ui.navigation.post.PostTabFragment;
 import com.graduation.hp.widget.NavigationTabView;
 
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 import org.jetbrains.annotations.NotNull;
@@ -226,38 +227,26 @@ public class NavigationTabActivity extends BaseActivity {
         NavigationPagerAdapter(FragmentManager fm, boolean isCurUserLogin) {
             super(fm);
             this.curUserLogin = isCurUserLogin;
-            mTabIds = new Integer[]{
-                    TAB_ID_NEWS,
-                    TAB_ID_ATTENTION,
-                    TAB_ID_CONSTITUTION,
-                    TAB_ID_POST,
-                    TAB_ID_MYSELF,
-            };
+            if (curUserLogin) {
+                mTabIds = new Integer[]{
+                        TAB_ID_NEWS,
+                        TAB_ID_ATTENTION,
+                        TAB_ID_CONSTITUTION,
+                        TAB_ID_POST,
+                        TAB_ID_MYSELF,
+                };
+            } else {
+                mTabIds = new Integer[]{
+                        TAB_ID_NEWS,
+                        TAB_ID_CONSTITUTION,
+                        TAB_ID_POST,
+                        TAB_ID_MYSELF,
+                };
+            }
         }
 
         @Override
         public Fragment getItem(int position) {
-//            if (curUserLogin) {
-//                switch (mTabIds[position]) {
-//                    case TAB_ID_NEWS: {
-//                        final NewsFragment mainStreamFragment = NewsFragment.newsInstance();
-//                        return mainStreamFragment;
-//                    }
-//                    case TAB_ID_ATTENTION:
-//                        return AnonymousAuthFragment.newInstance(AnonymousAuthStyle.SIGN_UP_IN_CLASSES);
-//                    case TAB_ID_CONSTITUTION:
-//                        return AnonymousAuthFragment.newInstance(AnonymousAuthStyle.SIGN_UP_IN_MESSAGES);
-//                    case TAB_ID_POST:
-//                        return AnonymousAuthFragment.newInstance(AnonymousAuthStyle.SIGN_UP_IN_NOTIFICATIONS);
-//                    case TAB_ID_MYSELF:
-//                        return AnonymousAuthFragment.newInstance(AnonymousAuthStyle.SIGN_UP_IN_SETTINGS);
-//                    case TAB_ID_WHATS_DUE:
-//                        return AnonymousAuthFragment.newInstance(AnonymousAuthStyle.SIGN_UP_DEFAULT);
-//                    default: {
-//                        throw new IllegalArgumentException("Invalid position.");
-//                    }
-//                }
-//            }
             switch (mTabIds[position]) {
                 case TAB_ID_NEWS: {
                     final NewsTabFragment fragment = NewsTabFragment.newInstance();
@@ -306,8 +295,9 @@ public class NavigationTabActivity extends BaseActivity {
 
 
     @Override
-    @Subscribe(threadMode = ThreadMode.MAIN)
+    @Subscribe(threadMode = ThreadMode.MAIN, priority = 1)
     public void skipToLoginPage(TokenInvalidEvent event) {
+        EventBus.getDefault().cancelEventDelivery(event);
         startActivity(AuthActivity.createIntent(this));
     }
 

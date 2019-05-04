@@ -2,17 +2,17 @@ package com.graduation.hp.repository.model.impl;
 
 import com.graduation.hp.core.mvp.BaseModel;
 import com.graduation.hp.repository.RepositoryHelper;
-import com.graduation.hp.repository.model.ICollectModel;
+import com.graduation.hp.repository.model.ISearchModel;
 
 import javax.inject.Inject;
 
-public class CollectModel extends BaseModel
-        implements ICollectModel {
+public class SearchModel extends BaseModel
+        implements ISearchModel {
 
     private final RepositoryHelper mRepositoryHelper;
 
     @Inject
-    public CollectModel(RepositoryHelper repositoryHelper) {
+    public SearchModel(RepositoryHelper repositoryHelper) {
         this.mRepositoryHelper = repositoryHelper;
     }
 

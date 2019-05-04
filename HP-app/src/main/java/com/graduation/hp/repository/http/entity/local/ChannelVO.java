@@ -3,33 +3,33 @@ package com.graduation.hp.repository.http.entity.local;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class ChannelVo implements Parcelable {
+public class ChannelVO implements Parcelable {
 
     private long id;
     private String titile;
 
-    public ChannelVo() {
+    public ChannelVO() {
     }
 
-    public ChannelVo(long id, String titile) {
+    public ChannelVO(long id, String titile) {
         this.id = id;
         this.titile = titile;
     }
 
-    protected ChannelVo(Parcel in) {
+    protected ChannelVO(Parcel in) {
         id = in.readLong();
         titile = in.readString();
     }
 
-    public static final Creator<ChannelVo> CREATOR = new Creator<ChannelVo>() {
+    public static final Creator<ChannelVO> CREATOR = new Creator<ChannelVO>() {
         @Override
-        public ChannelVo createFromParcel(Parcel in) {
-            return new ChannelVo(in);
+        public ChannelVO createFromParcel(Parcel in) {
+            return new ChannelVO(in);
         }
 
         @Override
-        public ChannelVo[] newArray(int size) {
-            return new ChannelVo[size];
+        public ChannelVO[] newArray(int size) {
+            return new ChannelVO[size];
         }
     };
 

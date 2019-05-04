@@ -18,8 +18,8 @@ public abstract class RootActivity<P extends BasePresenter> extends BaseActivity
     private static final int ID_EMPTY = R.id.view_empty;
     private static final int ID_MAIN = R.id.view_main;
 
-    private static final int ID_ERROR_RETRY_BUTTON = R.id.view_retry;
-    private static final int ID_EMPTY_TEXT = R.id.empty_tv;
+    private static final int ID_ERROR_RETRY_BUTTON = R.id.error_retry;
+    private static final int ID_EMPTY_TEXT = R.id.empty_retry;
 
     private ViewStateManager mViewStateManager;
 
@@ -89,7 +89,7 @@ public abstract class RootActivity<P extends BasePresenter> extends BaseActivity
     // Override this if you need a different no data view, but name the root id R.id.no_data_view
 
     protected void setupNoDataView(View layout) {
-        final TextView noDataMsgTextView = (TextView) layout.findViewById(ID_EMPTY_TEXT);
+        final TextView noDataMsgTextView = layout.findViewById(ID_EMPTY_TEXT);
         if (noDataMsgTextView != null)
             noDataMsgTextView.setText(getNoDataStringResId());
     }

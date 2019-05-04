@@ -22,17 +22,12 @@ import com.graduation.hp.app.di.component.DaggerActivityComponent;
 import com.graduation.hp.app.di.module.ActivityModule;
 import com.graduation.hp.core.app.di.component.AppComponent;
 import com.graduation.hp.core.ui.BaseActivity;
-import com.graduation.hp.core.ui.RootFragment;
-import com.graduation.hp.core.ui.SingleFragmentActivity;
 import com.graduation.hp.core.utils.GlideUtils;
 import com.graduation.hp.core.utils.LogUtils;
 import com.graduation.hp.presenter.UserCenterPresenter;
 import com.graduation.hp.repository.contact.UserCenterContact;
 import com.graduation.hp.repository.http.entity.User;
-import com.graduation.hp.repository.http.entity.local.ChannelVo;
-import com.graduation.hp.repository.http.entity.local.UserVo;
-import com.graduation.hp.ui.navigation.news.NewsTabFragment;
-import com.graduation.hp.ui.navigation.news.list.NewsListFragment;
+import com.graduation.hp.repository.http.entity.local.UserVO;
 import com.graduation.hp.ui.navigation.user.info.UserInfoActivity;
 import com.graduation.hp.widget.AttentionButton;
 import com.graduation.hp.widget.TriangleView;
@@ -46,7 +41,6 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import retrofit2.http.Body;
 
 public class UserCenterActivity extends BaseActivity<UserCenterPresenter>
         implements UserCenterContact.View, OnRefreshListener, OnLoadMoreListener {
@@ -144,7 +138,7 @@ public class UserCenterActivity extends BaseActivity<UserCenterPresenter>
     }
 
     @Override
-    public void onGetUserSuccess(UserVo userVo) {
+    public void onGetUserSuccess(UserVO userVo) {
         User user = userVo.getUser();
         setUserData(user);
         setUserAttentionNumber(userVo.getAttentionCount());

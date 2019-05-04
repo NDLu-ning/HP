@@ -1,8 +1,8 @@
 package com.graduation.hp.utils;
 
 import com.graduation.hp.R;
+import com.graduation.hp.repository.http.entity.ArticleVO;
 import com.graduation.hp.repository.http.entity.CommentItem;
-import com.graduation.hp.repository.http.entity.NewsList;
 import com.graduation.hp.repository.http.entity.PostItem;
 
 import java.util.ArrayList;
@@ -43,7 +43,7 @@ public class BeanFactory {
             "粘滤面包糠，加奶粉，炼乳，吉士粉味道更好。",
             "木耳菜应该是南方的一种蔬菜，大概四五月份（端午节前）大量上市，叶肥厚，做汤鲜美"};
 
-    public static NewsList createNewsList() {
+    public static ArticleVO createNewsList() {
         Random random = new Random();
         int imageSize = random.nextInt(images.length);
         StringBuilder sb = new StringBuilder();
@@ -56,9 +56,9 @@ public class BeanFactory {
             image = sb.toString();
             image = image.substring(0, image.length() - 1);
         }
-        NewsList newsList = new NewsList(random.nextBoolean(), titles[random.nextInt(titles.length)], image, new Date(), authors[random.nextInt(authors.length)],
-                random.nextInt(1000));
-        return newsList;
+//        ArticlePO newsList = new ArticlePO(random.nextBoolean(), titles[random.nextInt(titles.length)], image, new Date(), authors[random.nextInt(authors.length)],
+//                random.nextInt(1000));
+        return null;
     }
 
     public static PostItem createPostItem() {

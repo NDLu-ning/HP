@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/md_white"
     android:maxHeight="@dimen/dp_140"
+    android:layout_marginBottom="@dimen/dp_5"
     android:paddingStart="@dimen/dp_14"
     android:paddingTop="@dimen/dp_6"
     android:paddingEnd="@dimen/dp_14"
