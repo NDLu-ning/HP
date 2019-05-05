@@ -1,4 +1,4 @@
-package com.graduation.hp;
+package com.graduation.hp.core;
 
 import android.app.Application;
 import android.content.Context;

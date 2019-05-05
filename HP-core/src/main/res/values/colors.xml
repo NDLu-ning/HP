@@ -6,6 +6,15 @@
 
     <color name="colorPressGray">#80DDDDDD</color>
     <color name="colorUnPressWhite">#80FFFFFF</color>
+
+    <color name="crop_window_background">@color/black_translucent</color>
+    <color name="crop_window_bottom_bar">@color/gray32</color>
+
+    <color name="black_translucent">#A0000000</color>
+    <color name="gray32">#AEAEAE</color>
+    <color name="blue2">#3784d3</color>
+
+
     <!-- red -->
     <color name="md_red_50">#fde0dc</color>
     <color name="md_red_100">#f9bdbb</color>

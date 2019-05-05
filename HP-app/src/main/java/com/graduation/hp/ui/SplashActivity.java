@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.widget.Button;
 
-import com.graduation.hp.HPApplication;
+import com.graduation.hp.core.HPApplication;
 import com.graduation.hp.R;
 import com.graduation.hp.app.di.component.DaggerActivityComponent;
 import com.graduation.hp.app.di.module.ActivityModule;

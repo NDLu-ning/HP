@@ -6,8 +6,13 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
 
-import com.graduation.hp.HPApplication;
+import com.graduation.hp.app.constant.Key;
+import com.graduation.hp.core.HPApplication;
+import com.graduation.hp.core.utils.JsonUtils;
 import com.graduation.hp.repository.http.entity.User;
+import com.graduation.hp.repository.http.entity.local.SearchKeyword;
+
+import java.util.ArrayList;
 
 public class PreferencesHelperImpl implements PreferencesHelper {
 
@@ -127,6 +132,16 @@ public class PreferencesHelperImpl implements PreferencesHelper {
     }
 
     @Override
+    public String getSearchKeywordsJson() {
+        return mPreferences.getString(SharedPrefsKey.APP_SEARCH_KEYWORDS, JsonUtils.objectToJson(new ArrayList<SearchKeyword>()));
+    }
+
+    @Override
+    public void saveSearchKeywordsJson(String json) {
+        mPreferences.edit().putString(SharedPrefsKey.APP_SEARCH_KEYWORDS, json).apply();
+    }
+
+    @Override
     public long getCurrentUserId() {
         return mPreferences.getLong(SharedPrefsKey.APP_CURRENT_USER_ID, -1L);
     }
@@ -163,6 +178,7 @@ public class PreferencesHelperImpl implements PreferencesHelper {
     static class SharedPrefsKey {
         static final String APP_INSTANCE_ID = "app_instance_id";
         static final String APP_IS_FIRST_LAUNCHER = "app_is_first_launcher";
+        static final String APP_SEARCH_KEYWORDS = "app_search_keywords";
 
         static final String APP_CURRENT_USER_TOKEN = "app_current_user_token";
         static final String APP_CURRENT_USER_ID = "app_current_user_id";

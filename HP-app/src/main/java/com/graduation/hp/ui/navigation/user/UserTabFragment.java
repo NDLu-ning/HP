@@ -103,7 +103,7 @@ public class UserTabFragment extends BaseFragment<UserTabPresenter>
                 case R.id.my_message_cl:
                     break;
                 case R.id.my_info_cl:
-                    startActivity(UserInfoActivity.createIntent(getContext(),mUser));
+                    startActivity(UserInfoActivity.createIntent(getContext()));
                     break;
                 case R.id.my_test_cl:
                     break;

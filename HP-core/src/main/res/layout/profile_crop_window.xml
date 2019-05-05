@@ -1,0 +1,43 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/crop_window_background">
+
+    <com.theartofdev.edmodo.cropper.CropImageView xmlns:custom="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/cropImageView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/bottomBar"
+        android:layout_centerHorizontal="true" />
+
+    <LinearLayout
+        android:id="@id/bottomBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:baselineAligned="false"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/rotatePicture"
+            style="@style/Profile.CropButton"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:text="@string/rotate_picture" />
+
+        <Button
+            android:id="@+id/usePicture"
+            style="@style/Profile.CropButton"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:text="@string/use_picture" />
+    </LinearLayout>
+
+    <View
+        android:id="@+id/bottomLine"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_above="@id/bottomBar"
+        android:background="@color/crop_window_bottom_bar" />
+
+</RelativeLayout>

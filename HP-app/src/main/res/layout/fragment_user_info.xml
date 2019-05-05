@@ -15,7 +15,8 @@
 
         <android.support.v4.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             android:background="@color/md_white"
             android:elevation="0dp">
 
@@ -204,17 +205,20 @@
                     app:layout_constraintBottom_toBottomOf="parent" />
             </LinearLayout>
         </android.support.v4.widget.NestedScrollView>
+
+
+        <com.graduation.hp.core.widget.ProgressTextButton
+            android:id="@+id/user_info_logout_btn"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_45"
+            android:layout_gravity="bottom"
+            android:layout_marginStart="@dimen/dp_18"
+            android:layout_marginEnd="@dimen/dp_18"
+            android:layout_marginBottom="@dimen/dp_14"
+            android:layout_marginTop="@dimen/dp_14"
+            android:background="@drawable/selector_login_btn"
+            android:text="@string/action_logout"
+            android:textColor="@color/md_white" />
     </LinearLayout>
 
-    <com.graduation.hp.core.widget.ProgressTextButton
-        android:id="@+id/user_info_logout_btn"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_50"
-        android:layout_gravity="bottom"
-        android:layout_marginStart="@dimen/dp_14"
-        android:layout_marginEnd="@dimen/dp_14"
-        android:layout_marginBottom="@dimen/dp_18"
-        android:background="@drawable/selector_login_btn"
-        android:text="@string/action_logout"
-        android:textColor="@color/md_white" />
 </FrameLayout>

@@ -1,8 +1,8 @@
 package com.graduation.hp.repository.contact;
 
 import com.graduation.hp.repository.http.entity.User;
-import com.graduation.hp.ui.navigation.user.info.UserInfoActivity;
-import com.graduation.hp.ui.navigation.user.info.UserInfoFragment;
+
+import java.io.File;
 
 public interface UserInfoContact {
 
@@ -10,8 +10,15 @@ public interface UserInfoContact {
         void onGetUserInfoSuccess(User user);
     }
 
-    interface Presenter extends UserInfoFragment.UserInfoFragmentListener {
+    interface Presenter {
 
+        void getCurrentUserInfo();
+
+        void logout();
+
+        void updateUserInfo(int type, User user);
+
+        void uploadUserProfile(File file);
     }
 
 }

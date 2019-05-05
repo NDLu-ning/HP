@@ -19,7 +19,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.FrameLayout;
 
-import com.graduation.hp.HPApplication;
+import com.graduation.hp.core.HPApplication;
 import com.graduation.hp.R;
 import com.graduation.hp.app.constant.Key;
 import com.graduation.hp.app.di.component.DaggerFragmentComponent;

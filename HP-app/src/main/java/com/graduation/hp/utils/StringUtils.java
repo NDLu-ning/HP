@@ -3,8 +3,8 @@ package com.graduation.hp.utils;
 import android.support.annotation.StringRes;
 import android.text.TextUtils;
 
-import com.graduation.hp.HPApplication;
 import com.graduation.hp.R;
+import com.graduation.hp.core.HPApplication;
 
 public class StringUtils {
 

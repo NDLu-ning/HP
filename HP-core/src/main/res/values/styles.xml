@@ -11,6 +11,24 @@
         <item name="android:backgroundDimEnabled">false</item> <!-- 是否模糊 -->
     </style>
 
+    <style name="MyAlertDialog" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="colorAccent">@color/colorPrimary</item>
+    </style>
+
+    <style name="Profile">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+
+    <style name="Profile.CropButton">
+        <item name="android:layout_gravity">center</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/btn_crop_window</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
 
     <!-- Button -->
     <style name="Button" parent="Widget.AppCompat.Button">

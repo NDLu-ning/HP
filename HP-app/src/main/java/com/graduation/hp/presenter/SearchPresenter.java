@@ -18,4 +18,15 @@ public class SearchPresenter extends BasePresenter<SearchActivity, SearchModel>
     public SearchPresenter(SearchModel mMvpModel) {
         super(mMvpModel);
     }
+
+
+    @Override
+    public void getSearchRecords() {
+
+    }
+
+    @Override
+    public void saveSearchRecord(String keyword) {
+
+    }
 }

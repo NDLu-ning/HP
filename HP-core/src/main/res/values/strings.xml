@@ -15,4 +15,28 @@
     <string name="tips_text_size_super_big">特大</string>
     <string name="tips_album">手机相册</string>
     <string name="tips_camera">相机拍摄</string>
+
+    <string name="unknown_file_name">未知的文件名</string>
+
+    <string name="error_general">出现了未知错误，请稍后再试</string>
+    <string name="requesting_permission">正在请求权限</string>
+
+    <string name="read_external_storage_permission_message">当前应用需要访问内部存储器的权限，请用户进行授权!</string>
+    <string name="nnn_hours_ago">%d 小时以前</string>
+    <string name="nnn_minutes_ago">%d 分钟以前</string>
+    <string name="nnn_seconds_ago">%d 秒钟以前</string>
+    <string name="one_hour_ago">1 小时以前</string>
+    <string name="one_minute_ago">1 分钟以前</string>
+    <string name="one_second_ago">1 秒钟以前</string>
+    <string name="today_at">今天在</string>
+    <string name="yesterday_at">昨天在</string>
+    <string name="tomorrow_at">明天在</string>
+    <string name="today">今天</string>
+    <string name="tomorrow">明天</string>
+    <string name="yesterday">昨天</string>
+    <string name="no_camera_found">未找到照相机</string>
+    <string name="camera_not_supported">当前设备不支持照相机</string>
+    <string name="rotate_picture">旋转</string>
+    <string name="use_picture">使用</string>
+
 </resources>

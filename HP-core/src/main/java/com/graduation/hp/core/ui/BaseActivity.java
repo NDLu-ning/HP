@@ -21,6 +21,7 @@ import com.graduation.hp.core.app.base.IActivity;
 import com.graduation.hp.core.app.base.lifecycleable.ActivityLifecycleable;
 import com.graduation.hp.core.app.di.component.AppComponent;
 import com.graduation.hp.core.app.event.TokenInvalidEvent;
+import com.graduation.hp.core.app.listener.PermissionCallback;
 import com.graduation.hp.core.mvp.BaseContact;
 import com.graduation.hp.core.mvp.BasePresenter;
 import com.graduation.hp.core.utils.DaggerUtils;
@@ -51,6 +52,8 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
     private ImageButton mToolbarLeftBtn;
     private ImageButton mToolbarRightBtn;
     private AppCompatTextView mToolbarRightTv;
+
+    private PermissionCallback mPermissionCallback;
 
     @Inject
     @Nullable
@@ -91,9 +94,13 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
         super.onDestroy();
     }
 
+    public void setPermissionCallback(PermissionCallback mPermissionCallback) {
+        this.mPermissionCallback = mPermissionCallback;
+    }
+
     @Override
     public void showMessage(String msg) {
-        ToastUtils.show(this,msg);
+        ToastUtils.show(this, msg);
     }
 
     @Override

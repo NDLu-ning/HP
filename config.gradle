@@ -107,7 +107,7 @@ ext {
 
 
             "ninegridview"          : "com.lzy.widget:ninegridview:0.2.0",
-
+            "image-cropper"         : 'com.theartofdev.edmodo:android-image-cropper:2.7.0'
     ]
 }
 

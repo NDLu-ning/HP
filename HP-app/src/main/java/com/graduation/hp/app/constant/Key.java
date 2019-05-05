@@ -32,6 +32,7 @@ public class Key {
     public static final String CONTEXT = "context";
     public static final String DISCUSS_TYPE = "discuss_type";
     public static final String TALKER_USER_ID = "talker_user_id ";
+    public static final String FILE = "file";
 
 
     /**
@@ -59,4 +60,5 @@ public class Key {
     public static final String UPDATE_TITIL_ARRAY = "update_title_array";
     public static final String NEWS = "news";
 
+    public static final String KEYWORD = "keyword";
 }

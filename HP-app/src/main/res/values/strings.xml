@@ -137,6 +137,13 @@
     <string name="tips_modify_gender_title">更改性别</string>
     <string name="tips_modify_nickanme_title">更改昵称</string>
     <string name="tips_modify_signature_title">更改签名</string>
+    <string name="hint_edit_nickname">编辑个人昵称</string>
+    <string name="tips_update_nickname_error">输入昵称长度应满足2-10个字符</string>
+    <string name="tips_update_signature_error">输入签名长度应满足0-120个字符</string>
+    <string name="tips_upload_ing">正在上传</string>
+    <string name="tips_upload_success">上传成功</string>
+    <string name="tips_clear_search_history">清除搜索记录</string>
+    <string name="tips_please_input_keywords">请输入检索内容</string>
 
 
     <string-array name="user_center_tab_titles">

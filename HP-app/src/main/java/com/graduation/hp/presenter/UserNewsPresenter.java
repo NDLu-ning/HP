@@ -1,25 +1,15 @@
 package com.graduation.hp.presenter;
 
-import android.util.Log;
-
-import com.graduation.hp.HPApplication;
 import com.graduation.hp.R;
+import com.graduation.hp.core.HPApplication;
 import com.graduation.hp.core.mvp.BasePresenter;
 import com.graduation.hp.core.mvp.State;
 import com.graduation.hp.core.repository.http.bean.Page;
-import com.graduation.hp.core.utils.RxUtils;
 import com.graduation.hp.repository.contact.UserNewsContact;
 import com.graduation.hp.repository.model.impl.NewsModel;
 import com.graduation.hp.ui.navigation.user.center.UserNewsFragment;
-import com.graduation.hp.utils.BeanFactory;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
-
-import io.reactivex.Single;
 
 public class UserNewsPresenter extends BasePresenter<UserNewsFragment, NewsModel>
         implements UserNewsContact.Presenter {

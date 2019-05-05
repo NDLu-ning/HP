@@ -157,7 +157,7 @@ public class UserCenterActivity extends BaseActivity<UserCenterPresenter>
         if (mOwnerId == mUserId) {
             mUserCenterSubCb.setVisibility(View.GONE);
             mUserCenterEditTv.setVisibility(View.VISIBLE);
-            mUserCenterEditTv.setOnClickListener(v -> startActivity(UserInfoActivity.createIntent(this, user)));
+            mUserCenterEditTv.setOnClickListener(v -> startActivity(UserInfoActivity.createIntent(this)));
         } else {
             mUserCenterEditTv.setVisibility(View.GONE);
             mUserCenterSubCb.setVisibility(View.VISIBLE);
@@ -169,11 +169,6 @@ public class UserCenterActivity extends BaseActivity<UserCenterPresenter>
             int maxLine = mUserCenterSummaryTv.getMaxLines();
             mUserCenterSummaryTv.setMaxLines(maxLine > 1 ? 1 : 4);
         });
-    }
-
-    @OnClick({R.id.user_center_edit_tv})
-    public void onClick(View view) {
-        startActivity(UserInfoActivity.createIntent(this, mUser));
     }
 
     @Override

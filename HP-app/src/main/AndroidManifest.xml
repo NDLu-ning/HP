@@ -9,8 +9,13 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+
+
     <application
-        android:name=".HPApplication"
+        android:name=".core.HPApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -38,7 +43,8 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.auth.AuthActivity"
+        <activity
+            android:name=".ui.auth.AuthActivity"
             android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.AUTH" />
@@ -46,7 +52,8 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.navigation.news.detail.NewsDetailActivity"
+        <activity
+            android:name=".ui.navigation.news.detail.NewsDetailActivity"
             android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.NEWS_DETAIL" />
@@ -61,7 +68,8 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.setting.SettingActivity"
+        <activity
+            android:name=".ui.setting.SettingActivity"
             android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.SETTING" />
@@ -69,13 +77,26 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.navigation.user.info.UserInfoActivity"
+        <activity
+            android:name=".ui.navigation.user.info.UserInfoActivity"
             android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.USER_INFO" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".core.ui.crop.AvatarCropWindowActivity"/>
+
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.graduation.hp.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
     </application>
 
 </manifest>

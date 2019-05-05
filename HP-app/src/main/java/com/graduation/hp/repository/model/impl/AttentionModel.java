@@ -1,9 +1,5 @@
 package com.graduation.hp.repository.model.impl;
 
-import android.text.TextUtils;
-
-import com.graduation.hp.HPApplication;
-import com.graduation.hp.R;
 import com.graduation.hp.app.constant.Key;
 import com.graduation.hp.core.mvp.BaseModel;
 import com.graduation.hp.core.repository.http.HttpHelper;
@@ -16,7 +12,6 @@ import com.graduation.hp.repository.RepositoryHelper;
 import com.graduation.hp.repository.http.entity.FocusPO;
 import com.graduation.hp.repository.http.service.AttentionService;
 import com.graduation.hp.repository.model.IAttentionModel;
-import com.graduation.hp.repository.preferences.PreferencesHelper;
 
 import java.util.HashMap;
 import java.util.List;
@@ -26,7 +21,6 @@ import javax.inject.Inject;
 
 import io.reactivex.Single;
 import io.reactivex.SingleOnSubscribe;
-import io.reactivex.functions.Function;
 
 public class AttentionModel extends BaseModel
         implements IAttentionModel {

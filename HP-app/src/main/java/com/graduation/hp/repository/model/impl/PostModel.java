@@ -1,6 +1,6 @@
 package com.graduation.hp.repository.model.impl;
 
-import com.graduation.hp.HPApplication;
+import com.graduation.hp.core.HPApplication;
 import com.graduation.hp.R;
 import com.graduation.hp.core.mvp.BaseModel;
 import com.graduation.hp.core.repository.http.HttpHelper;

@@ -26,4 +26,6 @@ public interface IUserModel {
     void clearUserInfo();
 
     Single<Result> logout();
+
+    Single<Boolean> updateUserInfo();
 }

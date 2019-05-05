@@ -22,13 +22,14 @@ public class GlobalConfiguration implements ConfigModule {
                 .debug(true)
                 .validate(true)
                 .startAdvancedUrl("http://47.52.157.78:8080/")
+                .multiDomain("UPLOAD_URL", "http://39.106.49.168:8080/")
                 .addParamsAdder(new TokenAdder())
                 .level(DebugInterceptor.Level.BASIC)
                 .okHttpConfiguration((context, builder) -> {
 
                 }).retrofitConfiguration((context, builder) -> {
 
-                });
+        });
 
     }
 

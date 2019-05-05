@@ -74,6 +74,10 @@ dependencies {
         exclude module: 'rxandroid'
         exclude module: 'rxlifecycle'
     }
+    api(rootProject.ext.dependencies["image-cropper"]){
+        exclude group: 'com.android.support'
+    }
+    api rootProject.ext.dependencies["wraplayout"]
     api rootProject.ext.dependencies["ninegridview"]
     api rootProject.ext.dependencies["fastjson"]
     api rootProject.ext.dependencies['percent-support']
@@ -85,5 +89,4 @@ dependencies {
     annotationProcessor rootProject.ext.dependencies["dagger2-compiler"]
     annotationProcessor rootProject.ext.dependencies["butterknife-compiler"]
     annotationProcessor rootProject.ext.dependencies["glide-compiler"]
-    api 'com.squareup.okhttp3:logging-interceptor:3.1.2'
 }

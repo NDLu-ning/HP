@@ -53,6 +53,8 @@ public class UserModel extends BaseModel
                 user.setRemark(preferencesHelper.getCurrentUserRemark());
                 user.setUsername(preferencesHelper.getCurrentUserUsername());
                 user.setNickname(preferencesHelper.getCurrentUserNickname());
+                user.setSex(preferencesHelper.getCurrentUserGender());
+                user.setPhysiquId(preferencesHelper.getCurrentUserPhysiquId());
                 emitter.onSuccess(user);
             } else {
                 emitter.onError(new ApiException(ResponseCode.TOKEN_ERROR));
@@ -182,6 +184,11 @@ public class UserModel extends BaseModel
                 .map(RxUtils.mappingResponseToResult(Boolean.class))
                 .doOnSuccess(consumer -> clearUserInfo())
                 .compose(RxUtils.rxSchedulerHelper());
+    }
+
+    @Override
+    public Single<Boolean> updateUserInfo() {
+        return null;
     }
 
     public RepositoryHelper getRepositoryHelper() {

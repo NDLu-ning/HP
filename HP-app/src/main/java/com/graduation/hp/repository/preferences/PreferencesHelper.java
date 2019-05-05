@@ -49,4 +49,8 @@ public interface PreferencesHelper {
     void saveCurrentUserId(long userId);
 
     void clearUserInfo();
+
+    String getSearchKeywordsJson();
+
+    void saveSearchKeywordsJson(String json);
 }

@@ -2,7 +2,8 @@ package com.graduation.hp.presenter;
 
 import android.os.Bundle;
 
-import com.graduation.hp.HPApplication;
+import com.graduation.hp.core.HPApplication;
+
 import com.graduation.hp.R;
 import com.graduation.hp.app.constant.Key;
 import com.graduation.hp.core.mvp.BasePresenter;
