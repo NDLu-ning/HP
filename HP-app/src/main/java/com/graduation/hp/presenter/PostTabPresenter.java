@@ -6,10 +6,10 @@ import com.graduation.hp.HPApplication;
 import com.graduation.hp.R;
 import com.graduation.hp.core.mvp.BasePresenter;
 import com.graduation.hp.core.mvp.State;
+import com.graduation.hp.core.repository.http.bean.Page;
 import com.graduation.hp.core.utils.RxUtils;
 import com.graduation.hp.repository.RepositoryHelper;
 import com.graduation.hp.repository.contact.PostTabContact;
-import com.graduation.hp.repository.http.entity.Pager;
 import com.graduation.hp.repository.http.entity.PostItem;
 import com.graduation.hp.repository.model.impl.PostModel;
 import com.graduation.hp.repository.model.impl.UserModel;
@@ -30,12 +30,12 @@ public class PostTabPresenter extends BasePresenter<PostTabFragment, PostModel>
     @Inject
     UserModel userModel;
 
-    private Pager pager;
+    private Page page;
 
     @Inject
     public PostTabPresenter(PostModel mMvpModel) {
         super(mMvpModel);
-        this.pager = new Pager(1, 10);
+        this.page = new Page();
     }
 
     @Override
@@ -54,7 +54,7 @@ public class PostTabPresenter extends BasePresenter<PostTabFragment, PostModel>
     public void downloadMoreData(State state) {
         setCurState(state);
         if (isRefresh()) {
-            pager = new Pager(1, 10);
+            page = new Page();
         }
         if (!mMvpView.isNetworkAvailable()) {
             mMvpView.showError(HPApplication.getStringById(R.string.tips_network_unavailable));
@@ -65,7 +65,7 @@ public class PostTabPresenter extends BasePresenter<PostTabFragment, PostModel>
                 .subscribe(aLong -> {
                     mMvpView.dismissDialog();
                     List<PostItem> list = new ArrayList<>();
-                    for (int i = 0; i < pager.getCount(); i++) {
+                    for (int i = 0; i < page.getLimit(); i++) {
                         list.add(BeanFactory.createPostItem());
                     }
                     mMvpView.onDownloadDataSuccess(list);

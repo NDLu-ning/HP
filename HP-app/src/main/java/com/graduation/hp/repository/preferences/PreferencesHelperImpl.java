@@ -146,6 +146,16 @@ public class PreferencesHelperImpl implements PreferencesHelper {
         mPreferences.edit().putBoolean(SharedPrefsKey.APP_IS_FIRST_LAUNCHER, isFirst).apply();
     }
 
+    @Override
+    public void updateTextSize(int textSize) {
+        mPreferences.edit().putInt(SharedPrefsKey.APP_TEXT_SIZE, textSize).apply();
+    }
+
+    @Override
+    public int getTextSize() {
+        return mPreferences.getInt(SharedPrefsKey.APP_TEXT_SIZE, 1);
+    }
+
     private static final class PreferencesHelperHolder {
         private static final PreferencesHelperImpl INSTANCE = new PreferencesHelperImpl(HPApplication.getInstance());
     }
@@ -162,6 +172,8 @@ public class PreferencesHelperImpl implements PreferencesHelper {
         static final String APP_CURRENT_USER_HEALTHY_NUM = "app_current_user_healthy_num";
         static final String APP_CURRENT_USER_GENDER = "app_current_user_gender";
         static final String APP_CURRENT_USER_REMARK = "app_current_user_remark";
+
+        static final String APP_TEXT_SIZE = "app_text_size";
 
     }
 }

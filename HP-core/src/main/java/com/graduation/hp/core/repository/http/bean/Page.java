@@ -4,6 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.util.Date;
+import java.util.Locale;
 
 /**
  * 分页组件
@@ -39,6 +40,7 @@ public class Page implements Parcelable {
         limit = 10;
     }
 
+
     protected Page(Parcel in) {
         if (in.readByte() == 0) {
             limit = null;
@@ -49,6 +51,18 @@ public class Page implements Parcelable {
             offset = null;
         } else {
             offset = in.readInt();
+        }
+        if (in.readByte() == 0) {
+            createTimeStart = null;
+        } else {
+            long startTime = in.readLong();
+            createTimeStart = new Date(startTime);
+        }
+        if (in.readByte() == 0) {
+            createTimeEnd = null;
+        } else {
+            long endTime = in.readLong();
+            createTimeEnd = new Date(endTime);
         }
     }
 
@@ -96,24 +110,37 @@ public class Page implements Parcelable {
         this.createTimeEnd = createTimeEnd;
     }
 
+
     @Override
     public int describeContents() {
         return 0;
     }
 
     @Override
-    public void writeToParcel(Parcel parcel, int i) {
+    public void writeToParcel(Parcel dest, int flags) {
         if (limit == null) {
-            parcel.writeByte((byte) 0);
+            dest.writeByte((byte) 0);
         } else {
-            parcel.writeByte((byte) 1);
-            parcel.writeInt(limit);
+            dest.writeByte((byte) 1);
+            dest.writeInt(limit);
         }
         if (offset == null) {
-            parcel.writeByte((byte) 0);
+            dest.writeByte((byte) 0);
         } else {
-            parcel.writeByte((byte) 1);
-            parcel.writeInt(offset);
+            dest.writeByte((byte) 1);
+            dest.writeInt(offset);
+        }
+        if (createTimeStart == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeLong(createTimeStart.getTime());
+        }
+        if (createTimeEnd == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeLong(createTimeEnd.getTime());
         }
     }
 }

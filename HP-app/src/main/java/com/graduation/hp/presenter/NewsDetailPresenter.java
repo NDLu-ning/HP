@@ -1,19 +1,18 @@
 package com.graduation.hp.presenter;
 
+import com.graduation.hp.HPApplication;
+import com.graduation.hp.R;
 import com.graduation.hp.core.mvp.BasePresenter;
 import com.graduation.hp.core.repository.http.bean.ResponseCode;
 import com.graduation.hp.core.repository.http.exception.ApiException;
 import com.graduation.hp.repository.contact.NewsDetailContact;
-import com.graduation.hp.repository.http.entity.ArticleVO;
-import com.graduation.hp.repository.http.entity.local.ArticleVOWrapper;
 import com.graduation.hp.repository.model.impl.AttentionModel;
+import com.graduation.hp.repository.model.impl.CommentModel;
+import com.graduation.hp.repository.model.impl.LikeModel;
 import com.graduation.hp.repository.model.impl.NewsModel;
 import com.graduation.hp.ui.navigation.news.detail.NewsDetailFragment;
 
 import javax.inject.Inject;
-
-import io.reactivex.SingleSource;
-import io.reactivex.functions.Function;
 
 public class NewsDetailPresenter extends BasePresenter<NewsDetailFragment, NewsModel>
         implements NewsDetailContact.Presenter {
@@ -21,6 +20,11 @@ public class NewsDetailPresenter extends BasePresenter<NewsDetailFragment, NewsM
     @Inject
     AttentionModel attentionModel;
 
+    @Inject
+    LikeModel likeModel;
+
+    @Inject
+    CommentModel commentModel;
 
     @Inject
     public NewsDetailPresenter(NewsModel mMvpModel) {
@@ -29,7 +33,7 @@ public class NewsDetailPresenter extends BasePresenter<NewsDetailFragment, NewsM
 
     @Override
     public int getLocalTextSize() {
-        return 0;
+        return 1;
     }
 
     @Override
@@ -43,33 +47,75 @@ public class NewsDetailPresenter extends BasePresenter<NewsDetailFragment, NewsM
 
     @Override
     public void isFocusOn(long authorId) {
-        attentionModel.addSubscribe(attentionModel.isFocusOn(authorId)
-                .subscribe(isFocusOn -> {
-                    mMvpView.onGetAttentionSuccess(isFocusOn);
-                }, throwable -> {
-                    if (throwable instanceof ApiException) {
-                        ApiException apiException = (ApiException) throwable;
-                        if (apiException.getCode() == ResponseCode.TOKEN_ERROR.getStatus()) {
-                            mMvpView.onGetAttentionSuccess(false);
-                            return;
-                        }
-                    }
-                    handlerApiError(throwable);
-                }));
+        mMvpModel.addSubscribe(attentionModel.isFocusOn(authorId)
+                .subscribe(
+                        isFocusOn -> mMvpView.onGetAttentionSuccess(isFocusOn),
+                        throwable -> {
+                            if (throwable instanceof ApiException) {
+                                ApiException apiException = (ApiException) throwable;
+                                if (apiException.getCode() == ResponseCode.TOKEN_ERROR.getStatus()) {
+                                    mMvpView.onGetAttentionSuccess(false);
+                                    return;
+                                }
+                            }
+                            handlerApiError(throwable);
+                        }));
     }
 
     @Override
     public void addComment(long newsId, String content) {
-
+        if (!mMvpView.isNetworkAvailable()) {
+            mMvpView.showError(HPApplication.getStringById(R.string.tips_network_unavailable));
+            return;
+        }
+        mMvpModel.addSubscribe(commentModel.discuss(newsId, content, CommentModel.DISCUSS_COMMENT, -1L)
+                .doFinally(() -> mMvpView.dismissDialog())
+                .subscribe(success -> mMvpView.operateArticleCommentStatus(true),
+                        throwable -> {
+                            mMvpView.operateArticleCommentStatus(false);
+                            handlerApiError(throwable);
+                        }));
     }
 
     @Override
-    public void likeArticle(long mNewsId, boolean liked) {
-
+    public void likeArticle(long mNewsId) {
+        if (!mMvpView.isNetworkAvailable()) {
+            mMvpView.showError(HPApplication.getStringById(R.string.tips_network_unavailable));
+            return;
+        }
+        mMvpModel.addSubscribe(likeModel.like(mNewsId)
+                .subscribe(
+                        isLiked -> mMvpView.operateLikeStateSuccess(isLiked),
+                        throwable -> {
+                            mMvpView.operateLikeStateError();
+                            if (throwable instanceof ApiException) {
+                                ApiException apiException = (ApiException) throwable;
+                                if (apiException.getCode() == ResponseCode.TOKEN_ERROR.getStatus()) {
+                                    mMvpView.showMessage(HPApplication.getStringById(R.string.tips_please_login_first));
+                                    return;
+                                }
+                            }
+                            handlerApiError(throwable);
+                        }));
     }
 
     @Override
-    public void focusOnAuthor(long authorId, boolean focusOn) {
-
+    public void focusOnAuthor(long authorId) {
+        if (!mMvpView.isNetworkAvailable()) {
+            mMvpView.showError(HPApplication.getStringById(R.string.tips_network_unavailable));
+            return;
+        }
+        mMvpModel.addSubscribe(attentionModel.focusUser(authorId)
+                .subscribe(
+                        isFocusOn -> mMvpView.operateAttentionStateSuccess(isFocusOn),
+                        throwable -> {
+                            if (throwable instanceof ApiException) {
+                                ApiException apiException = (ApiException) throwable;
+                                if (apiException.getCode() == ResponseCode.TOKEN_ERROR.getStatus()) {
+                                    mMvpView.showMessage(HPApplication.getStringById(R.string.tips_please_login_first));
+                                    return;
+                                }
+                            }
+                        }));
     }
 }

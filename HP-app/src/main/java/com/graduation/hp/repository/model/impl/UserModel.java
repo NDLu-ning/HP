@@ -54,7 +54,7 @@ public class UserModel extends BaseModel
                 user.setUsername(preferencesHelper.getCurrentUserUsername());
                 user.setNickname(preferencesHelper.getCurrentUserNickname());
                 emitter.onSuccess(user);
-            }else {
+            } else {
                 emitter.onError(new ApiException(ResponseCode.TOKEN_ERROR));
             }
         });
@@ -80,8 +80,10 @@ public class UserModel extends BaseModel
         return Single.create((SingleOnSubscribe<User>) emitter -> {
             User user = new User();
             user.setId(preferencesHelper.getCurrentUserId());
+            user.setSex(preferencesHelper.getCurrentUserGender());
+            user.setRemark(preferencesHelper.getCurrentUserRemark());
+            user.setPhysiquId(preferencesHelper.getCurrentUserPhysiquId());
             user.setHeadUrl(preferencesHelper.getCurrentUserIcon());
-            user.setRemark("越过山丘，才发现无人等候；喋喋不休，再也唤不回温柔。为何记不得上一次是谁给的拥抱，在什么时候~~~");
             user.setUsername(preferencesHelper.getCurrentUserUsername());
             user.setNickname(preferencesHelper.getCurrentUserNickname());
             emitter.onSuccess(user);
@@ -167,12 +169,19 @@ public class UserModel extends BaseModel
     }
 
     @Override
-    public Single<Result> clearUserInfo() {
+    public void clearUserInfo() {
         PreferencesHelper preferencesHelper = mRepositoryHelper.getPreferencesHelper();
-        return Single.create(emitter -> {
-            preferencesHelper.clearUserInfo();
-            emitter.onSuccess(Result.ok());
-        });
+        preferencesHelper.clearUserInfo();
+    }
+
+    @Override
+    public Single<Result> logout() {
+        HttpHelper httpHelper = mRepositoryHelper.getHttpHelper();
+        return httpHelper.obtainRetrofitService(UserService.class)
+                .logout()
+                .map(RxUtils.mappingResponseToResult(Boolean.class))
+                .doOnSuccess(consumer -> clearUserInfo())
+                .compose(RxUtils.rxSchedulerHelper());
     }
 
     public RepositoryHelper getRepositoryHelper() {

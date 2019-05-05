@@ -40,7 +40,8 @@ public class RxUtils {
 
     public static <T> Function<String, Result> mappingResponseToResultWithNoException(final Class<T> clazz) {
         return s -> {
-            return Result.formatToPojo(s, clazz);
+            Result result = Result.formatToPojo(s, clazz);
+            return result;
         };
     }
 

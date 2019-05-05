@@ -8,4 +8,11 @@
     <string name="tips_error_general">糟糕，系统出错，请稍后再试。</string>
     <string name="tips_network_unavailable">健康养生：当前网络不可用</string>
     <string name="tips_please_login_first">健康养生：请先登录</string>
+
+    <string name="tips_text_size_small">小</string>
+    <string name="tips_text_size_middle">中</string>
+    <string name="tips_text_size_big">大</string>
+    <string name="tips_text_size_super_big">特大</string>
+    <string name="tips_album">手机相册</string>
+    <string name="tips_camera">相机拍摄</string>
 </resources>

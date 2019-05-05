@@ -5,10 +5,8 @@ import com.graduation.hp.R;
 import com.graduation.hp.core.mvp.BasePresenter;
 import com.graduation.hp.core.mvp.State;
 import com.graduation.hp.core.repository.http.bean.Page;
-import com.graduation.hp.core.repository.http.exception.ApiException;
 import com.graduation.hp.repository.contact.AttentionTabContact;
 import com.graduation.hp.repository.http.entity.FocusPO;
-import com.graduation.hp.repository.http.entity.Pager;
 import com.graduation.hp.repository.model.impl.AttentionModel;
 import com.graduation.hp.ui.navigation.attention.AttentionTabFragment;
 

@@ -27,7 +27,11 @@ public class Key {
     public static final String OFFSET = "offset";
     public static final String LIMIT = "limit";
     public static final String TYPE_ID = "typeId";
-    public static final String USERID = "userId";
+    public static final String USER_ID_CAMEL_CASE = "userId";
+    public static final String ARTICLE_ID = "articleId";
+    public static final String CONTEXT = "context";
+    public static final String DISCUSS_TYPE = "discuss_type";
+    public static final String TALKER_USER_ID = "talker_user_id ";
 
 
     /**
@@ -53,5 +57,6 @@ public class Key {
     public static final String USER = "user";
     public static final String UPDATE_TYPE = "update_type";
     public static final String UPDATE_TITIL_ARRAY = "update_title_array";
+    public static final String NEWS = "news";
 
 }

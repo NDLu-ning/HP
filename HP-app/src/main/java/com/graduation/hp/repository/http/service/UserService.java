@@ -28,4 +28,8 @@ public interface UserService {
     @Headers(value = {"Content-Type:application/json"})
     @POST("user")
     Single<String> updatePassword(@Body RequestBody requestBody);
+
+    @Headers(value = {"Content-Type:application/json", "Cookie-Name:token"})
+    @POST("user/logout")
+    Single<String> logout();
 }

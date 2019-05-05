@@ -57,8 +57,6 @@ public class UserPostFragment extends RootFragment<UserPostPresenter>
 
     private long mUserId;
 
-    private List<PostItem> mList = new ArrayList<>();
-
     @Override
     protected void init(Bundle savedInstanceState, View rootView) {
         super.init(savedInstanceState, rootView);
@@ -130,9 +128,9 @@ public class UserPostFragment extends RootFragment<UserPostPresenter>
     @Override
     public void onGetPostListSuccess(List<PostItem> list) {
         if (mPresenter.isRefresh()) {
-            mList.clear();
+            mItems.clear();
         }
-        mList.addAll(list);
+        mItems.addAll(list);
         mAdapter.notifyDataSetChanged();
     }
 

@@ -49,19 +49,54 @@ public class DialogUtils {
         titleTv.setText(title);
         TextView messageTv = view.findViewById(R.id.dialog_message_tv);
         messageTv.setText(message);
-        view.findViewById(R.id.dialog_confirm_btn).setOnClickListener(new View.OnClickListener() {
+        view.findViewById(R.id.dialog_confirm_btn).setOnClickListener(v -> {
+            listener.OnItemClick(v, 1);
+            dialog.dismiss();
+        });
+        view.findViewById(R.id.dialog_cancel_btn).setOnClickListener(v -> dialog.dismiss());
+        return dialog;
+    }
+
+    public static AlertDialog showTextSortDialog(Context context, final OnItemClickListener listener) {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        final int[] checkId = {0};
+        View view = LayoutInflater.from(context).inflate(R.layout.view_size_sort_dialog, null);
+        builder.setView(view);
+        builder.setCancelable(true);
+        final AlertDialog dialog = builder.create();
+        if (dialog.getWindow() != null) {
+            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        }
+        dialog.show();
+        view.findViewById(R.id.view_size_sort_small_rl).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                listener.OnItemClick(v, 0);
                 dialog.dismiss();
             }
         });
-        view.findViewById(R.id.dialog_cancel_btn).setOnClickListener(new View.OnClickListener() {
+        view.findViewById(R.id.view_size_sort_middle_rl).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 listener.OnItemClick(v, 1);
                 dialog.dismiss();
             }
         });
+        view.findViewById(R.id.view_size_sort_big_rl).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.OnItemClick(v, 2);
+                dialog.dismiss();
+            }
+        });
+        view.findViewById(R.id.view_size_sort_super_big_rl).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.OnItemClick(v, 3);
+                dialog.cancel();
+            }
+        });
+
         return dialog;
     }
 }

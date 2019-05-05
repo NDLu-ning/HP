@@ -23,7 +23,8 @@
             android:background="@android:color/transparent"
             android:fitsSystemWindows="true"
             android:gravity="center"
-            android:orientation="vertical"> <!-- 避免状态透明上移 -->
+            android:orientation="vertical"
+            android:visibility="gone"> <!-- 避免状态透明上移 -->
 
             <ImageView
                 android:id="@+id/empty_iv"
@@ -52,7 +53,8 @@
             android:background="@android:color/transparent"
             android:fitsSystemWindows="true"
             android:gravity="center"
-            android:orientation="vertical"> <!-- 避免状态透明上移 -->
+            android:orientation="vertical"
+            android:visibility="gone"> <!-- 避免状态透明上移 -->
 
             <ImageView
                 android:id="@+id/error_iv"
@@ -60,17 +62,11 @@
                 android:layout_height="@dimen/dp_140"
                 android:src="@mipmap/ic_empty_comment" />
 
-            <TextView
+            <Button
                 android:id="@+id/error_retry"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/bg_common_circle_btn"
+                style="@style/Button.Green"
                 android:gravity="center"
-                android:padding="@dimen/dp_6"
-                android:paddingStart="@dimen/dp_24"
-                android:paddingEnd="@dimen/dp_24"
-                android:text="@string/tips_retry"
-                android:textSize="@dimen/sp_12" />
+                android:text="@string/tips_retry" />
 
         </LinearLayout>
 
@@ -80,6 +76,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:overScrollMode="never"
+            android:paddingStart="@dimen/dp_14"
+            android:paddingEnd="@dimen/dp_14"
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
     </FrameLayout>
 </LinearLayout>

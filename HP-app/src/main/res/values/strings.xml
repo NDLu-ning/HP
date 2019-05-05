@@ -99,12 +99,44 @@
     <string name="hint_write_comment">写评论</string>
     <string name="tips_put_first_comment">快来抢沙发</string>
 
+    <string name="hint_comment">有趣有品的评论将更容易被看到</string>
+    <string name="hint_comment_template">回复&#032;<xliff:g id="REPLY_SIZE">%s</xliff:g>:</string>
+    <string name="tips_comment_failed">评论失败</string>
+    <string name="tips_comment_success">评论成功</string>
 
     <string name="tips_news_author">
         <Data><![CDATA[<b>%1s</b>]]></Data>
     </string>
     <string name="tips_publish_comment">发表</string>
     <string name="tips_content_not_null">评论内容不能为空</string>
+    <string name="tips_all_discussions_title">全部评论</string>
+    <string name="tips_like_success">点赞成功</string>
+    <string name="tips_cancel_like_success">取消赞成功</string>
+    <string name="tips_focus_on_success">关注成功</string>
+    <string name="tips_cancel_focus_on_success">取消关注成功</string>
+    <string name="tips_happen_unknown_error">发生未知错误</string>
+    <string name="tips_connect_server">正在查询</string>
+
+    <string name="tips_setting_update">检查更新</string>
+    <string name="tips_setting_about">关于</string>
+    <string name="tips_setting_clear">清理缓存</string>
+    <string name="tips_setting_user">我的帐户</string>
+    <string name="tips_setting_login">登录</string>
+    <string name="tips_setting_text_size_middle">中</string>
+    <string name="tips_setting_text_size">字体大小</string>
+    <string name="tips_setting_logout">注销</string>
+    <string name="tips_dialog_title">提示信息</string>
+    <string name="tips_want_to_clear_cache">是否需要清除缓存？</string>
+    <string name="tips_logout_subtitle">退出登录</string>
+    <string name="tips_logout_message">你确定想从这个账号退出吗？</string>
+    <string name="tips_logout_ing">正在注销...</string>
+    <string name="tips_logout_success">注销成功</string>
+    <string name="tips_update_info_title">更新信息</string>
+
+    <string name="tips_user_info_title">用户信息</string>
+    <string name="tips_modify_gender_title">更改性别</string>
+    <string name="tips_modify_nickanme_title">更改昵称</string>
+    <string name="tips_modify_signature_title">更改签名</string>
 
 
     <string-array name="user_center_tab_titles">

@@ -51,7 +51,7 @@ public class NewsModel extends BaseModel
         HttpHelper httpHelper = mRepositoryHelper.getHttpHelper();
         return Single.create((SingleOnSubscribe<Map<String, Object>>) emitter -> {
             Map<String, Object> map = new HashMap<>();
-            map.put(Key.USERID, userId);
+            map.put(Key.USER_ID_CAMEL_CASE, userId);
             map.put(Key.LIMIT, limit);
             map.put(Key.OFFSET, offset);
             emitter.onSuccess(map);

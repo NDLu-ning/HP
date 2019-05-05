@@ -9,9 +9,10 @@
 
 
     <color name="md_selected_blue">#1296db</color>
-    <color name="md_selected_blue_dark">#108CCC</color>
-    
-    
+    <color name="md_selected_blue_dark">#E4E4E4</color>
+
+    <color name="md_selected_grey">#E4E4E4</color>
+
     <color name="ping_he_color">#CC6633</color>
     <color name="qi_xu_color">#0099CC</color>
     <color name="yang_xu_color">#FF6600</color>

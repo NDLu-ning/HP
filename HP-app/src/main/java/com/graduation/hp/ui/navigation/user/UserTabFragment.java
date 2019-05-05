@@ -12,6 +12,7 @@ import com.graduation.hp.app.constant.Key;
 import com.graduation.hp.app.di.component.DaggerFragmentComponent;
 import com.graduation.hp.app.di.module.FragmentModule;
 import com.graduation.hp.core.app.di.component.AppComponent;
+import com.graduation.hp.core.app.event.TokenInvalidEvent;
 import com.graduation.hp.core.ui.BaseFragment;
 import com.graduation.hp.core.utils.GlideUtils;
 import com.graduation.hp.core.utils.ScreenUtils;
@@ -20,7 +21,10 @@ import com.graduation.hp.repository.contact.UserTabContact;
 import com.graduation.hp.repository.http.entity.User;
 import com.graduation.hp.ui.navigation.NavigationTabActivity;
 import com.graduation.hp.ui.navigation.user.center.UserCenterActivity;
+import com.graduation.hp.ui.navigation.user.info.UserInfoActivity;
+import com.graduation.hp.ui.setting.SettingActivity;
 
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
@@ -47,7 +51,6 @@ public class UserTabFragment extends BaseFragment<UserTabPresenter>
 
     private User mUser;
 
-
     public static UserTabFragment newInstance() {
         UserTabFragment fragment = new UserTabFragment();
         return fragment;
@@ -65,7 +68,9 @@ public class UserTabFragment extends BaseFragment<UserTabPresenter>
 
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
-        outState.putParcelable(Key.USER, mUser);
+        if (mUser != null) {
+            outState.putParcelable(Key.USER, mUser);
+        }
         super.onSaveInstanceState(outState);
     }
 
@@ -90,13 +95,15 @@ public class UserTabFragment extends BaseFragment<UserTabPresenter>
                 (id == R.id.my_info_cl || id == R.id.my_message_cl)) {
             ((NavigationTabActivity) getActivity()).skipToLoginPage(null);
             showMessage(getString(R.string.tips_please_login_first));
-        }else {
+        } else {
             switch (id) {
                 case R.id.my_setting_cl:
+                    startActivity(SettingActivity.createIntent(getContext()));
                     break;
                 case R.id.my_message_cl:
                     break;
                 case R.id.my_info_cl:
+                    startActivity(UserInfoActivity.createIntent(getContext(),mUser));
                     break;
                 case R.id.my_test_cl:
                     break;
@@ -115,7 +122,9 @@ public class UserTabFragment extends BaseFragment<UserTabPresenter>
         if (isAdded()) {
             if (mUser == null) {
                 myNameTv.setText(getString(R.string.tips_myself_login));
-                myCenterCl.setOnClickListener(v -> ((NavigationTabActivity) getActivity()).skipToLoginPage(null));
+                myCenterCl.setOnClickListener(v -> {
+                    EventBus.getDefault().post(TokenInvalidEvent.INSTANCE);
+                });
             } else {
                 int width = ScreenUtils.dip2px(getContext(), 80);
                 GlideUtils.loadUserHead(myPhotoIv, mUser.getHeadUrl(), width, width);

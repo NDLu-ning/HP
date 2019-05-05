@@ -41,15 +41,14 @@ public class AttentionButton extends AppCompatButton {
         setTextColor(getResources().getColor(R.color.selector_focus_tv));
         setText(getResources().getString(R.string.action_focused));
         setOnClickListener(v -> {
-            setFocusOn(!focusOn);
             if (listener != null) {
                 listener.onClick(this, focusOn);
             }
-            focusOn = !focusOn;
         });
     }
 
     public void setFocusOn(boolean focusOn) {
+        this.focusOn = focusOn;
         if (!focusOn) {
             setBackgroundResource(R.drawable.selector_focus_btn);
             setTextColor(getResources().getColor(R.color.selector_focus_tv));

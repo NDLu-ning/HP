@@ -93,7 +93,7 @@
             android:scaleType="fitXY"
             android:maxWidth="@dimen/dp_80"
             android:maxHeight="@dimen/dp_80"
-            tools:src="@mipmap/ic_user_default_photo" />
+            android:src="@mipmap/ic_user_default_photo" />
 
 
     </RelativeLayout>

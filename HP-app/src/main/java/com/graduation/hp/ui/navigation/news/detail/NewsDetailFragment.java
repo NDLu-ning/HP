@@ -1,5 +1,6 @@
 package com.graduation.hp.ui.navigation.news.detail;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -32,9 +33,11 @@ import com.graduation.hp.presenter.NewsDetailPresenter;
 import com.graduation.hp.repository.contact.NewsDetailContact;
 import com.graduation.hp.repository.http.entity.ArticleVO;
 import com.graduation.hp.ui.navigation.news.comment.NewsCommentFragment;
+import com.graduation.hp.ui.navigation.news.comment.PrepareForDiscussionListener;
 import com.graduation.hp.utils.StringUtils;
 import com.graduation.hp.widget.AttentionButton;
 import com.graduation.hp.widget.LikeButton;
+import com.graduation.hp.widget.dialog.CommentDialog;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -103,14 +106,32 @@ public class NewsDetailFragment extends RootFragment<NewsDetailPresenter>
     private WebSettings mWebSettings;
     private WebView mWebView;
     private long mNewsId;
+    private int mLikeNum = 0;
+    private int mDiscussNum = 0;
     private ArticleVO mNews;
     private NewsCommentFragment mCommentFragment;
+    private PrepareForDiscussionListener mDiscussionDialogListener;
+
+
+    @Override
+    public void onAttach(Context context) {
+        try {
+            mDiscussionDialogListener = (PrepareForDiscussionListener) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString() +
+                    "must implement the PrepareForDiscussionListener");
+        }
+        super.onAttach(context);
+    }
 
     @Override
     protected void init(Bundle savedInstanceState, View rootView) {
         super.init(savedInstanceState, rootView);
         Bundle args = getArguments();
         mNewsId = args.getLong(Key.NEWS_ID, 0L);
+        if (savedInstanceState != null) {
+            mNews = savedInstanceState.getParcelable(Key.NEWS);
+        }
         if (mNewsId == 0L) {
             throw new IllegalArgumentException("NewsDetailFragment must receive the news's id");
         }
@@ -121,9 +142,20 @@ public class NewsDetailFragment extends RootFragment<NewsDetailPresenter>
 
     @Override
     protected void onLazyLoad() {
-        mPresenter.getNewsDetailByNewsId(mNewsId);
+        if (mNews == null) {
+            mPresenter.getNewsDetailByNewsId(mNewsId);
+        } else {
+            onGetNewsDetailInfoSuccess(mNews);
+        }
     }
 
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        if (mNews != null) {
+            outState.putParcelable(Key.NEWS, mNews);
+        }
+        super.onSaveInstanceState(outState);
+    }
 
     @OnClick({R.id.news_detail_author_info_cl, R.id.news_detail_author_info_2_cl,
             R.id.news_detail_comment_iv_container, R.id.news_detail_comment_tv})
@@ -135,6 +167,7 @@ public class NewsDetailFragment extends RootFragment<NewsDetailPresenter>
                 break;
             case R.id.news_detail_comment_tv:
             case R.id.news_detail_comment_iv_container:
+                mDiscussionDialogListener.showCommentDialog(getString(R.string.hint_comment), listener);
                 // 进行评论
                 break;
         }
@@ -148,6 +181,11 @@ public class NewsDetailFragment extends RootFragment<NewsDetailPresenter>
     @Override
     protected int getNoDataStringResId() {
         return 0;
+    }
+
+    @Override
+    protected void onRetryClick() {
+        mPresenter.getNewsDetailByNewsId(mNewsId);
     }
 
     @Override
@@ -167,7 +205,8 @@ public class NewsDetailFragment extends RootFragment<NewsDetailPresenter>
     @Override
     public void onGetNewsDetailInfoSuccess(ArticleVO articleVO) {
         this.mNews = articleVO;
-        // TODO SHOW
+        this.mLikeNum = articleVO.getLikeNum();
+        this.mDiscussNum = articleVO.getDiscussNum();
         showNewsContent();
         showNewsAuthorInfo();
         mPresenter.isFocusOn(articleVO.getUserId());
@@ -181,13 +220,14 @@ public class NewsDetailFragment extends RootFragment<NewsDetailPresenter>
         newsDetailAuthorPhysicalTv.setText(mNews.getPhysiqueStr());
         newsDetailAuthorPhysical2Tv.setText(mNews.getPhysiqueStr());
         newsDetailDateSummaryTv.setText(DateUtils.formatPublishDate(mNews.getCreateTime()));
-        newsDetailCommentNumTv.setText(StringUtils.getFormattedOverMaximumString(mNews.getDiscussNum(), 999, R.string.tips_over_maximum));
     }
 
     private void showNewsContent() {
-        String title = mNews.getTitle();
-        newsDetailTitleTv.setText(title);
-        newsDetailLikeTv.setText(String.valueOf(mNews.getLikeNum()));
+        newsDetailTitleTv.setText(mNews.getTitle());
+        mLikeNum = mNews.getLikeNum();
+        mDiscussNum = mNews.getDiscussNum();
+        newsDetailLikeTv.setText(String.valueOf(mLikeNum));
+        newsDetailCommentNumTv.setText(StringUtils.getFormattedOverMaximumString(mDiscussNum, 999, R.string.tips_over_maximum));
         String body = mNews.getContent();
         // 使用css样式的方式设置图片大小
         String css = "<style type=\"text/css\"> img {width:100%;height:auto;}body {margin-right:15px;margin-left:15px;margin-top:15px;font-size:24px;}</style>";
@@ -201,9 +241,55 @@ public class NewsDetailFragment extends RootFragment<NewsDetailPresenter>
         showNewsSubButton(isFocusOn);
     }
 
+    @Override
+    public void operateLikeStateSuccess(boolean isLiked) {
+        newsDetailLikeBtn.setLiked(isLiked);
+        newsDetailLikeTv.setText(String.valueOf(isLiked ? ++mLikeNum : --mLikeNum));
+        showMessage(getString(isLiked ? R.string.tips_like_success : R.string.tips_cancel_like_success));
+    }
+
+    @Override
+    public void operateLikeStateError() {
+        newsDetailLikeBtn.setLiked(!newsDetailLikeBtn.isLiked());
+        showMessage(getString(R.string.tips_happen_unknown_error));
+    }
+
+    @Override
+    public void operateAttentionStateSuccess(boolean isFocusOn) {
+        showNewsSubButton(isFocusOn);
+        showMessage(getString(isFocusOn ? R.string.tips_focus_on_success : R.string.tips_cancel_focus_on_success));
+    }
+
+    @Override
+    public void operateArticleCommentStatus(boolean success) {
+        mDiscussionDialogListener.dismissCommentDialog();
+        showMessage(getString(success ? R.string.tips_comment_success : R.string.tips_comment_failed));
+    }
+
     private void showNewsSubButton(boolean isFocusOn) {
         newsDetailSubCb.setFocusOn(isFocusOn);
         newsDetailSubCb2.setFocusOn(isFocusOn);
+    }
+
+    private CommentDialog.CommentDialogClickListener listener = new CommentDialog.CommentDialogClickListener() {
+        @Override
+        public void onDialogBackPressed() {
+            mDiscussionDialogListener.dismissCommentDialog();
+            mPresenter.getModel().cancelSubscribe();
+        }
+
+        @Override
+        public void onSendMessage(String content) {
+            mPresenter.addComment(mNewsId, content);
+        }
+    };
+
+    @Override
+    public void dismissDialog() {
+        super.dismissDialog();
+        if (mDiscussionDialogListener != null) {
+            mDiscussionDialogListener.dismissCommentDialog();
+        }
     }
 
     /**
@@ -221,14 +307,6 @@ public class NewsDetailFragment extends RootFragment<NewsDetailPresenter>
             if (TextUtils.isEmpty(imageUrls)) return;
 
         }
-
-//        @android.webkit.JavascriptInterface
-//        public void resize(final float height) {
-//            LogUtils.d(height + "");
-//            getActivity().runOnUiThread(() ->
-//                    mWebView.setLayoutParams(new FrameLayout.LayoutParams(getResources().getDisplayMetrics().widthPixels,
-//                    (int) (height * getResources().getDisplayMetrics().density))));
-//        }
     }
 
     class MyWebChromeClient extends WebChromeClient {
@@ -301,8 +379,10 @@ public class NewsDetailFragment extends RootFragment<NewsDetailPresenter>
      */
     private void initWebView(View rootView) {
         mWebView = new WebView(HPApplication.getInstance());
+        FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         FrameLayout frameLayout = rootView.findViewById(R.id.news_detail_web_container);
         frameLayout.addView(mWebView);
+        mWebView.setLayoutParams(layoutParams);
         mWebSettings = mWebView.getSettings();
         //自适应屏幕
         mWebSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
@@ -332,29 +412,26 @@ public class NewsDetailFragment extends RootFragment<NewsDetailPresenter>
     }
 
     private void initListener() {
-        newsDetailLikeBtn.setLikeButtonClickListener((v, liked) -> mPresenter.likeArticle(mNewsId, liked));
+        newsDetailLikeBtn.setLikeButtonClickListener((v, liked) -> mPresenter.likeArticle(mNewsId));
         newsDetailSubCb.setAttentionButtonClickListener((v, focusOn) -> {
-            if (mNews == null) {
+            if (mNews == null)
                 return;
-            }
-            mPresenter.focusOnAuthor(mNews.getUserId(), focusOn);
+            mPresenter.focusOnAuthor(mNews.getUserId());
         });
         newsDetailSubCb2.setAttentionButtonClickListener((v, focusOn) -> {
-            if (mNews == null) {
+            if (mNews == null)
                 return;
-            }
-            mPresenter.focusOnAuthor(mNews.getUserId(), focusOn);
+            mPresenter.focusOnAuthor(mNews.getUserId());
         });
         newsDetailScrollNsv.setOnScrollChangeListener((NestedScrollView.OnScrollChangeListener) (v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
             if (newsDetailAuthorInfo2Cl != null && newsDetailAuthorInfoCl != null) {
-//                    LogUtils.d(scrollY + "," + newsDetailAuthorInfo2Cl.getMeasuredHeight() + "," + newsDetailAuthorInfo2Cl.getY());
                 if (scrollY >= newsDetailAuthorInfo2Cl.getY() + newsDetailAuthorInfo2Cl.getMeasuredHeight()) {
                     newsDetailAuthorInfoCl.setVisibility(View.VISIBLE);
                 } else {
                     newsDetailAuthorInfoCl.setVisibility(View.INVISIBLE);
                 }
             }
-            if (scrollY == (v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight())) {
+            if (scrollY <= (v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight())) {
                 LogUtils.d("BOTTOM SCROLL");
                 if (mCommentFragment == null || !mCommentFragment.isAdded()) {
                     mCommentFragment = NewsCommentFragment.newInstance(mNewsId);

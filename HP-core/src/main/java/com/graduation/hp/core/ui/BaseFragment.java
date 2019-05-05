@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.ColorRes;
 import android.support.annotation.DrawableRes;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
@@ -19,6 +20,7 @@ import com.graduation.hp.core.mvp.BaseContact;
 import com.graduation.hp.core.mvp.BasePresenter;
 import com.graduation.hp.core.utils.DialogUtils;
 import com.graduation.hp.core.utils.NetworkUtils;
+import com.graduation.hp.core.utils.ToastUtils;
 
 import javax.inject.Inject;
 
@@ -58,7 +60,23 @@ public abstract class BaseFragment<P extends BasePresenter> extends BaseLazyLoad
     }
 
     @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        if (mPresenter != null) {
+            mPresenter.onSaveInstanceState(outState);
+        }
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    protected void init(Bundle savedInstanceState, View view) {
+        if (mPresenter != null && savedInstanceState != null) {
+            mPresenter.onRestoreInstanceState(savedInstanceState);
+        }
+    }
+
+    @Override
     public void showMessage(String msg) {
+        ToastUtils.show(getContext(), msg);
     }
 
     @Override

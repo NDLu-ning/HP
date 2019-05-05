@@ -52,7 +52,14 @@ public class AttentionModel extends BaseModel
         }).flatMap(params -> httpHelper.obtainRetrofitService(AttentionService.class)
                 .focusUser(JsonUtils.mapToRequestBody(params))
                 .map(RxUtils.mappingResponseToResultWithNoException(Object.class))
-                .map(checkAttentionStatus())
+                .map(result -> {
+                    if (result.getStatus() == ResponseCode.FOCUS_ON.getStatus()) {
+                        return true;
+                    } else if (result.getStatus() == ResponseCode.CANCEL_FOCUS_ON.getStatus()) {
+                        return false;
+                    }
+                    throw new ApiException(result.getStatus(), result.getMsg());
+                })
                 .compose(RxUtils.rxSchedulerHelper()));
     }
 
@@ -99,18 +106,14 @@ public class AttentionModel extends BaseModel
         }).flatMap(params -> httpHelper.obtainRetrofitService(AttentionService.class)
                 .isFocus(JsonUtils.mapToRequestBody(params))
                 .map(RxUtils.mappingResponseToResultWithNoException(Result.class))
-                .map(checkAttentionStatus())
+                .map(result -> {
+                    if (result.getStatus() == ResponseCode.HAVE_NOT_FOCUS_ON.getStatus()) {
+                        return false;
+                    } else if (result.getStatus() == ResponseCode.ALREADY_FOCUS_ON.getStatus()) {
+                        return true;
+                    }
+                    throw new ApiException(result.getStatus(), result.getMsg());
+                })
                 .compose(RxUtils.rxSchedulerHelper()));
-    }
-
-    private Function<Result, Boolean> checkAttentionStatus() {
-        return result -> {
-            if (result.getStatus() == ResponseCode.FOCUS_ON.getStatus()) {
-                return true;
-            } else if (result.getStatus() == ResponseCode.UN_FOCUS_ON.getStatus()) {
-                return false;
-            }
-            throw new ApiException(result.getStatus(), result.getMsg());
-        };
     }
 }

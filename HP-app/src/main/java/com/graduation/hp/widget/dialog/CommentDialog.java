@@ -41,44 +41,34 @@ public class CommentDialog extends DialogFragment {
     }
 
     @SuppressLint("ValidFragment")
-    public CommentDialog(String hint) {
+    public CommentDialog(String hint, CommentDialogClickListener listener) {
+        this.mListener = listener;
         this.hint = hint;
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        try {
-            mListener = (CommentDialogClickListener) context;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(context.toString()
-                    + " must implement CommentDialogClickListener");
-        }
-        super.onAttach(context);
     }
 
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         View view = LayoutInflater.from(getContext()).inflate(R.layout.dialog_comment_layout, null);
-        mDialog = new AlertDialog.Builder(getContext(), R.style.BottomDialogStyle)
-                .setCancelable(true)
-                .setView(view)
-                .create();
+        mDialog = new Dialog(getActivity(), R.style.BottomDialogStyle);
+        mDialog.requestWindowFeature(Window.FEATURE_NO_TITLE); // 设置Content前设定
+//        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+        View contentView = View.inflate(getActivity(), R.layout.dialog_comment_layout, null);
+        mDialog.setContentView(contentView);
         mDialog.setCanceledOnTouchOutside(true);
-        mDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         // 设置宽度为屏宽, 靠近屏幕底部。
         Window window = mDialog.getWindow();
         WindowManager.LayoutParams lp = window.getAttributes();
         lp.gravity = Gravity.BOTTOM; // 紧贴底部
         lp.alpha = 1;
         lp.dimAmount = 0.5f;
-        lp.height = ScreenUtils.dip2px(getContext(), 140.0F);
+        lp.height = ScreenUtils.dip2px(getContext(), 180.0F);
         lp.width = WindowManager.LayoutParams.MATCH_PARENT; // 宽度持平
         window.setAttributes(lp);
         window.addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+        final Button mSendBtn = view.findViewById(R.id.dialog_publish_btn);
         mEditText = view.findViewById(R.id.dialog_input_et);
         mEditText.setHint(hint);
-        final Button mSendBtn = view.findViewById(R.id.dialog_publish_btn);
         mEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -90,7 +80,11 @@ public class CommentDialog extends DialogFragment {
 
             @Override
             public void afterTextChanged(Editable editable) {
-                mSendBtn.setEnabled(editable.length() > 0);
+                if(editable.length() > 0){
+                    mSendBtn.setEnabled(true);
+                }else {
+                    mSendBtn.setEnabled(false);
+                }
             }
         });
         mSendBtn.setOnClickListener(v -> {
@@ -108,6 +102,7 @@ public class CommentDialog extends DialogFragment {
                             mListener.onDialogBackPressed();
                         }
                         hideProgressDialog();
+                        return true;
                     }
                     return false;
                 });
@@ -119,7 +114,22 @@ public class CommentDialog extends DialogFragment {
         mEditText.setFocusable(true);
         mEditText.setFocusableInTouchMode(true);
         mEditText.requestFocus();
+        mDialog.setOnKeyListener((dialogInterface, keyCode, keyEvent) -> {
+            if (keyCode == KeyEvent.KEYCODE_BACK && keyEvent.getAction() == KeyEvent.ACTION_DOWN) {
+                if (mListener != null && isAdded()) {
+                    mListener.onDialogBackPressed();
+                }
+                hideProgressDialog();
+                return true;
+            }
+            return false;
+        });
         return mDialog;
+    }
+
+    public boolean isShowing() {
+        return isAdded() && (mDialog != null && mDialog.isShowing()
+                || mProgressDialog != null && mProgressDialog.isShowing());
     }
 
     private void hideProgressDialog() {

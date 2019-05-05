@@ -78,6 +78,7 @@ public class UserCenterActivity extends BaseActivity<UserCenterPresenter>
     private long mUserId;
     private long mOwnerId;
     private UserCenterAdapter mAdapter;
+    private User mUser;
 
     public static Intent createIntent(Context context, long ownerId) {
         return createIntent(context, ownerId, ownerId);
@@ -139,8 +140,8 @@ public class UserCenterActivity extends BaseActivity<UserCenterPresenter>
 
     @Override
     public void onGetUserSuccess(UserVO userVo) {
-        User user = userVo.getUser();
-        setUserData(user);
+        mUser = userVo.getUser();
+        setUserData(mUser);
         setUserAttentionNumber(userVo.getAttentionCount());
     }
 
@@ -156,7 +157,7 @@ public class UserCenterActivity extends BaseActivity<UserCenterPresenter>
         if (mOwnerId == mUserId) {
             mUserCenterSubCb.setVisibility(View.GONE);
             mUserCenterEditTv.setVisibility(View.VISIBLE);
-            mUserCenterEditTv.setOnClickListener(v -> startActivity(UserInfoActivity.createIntent(this)));
+            mUserCenterEditTv.setOnClickListener(v -> startActivity(UserInfoActivity.createIntent(this, user)));
         } else {
             mUserCenterEditTv.setVisibility(View.GONE);
             mUserCenterSubCb.setVisibility(View.VISIBLE);
@@ -172,7 +173,7 @@ public class UserCenterActivity extends BaseActivity<UserCenterPresenter>
 
     @OnClick({R.id.user_center_edit_tv})
     public void onClick(View view) {
-        startActivity(UserInfoActivity.createIntent(this));
+        startActivity(UserInfoActivity.createIntent(this, mUser));
     }
 
     @Override

@@ -5,6 +5,7 @@ import com.graduation.hp.repository.http.entity.User;
 import com.graduation.hp.repository.http.entity.local.UserVO;
 
 import io.reactivex.Single;
+import io.reactivex.disposables.Disposable;
 
 public interface IUserModel {
 
@@ -22,5 +23,7 @@ public interface IUserModel {
 
     Single<Boolean> isCurrentUserLogin();
 
-    Single<Result> clearUserInfo();
+    void clearUserInfo();
+
+    Single<Result> logout();
 }

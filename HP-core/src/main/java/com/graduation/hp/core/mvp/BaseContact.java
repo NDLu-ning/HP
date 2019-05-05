@@ -1,5 +1,7 @@
 package com.graduation.hp.core.mvp;
 
+import android.os.Bundle;
+
 import com.graduation.hp.core.app.event.TokenInvalidEvent;
 
 import io.reactivex.disposables.Disposable;
@@ -71,6 +73,10 @@ public interface BaseContact {
          * @param apiException
          */
         void handlerApiError(Throwable apiException);
+
+        void onSaveInstanceState(Bundle outState);
+
+        void onRestoreInstanceState(Bundle savedInstanceState);
     }
 
 

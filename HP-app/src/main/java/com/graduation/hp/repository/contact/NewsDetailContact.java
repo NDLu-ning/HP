@@ -9,6 +9,13 @@ public interface NewsDetailContact {
 
         void onGetAttentionSuccess(boolean isFocusOn);
 
+        void operateLikeStateSuccess(boolean isLiked);
+
+        void operateAttentionStateSuccess(boolean isFocusOn);
+
+        void operateArticleCommentStatus(boolean success);
+
+        void operateLikeStateError();
     }
 
     interface Presenter {
@@ -21,8 +28,8 @@ public interface NewsDetailContact {
 
         void addComment(long newsId, String content);
 
-        void likeArticle(long mNewsId, boolean liked);
+        void likeArticle(long newsId);
 
-        void focusOnAuthor(long authorId, boolean focusOn);
+        void focusOnAuthor(long authorId);
     }
 }

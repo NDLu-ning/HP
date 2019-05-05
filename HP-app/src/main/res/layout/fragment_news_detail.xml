@@ -36,6 +36,7 @@
                     android:id="@+id/toolbar_left_btn"
                     android:layout_width="@dimen/dp_30"
                     android:layout_height="@dimen/dp_30"
+                    android:scaleType="center"
                     android:layout_gravity="start|center_vertical"
                     android:background="@null"
                     android:padding="@dimen/dp_10"

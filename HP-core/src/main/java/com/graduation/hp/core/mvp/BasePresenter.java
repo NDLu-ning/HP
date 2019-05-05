@@ -1,5 +1,7 @@
 package com.graduation.hp.core.mvp;
 
+import android.os.Bundle;
+
 import com.graduation.hp.core.app.event.TokenInvalidEvent;
 import com.graduation.hp.core.repository.http.bean.ResponseCode;
 import com.graduation.hp.core.repository.http.exception.ApiException;
@@ -89,6 +91,16 @@ public abstract class BasePresenter<V extends BaseContact.View
     }
 
     protected void handleConnectionException() {
+
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+
+    }
+
+    @Override
+    public void onRestoreInstanceState(Bundle savedInstanceState) {
 
     }
 

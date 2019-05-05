@@ -8,6 +8,10 @@ public interface PreferencesHelper {
 
     void updateAppFirstLauncherStatus(boolean isFirst);
 
+    void updateTextSize(int textSize);
+
+    int getTextSize();
+
     String getCurrentUserToken();
 
     void saveCurrentUserToken(String token);

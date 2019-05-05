@@ -10,6 +10,7 @@ import com.graduation.hp.ui.auth.AuthActivity;
 import com.graduation.hp.ui.navigation.news.detail.NewsDetailActivity;
 import com.graduation.hp.ui.navigation.user.center.UserCenterActivity;
 import com.graduation.hp.ui.navigation.user.info.UserInfoActivity;
+import com.graduation.hp.ui.setting.SettingActivity;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import dagger.Component;
@@ -35,5 +36,7 @@ public interface ActivityComponent {
     void inject(UserCenterActivity userCenterActivity);
 
     void inject(UserInfoActivity userInfoActivity);
+
+    void inject(SettingActivity settingActivity);
 
 }

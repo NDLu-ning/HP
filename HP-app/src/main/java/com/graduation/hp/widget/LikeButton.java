@@ -10,7 +10,7 @@ import com.graduation.hp.core.utils.AnimUtils;
 
 public class LikeButton extends AppCompatImageView {
 
-    private boolean liked = true;
+    private boolean liked = false;
     private LikeButtonClickListener listener;
 
     public interface LikeButtonClickListener {

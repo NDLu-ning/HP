@@ -293,11 +293,9 @@ public class NavigationTabActivity extends BaseActivity {
         }
     }
 
-
     @Override
     @Subscribe(threadMode = ThreadMode.MAIN, priority = 1)
     public void skipToLoginPage(TokenInvalidEvent event) {
-        EventBus.getDefault().cancelEventDelivery(event);
         startActivity(AuthActivity.createIntent(this));
     }
 

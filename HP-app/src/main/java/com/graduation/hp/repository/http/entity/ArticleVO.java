@@ -1,5 +1,7 @@
 package com.graduation.hp.repository.http.entity;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.text.TextUtils;
 
 import com.alibaba.fastjson.annotation.JSONField;
@@ -13,8 +15,8 @@ import java.util.Date;
  * @author wst
  * @date 2019/4/29 12:26
  **/
-public class ArticleVO extends Page {
-
+public class ArticleVO extends Page
+        implements Parcelable {
 
     /**
      * 昵称
@@ -102,6 +104,61 @@ public class ArticleVO extends Page {
 
     public ArticleVO() {
     }
+
+    protected ArticleVO(Parcel in) {
+        super(in);
+        nickname = in.readString();
+        headUrl = in.readString();
+        physiqueStr = in.readString();
+        typedStr = in.readString();
+        if (in.readByte() == 0) {
+            id = null;
+        } else {
+            id = in.readLong();
+        }
+        if (in.readByte() == 0) {
+            userId = null;
+        } else {
+            userId = in.readLong();
+        }
+        if (in.readByte() == 0) {
+            physiqueId = null;
+        } else {
+            physiqueId = in.readLong();
+        }
+        if (in.readByte() == 0) {
+            typedId = null;
+        } else {
+            typedId = in.readLong();
+        }
+        title = in.readString();
+        pic = in.readString();
+        pic2 = in.readString();
+        pic3 = in.readString();
+        if (in.readByte() == 0) {
+            likeNum = null;
+        } else {
+            likeNum = in.readInt();
+        }
+        if (in.readByte() == 0) {
+            discussNum = null;
+        } else {
+            discussNum = in.readInt();
+        }
+        content = in.readString();
+    }
+
+    public static final Creator<ArticleVO> CREATOR = new Creator<ArticleVO>() {
+        @Override
+        public ArticleVO createFromParcel(Parcel in) {
+            return new ArticleVO(in);
+        }
+
+        @Override
+        public ArticleVO[] newArray(int size) {
+            return new ArticleVO[size];
+        }
+    };
 
     public String getTitle() {
         return title;
@@ -257,5 +314,60 @@ public class ArticleVO extends Page {
 
     public void setTypedStr(String typedStr) {
         this.typedStr = typedStr;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        super.writeToParcel(dest, flags);
+        dest.writeString(nickname);
+        dest.writeString(headUrl);
+        dest.writeString(physiqueStr);
+        dest.writeString(typedStr);
+        if (id == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeLong(id);
+        }
+        if (userId == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeLong(userId);
+        }
+        if (physiqueId == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeLong(physiqueId);
+        }
+        if (typedId == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeLong(typedId);
+        }
+        dest.writeString(title);
+        dest.writeString(pic);
+        dest.writeString(pic2);
+        dest.writeString(pic3);
+        if (likeNum == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(likeNum);
+        }
+        if (discussNum == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(discussNum);
+        }
+        dest.writeString(content);
     }
 }
