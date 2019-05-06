@@ -8,10 +8,13 @@ import io.reactivex.Single;
 
 public interface INewsModel {
 
-    Single<List<ArticleVO>> getNewsListByType(long type, int page, int limit);
 
     Single<List<ArticleVO>> getNewsListByUserId(long userId, int page, int limit);
 
+    Single<List<ArticleVO>> getNewsListByTypeId(long userId, int offset, int limit);
+
     Single<ArticleVO> getNewsById(long newsId);
+
+
 
 }

@@ -1,17 +1,48 @@
 package com.graduation.hp.presenter;
 
+import com.graduation.hp.R;
+import com.graduation.hp.core.HPApplication;
 import com.graduation.hp.core.mvp.BasePresenter;
+import com.graduation.hp.core.mvp.State;
+import com.graduation.hp.core.repository.http.bean.Page;
 import com.graduation.hp.repository.contact.ConstitutionListContact;
+import com.graduation.hp.repository.model.impl.InvitationModel;
 import com.graduation.hp.repository.model.impl.NewsModel;
 import com.graduation.hp.ui.navigation.constitution.list.ConstitutionListFragment;
 
 import javax.inject.Inject;
 
-public class ConstitutionListPresenter extends BasePresenter<ConstitutionListFragment, NewsModel>
+public class ConstitutionListPresenter extends BasePresenter<ConstitutionListFragment, InvitationModel>
         implements ConstitutionListContact.Presenter {
 
+    private Page page;
+
     @Inject
-    public ConstitutionListPresenter(NewsModel mMvpModel) {
+    public ConstitutionListPresenter(InvitationModel mMvpModel) {
         super(mMvpModel);
+        page = new Page();
+    }
+
+
+    @Override
+    public void getConstitutionNewsList(State state, long typeId) {
+        setCurState(state);
+        if (isRefresh()) {
+            page = new Page();
+        }
+        if (!mMvpView.isNetworkAvailable()) {
+            mMvpView.showError(HPApplication.getStringById(R.string.tips_network_unavailable));
+            return;
+        }
+        mMvpModel.addSubscribe(mMvpModel.getInvitationListByTypeId(typeId, page.getOffset(), page.getLimit())
+                .doOnSuccess(newsList -> page.setOffset(page.getOffset() + page.getLimit()))
+                .doFinally(() -> mMvpView.dismissDialog())
+                .subscribe(newsList -> {
+                    mMvpView.onGetDataSuccess(state, newsList);
+                    mMvpView.showMain();
+                }, throwable -> {
+                    handlerApiError(throwable);
+                    mMvpView.showError(HPApplication.getStringById(R.string.tips_error_general));
+                }));
     }
 }

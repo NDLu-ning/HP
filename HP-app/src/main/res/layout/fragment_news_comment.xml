@@ -24,6 +24,7 @@
             android:fitsSystemWindows="true"
             android:gravity="center"
             android:orientation="vertical"
+            android:paddingBottom="@dimen/dp_10"
             android:visibility="gone"> <!-- 避免状态透明上移 -->
 
             <ImageView
@@ -54,6 +55,7 @@
             android:fitsSystemWindows="true"
             android:gravity="center"
             android:orientation="vertical"
+            android:paddingBottom="@dimen/dp_10"
             android:visibility="gone"> <!-- 避免状态透明上移 -->
 
             <ImageView

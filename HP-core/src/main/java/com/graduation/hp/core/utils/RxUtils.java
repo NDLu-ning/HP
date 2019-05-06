@@ -96,10 +96,14 @@ public class RxUtils {
             if (result.getData() != null) {
                 DataGrid<T> dataGrid = (DataGrid<T>) result.getData();
                 if (dataGrid.getRows() != null) {
-                    return JsonUtils.jsonToList(dataGrid.getRows().toString(), clazz);
+                    if (dataGrid.getRows().size() > 0) {
+                        return JsonUtils.jsonToList(dataGrid.getRows().toString(), clazz);
+                    } else {
+                        throw new ApiException(ResponseCode.DATA_EMPTY);
+                    }
                 }
             }
-            throw new ApiException(ResponseCode.DATA_NULL);
+            throw new ApiException(ResponseCode.DATA_EMPTY);
         });
     }
 
@@ -127,13 +131,15 @@ public class RxUtils {
         return upstream -> upstream.map((Function<Result, List<T>>) result -> {
             if (result.getData() != null) {
                 DataGrid<T> dataGrid = (DataGrid<T>) result.getData();
-                if (dataGrid.getRows() != null && dataGrid.getRows().size() > 0) {
-                    return dataGrid.getRows();
-                }else {
-                    throw new ApiException(ResponseCode.DATA_EMPTY);
+                if (dataGrid.getRows() != null) {
+                    if (dataGrid.getRows().size() > 0) {
+                        return dataGrid.getRows();
+                    } else {
+                        throw new ApiException(ResponseCode.DATA_EMPTY);
+                    }
                 }
             }
-            throw new ApiException(ResponseCode.DATA_NULL);
+            throw new ApiException(ResponseCode.DATA_EMPTY);
         });
     }
 }

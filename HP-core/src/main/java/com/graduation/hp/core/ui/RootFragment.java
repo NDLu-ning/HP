@@ -36,6 +36,7 @@ public abstract class RootFragment<P extends BasePresenter>
 
     @Override
     protected void init(Bundle savedInstanceState, View rootView) {
+        super.init(savedInstanceState, rootView);
         if (rootView == null) {
             throw new IllegalStateException(
                     "RootActivity must implements the getLayoutId() method and do not return 0");

@@ -9,6 +9,8 @@ public interface AttentionTabContact {
 
     interface View {
         void onDownloadDataSuccess(List<FocusPO> newsLists);
+
+        void operateAttentionStateSuccess(boolean isFocusOn);
     }
 
     interface Presenter {
@@ -16,5 +18,7 @@ public interface AttentionTabContact {
         void downloadMoreData(State state);
 
         void initialAttentionList();
+
+        void focusOnUser(long userId);
     }
 }

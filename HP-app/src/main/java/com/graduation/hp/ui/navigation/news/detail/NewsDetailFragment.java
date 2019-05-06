@@ -19,6 +19,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.FrameLayout;
 
+import com.graduation.hp.app.event.DiscussEvent;
 import com.graduation.hp.core.HPApplication;
 import com.graduation.hp.R;
 import com.graduation.hp.app.constant.Key;
@@ -38,6 +39,9 @@ import com.graduation.hp.utils.StringUtils;
 import com.graduation.hp.widget.AttentionButton;
 import com.graduation.hp.widget.LikeButton;
 import com.graduation.hp.widget.dialog.CommentDialog;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -133,7 +137,7 @@ public class NewsDetailFragment extends RootFragment<NewsDetailPresenter>
             mNews = savedInstanceState.getParcelable(Key.NEWS);
         }
         if (mNewsId == 0L) {
-            throw new IllegalArgumentException("NewsDetailFragment must receive the news's id");
+            throw new IllegalArgumentException("InvitationDetailFragment must receive the news's id");
         }
         initToolbar(rootView, "", R.mipmap.ic_navigation_back, R.mipmap.ic_toolbar_dot);
         initWebView(rootView);
@@ -205,8 +209,6 @@ public class NewsDetailFragment extends RootFragment<NewsDetailPresenter>
     @Override
     public void onGetNewsDetailInfoSuccess(ArticleVO articleVO) {
         this.mNews = articleVO;
-        this.mLikeNum = articleVO.getLikeNum();
-        this.mDiscussNum = articleVO.getDiscussNum();
         showNewsContent();
         showNewsAuthorInfo();
         mPresenter.isFocusOn(articleVO.getUserId());
@@ -227,7 +229,7 @@ public class NewsDetailFragment extends RootFragment<NewsDetailPresenter>
         mLikeNum = mNews.getLikeNum();
         mDiscussNum = mNews.getDiscussNum();
         newsDetailLikeTv.setText(String.valueOf(mLikeNum));
-        newsDetailCommentNumTv.setText(StringUtils.getFormattedOverMaximumString(mDiscussNum, 999, R.string.tips_over_maximum));
+        articleCommentSuccess(new DiscussEvent(false));
         String body = mNews.getContent();
         // 使用css样式的方式设置图片大小
         String css = "<style type=\"text/css\"> img {width:100%;height:auto;}body {margin-right:15px;margin-left:15px;margin-top:15px;font-size:24px;}</style>";
@@ -264,6 +266,18 @@ public class NewsDetailFragment extends RootFragment<NewsDetailPresenter>
     public void operateArticleCommentStatus(boolean success) {
         mDiscussionDialogListener.dismissCommentDialog();
         showMessage(getString(success ? R.string.tips_comment_success : R.string.tips_comment_failed));
+        articleCommentSuccess(new DiscussEvent(true));
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void articleCommentSuccess(DiscussEvent discussEvent) {
+        newsDetailCommentNumTv.setText(StringUtils.getFormattedOverMaximumString(
+                discussEvent.isAdded() ? ++mDiscussNum : mDiscussNum, 999, R.string.tips_over_maximum));
+    }
+
+    @Override
+    public boolean useEventBus() {
+        return true;
     }
 
     private void showNewsSubButton(boolean isFocusOn) {
@@ -431,7 +445,7 @@ public class NewsDetailFragment extends RootFragment<NewsDetailPresenter>
                     newsDetailAuthorInfoCl.setVisibility(View.INVISIBLE);
                 }
             }
-            if (scrollY <= (v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight())) {
+            if (scrollY == (v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight())) {
                 LogUtils.d("BOTTOM SCROLL");
                 if (mCommentFragment == null || !mCommentFragment.isAdded()) {
                     mCommentFragment = NewsCommentFragment.newInstance(mNewsId);

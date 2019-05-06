@@ -49,7 +49,6 @@ public class CommentDialog extends DialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        View view = LayoutInflater.from(getContext()).inflate(R.layout.dialog_comment_layout, null);
         mDialog = new Dialog(getActivity(), R.style.BottomDialogStyle);
         mDialog.requestWindowFeature(Window.FEATURE_NO_TITLE); // 设置Content前设定
 //        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
@@ -66,8 +65,8 @@ public class CommentDialog extends DialogFragment {
         lp.width = WindowManager.LayoutParams.MATCH_PARENT; // 宽度持平
         window.setAttributes(lp);
         window.addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
-        final Button mSendBtn = view.findViewById(R.id.dialog_publish_btn);
-        mEditText = view.findViewById(R.id.dialog_input_et);
+        final Button mSendBtn = contentView.findViewById(R.id.dialog_publish_btn);
+        mEditText = contentView.findViewById(R.id.dialog_input_et);
         mEditText.setHint(hint);
         mEditText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -76,20 +75,20 @@ public class CommentDialog extends DialogFragment {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                if(editable.length() > 0){
+                if(charSequence.length() > 0){
                     mSendBtn.setEnabled(true);
                 }else {
                     mSendBtn.setEnabled(false);
                 }
             }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+            }
         });
         mSendBtn.setOnClickListener(v -> {
             String content = mEditText.getText().toString();
-            if (!TextUtils.isEmpty(content)) {
+            if (TextUtils.isEmpty(content)) {
                 ToastUtils.show(getContext(), getString(R.string.tips_content_not_null));
                 return;
             } else {

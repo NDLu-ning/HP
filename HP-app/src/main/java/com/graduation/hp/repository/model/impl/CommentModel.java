@@ -11,9 +11,11 @@ import com.graduation.hp.core.utils.JsonUtils;
 import com.graduation.hp.core.utils.RxUtils;
 import com.graduation.hp.repository.RepositoryHelper;
 import com.graduation.hp.repository.contact.ICommentModel;
-import com.graduation.hp.repository.http.service.CommentService;
+import com.graduation.hp.repository.http.entity.ArticleDiscussPO;
+import com.graduation.hp.repository.http.service.DiscussService;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
@@ -39,7 +41,7 @@ public class CommentModel extends BaseModel
     public Single<Boolean> discuss(long articleId, String content, int discussType, long talkerUserId) {
         HttpHelper httpHelper = mRepositoryHelper.getHttpHelper();
         return Single.create((SingleOnSubscribe<Map<String, Object>>) emitter -> {
-            if (articleId == 0L || !TextUtils.isEmpty(content)) {
+            if (articleId == 0L || TextUtils.isEmpty(content)) {
                 emitter.onError(new ApiException(ResponseCode.ILLEGAL_ARGUMENT));
             }
             Map<String, Object> params = new HashMap<>();
@@ -50,10 +52,26 @@ public class CommentModel extends BaseModel
                 params.put(Key.TALKER_USER_ID, talkerUserId);
             }
             emitter.onSuccess(params);
-        }).flatMap(params -> httpHelper.obtainRetrofitService(CommentService.class)
+        }).flatMap(params -> httpHelper.obtainRetrofitService(DiscussService.class)
                 .discuss(JsonUtils.mapToRequestBody(params))
                 .map(RxUtils.mappingResponseToResult(Object.class))
                 .compose(RxUtils.mappingResultToCheck())
+                .compose(RxUtils.rxSchedulerHelper()));
+    }
+
+    @Override
+    public Single<List<ArticleDiscussPO>> getDiscuss(long articleId) {
+        HttpHelper httpHelper = mRepositoryHelper.getHttpHelper();
+        return Single.<Map<String, Object>>create(emitter -> {
+            if (articleId == 0L) {
+                emitter.onError(new ApiException(ResponseCode.ILLEGAL_ARGUMENT));
+            }
+            Map<String, Object> params = new HashMap<>();
+            params.put(Key.ARTICLE_ID, articleId);
+            emitter.onSuccess(params);
+        }).flatMap(params -> httpHelper.obtainRetrofitService(DiscussService.class)
+                .getDiscuss(JsonUtils.mapToRequestBody(params))
+                .compose(RxUtils.transformResultToList(ArticleDiscussPO.class))
                 .compose(RxUtils.rxSchedulerHelper()));
     }
 }

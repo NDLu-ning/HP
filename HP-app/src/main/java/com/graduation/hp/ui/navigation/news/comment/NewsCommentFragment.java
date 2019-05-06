@@ -12,6 +12,7 @@ import com.graduation.hp.R;
 import com.graduation.hp.app.constant.Key;
 import com.graduation.hp.app.di.component.DaggerFragmentComponent;
 import com.graduation.hp.app.di.module.FragmentModule;
+import com.graduation.hp.app.event.DiscussEvent;
 import com.graduation.hp.core.app.di.component.AppComponent;
 import com.graduation.hp.core.mvp.State;
 import com.graduation.hp.core.ui.RootFragment;
@@ -24,13 +25,15 @@ import com.jcodecraeer.xrecyclerview.ProgressStyle;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 
 public class NewsCommentFragment extends RootFragment<NewsCommentPresenter>
-        implements NewsCommentContact.View, XRecyclerView.LoadingListener {
+        implements NewsCommentContact.View {
 
     @BindView(R.id.view_main)
     XRecyclerView mRecyclerView;
@@ -84,9 +87,7 @@ public class NewsCommentFragment extends RootFragment<NewsCommentPresenter>
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mRecyclerView.setPullRefreshEnabled(false);
-        mRecyclerView.setLoadingMoreEnabled(true);
-        mRecyclerView.setLoadingMoreProgressStyle(ProgressStyle.BallZigZag);
-        mRecyclerView.setLoadingListener(this);
+        mRecyclerView.setLoadingMoreEnabled(false);
     }
 
     @Override
@@ -137,17 +138,25 @@ public class NewsCommentFragment extends RootFragment<NewsCommentPresenter>
                 .inject(this);
     }
 
-
     @Override
-    public void onRefresh() {
-        if (mRecyclerView != null)
-            mRecyclerView.refreshComplete();
+    protected void onEmptyClick() {
+        mDiscussionDialogListener.showCommentDialog(getString(R.string.hint_comment), new CommentDialog.CommentDialogClickListener() {
+            @Override
+            public void onDialogBackPressed() {
+                mDiscussionDialogListener.dismissCommentDialog();
+                mPresenter.getModel().cancelSubscribe();
+            }
+
+            @Override
+            public void onSendMessage(String content) {
+                mPresenter.addArticleComment(mNewsId, content, -1L);
+            }
+        });
     }
 
     @Override
-    public void onLoadMore() {
-        if (!isAdded()) return;
-        mPresenter.getArticleCommentList(State.STATE_MORE, mNewsId);
+    protected void onRetryClick() {
+        mPresenter.getArticleCommentList(State.STATE_INIT, mNewsId);
     }
 
     @Override
@@ -179,5 +188,6 @@ public class NewsCommentFragment extends RootFragment<NewsCommentPresenter>
     public void operateArticleCommentStatus(boolean success) {
         mDiscussionDialogListener.dismissCommentDialog();
         showMessage(getString(success ? R.string.tips_comment_success : R.string.tips_comment_failed));
+        EventBus.getDefault().post(new DiscussEvent(true));
     }
 }

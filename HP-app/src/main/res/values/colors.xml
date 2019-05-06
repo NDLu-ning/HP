@@ -7,6 +7,16 @@
     <color name="secondary_text">@color/md_grey_400</color>
     <color name="green_dark_secondary_text">#96baa9</color>
 
+    <color name="question_num_dark">#90A1A6</color>
+    <color name="question_num_light">#C8CED0</color>
+    <color name="bg_question_item_selected_color">#DEF2F9</color>
+    <color name="bg_question_item_normal_color">@color/md_white</color>
+    <color name="bg_question_item_not_enable_color">#FCFDFD</color>
+
+    <color name="bg_answer_stroke_color">#B1DAE7</color>
+    <color name="bg_answer_selected_color">#00A9C5</color>
+    <color name="bg_answer_normal_color">@color/md_white</color>
+
 
     <color name="md_selected_blue">#1296db</color>
     <color name="md_selected_blue_dark">#E4E4E4</color>

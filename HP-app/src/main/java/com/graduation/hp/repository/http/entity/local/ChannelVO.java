@@ -6,6 +6,7 @@ import android.os.Parcelable;
 public class ChannelVO implements Parcelable {
 
     private long id;
+    private String type;
     private String titile;
 
     public ChannelVO() {

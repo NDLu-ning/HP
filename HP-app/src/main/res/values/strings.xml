@@ -144,6 +144,13 @@
     <string name="tips_upload_success">上传成功</string>
     <string name="tips_clear_search_history">清除搜索记录</string>
     <string name="tips_please_input_keywords">请输入检索内容</string>
+    <string name="tips_invitation_detail_title">帖子详情</string>
+    <string name="tips_empty_question_list">未找到相关试题</string>
+    <string name="never">没有</string>
+    <string name="less">很少</string>
+    <string name="sometimes">有时</string>
+    <string name="usually">经常</string>
+    <string name="always">总是</string>
 
 
     <string-array name="user_center_tab_titles">

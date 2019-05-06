@@ -9,7 +9,7 @@ import com.graduation.hp.core.utils.JsonUtils;
 import com.graduation.hp.core.utils.RxUtils;
 import com.graduation.hp.repository.RepositoryHelper;
 import com.graduation.hp.repository.http.entity.ArticleVO;
-import com.graduation.hp.repository.http.service.NewsService;
+import com.graduation.hp.repository.http.service.ArticleService;
 import com.graduation.hp.repository.model.INewsModel;
 
 import java.util.HashMap;
@@ -32,7 +32,7 @@ public class NewsModel extends BaseModel
     }
 
     @Override
-    public Single<List<ArticleVO>> getNewsListByType(long typeId, int offset, int limit) {
+    public Single<List<ArticleVO>> getNewsListByTypeId(long typeId, int offset, int limit) {
         HttpHelper httpHelper = mRepositoryHelper.getHttpHelper();
         return Single.create((SingleOnSubscribe<Map<String, Object>>) emitter -> {
             Map<String, Object> map = new HashMap<>();
@@ -40,7 +40,7 @@ public class NewsModel extends BaseModel
             map.put(Key.LIMIT, limit);
             map.put(Key.OFFSET, offset);
             emitter.onSuccess(map);
-        }).flatMap(params -> httpHelper.obtainRetrofitService(NewsService.class)
+        }).flatMap(params -> httpHelper.obtainRetrofitService(ArticleService.class)
                 .dataGrid(JsonUtils.mapToRequestBody(params))
                 .compose(RxUtils.transformResultToList(ArticleVO.class))
                 .compose(RxUtils.rxSchedulerHelper()));
@@ -55,7 +55,7 @@ public class NewsModel extends BaseModel
             map.put(Key.LIMIT, limit);
             map.put(Key.OFFSET, offset);
             emitter.onSuccess(map);
-        }).flatMap(params -> httpHelper.obtainRetrofitService(NewsService.class)
+        }).flatMap(params -> httpHelper.obtainRetrofitService(ArticleService.class)
                 .dataGrid(JsonUtils.mapToRequestBody(params))
                 .compose(RxUtils.transformResultToList(ArticleVO.class))
                 .compose(RxUtils.rxSchedulerHelper()));
@@ -71,7 +71,7 @@ public class NewsModel extends BaseModel
             Map<String, Object> map = new HashMap<>();
             map.put(Key.ID, newsId);
             emitter.onSuccess(map);
-        }).flatMap(params -> httpHelper.obtainRetrofitService(NewsService.class)
+        }).flatMap(params -> httpHelper.obtainRetrofitService(ArticleService.class)
                 .queryByCondition(JsonUtils.mapToRequestBody(params))
                 .compose(RxUtils.transformResultToData(ArticleVO.class))
                 .compose(RxUtils.rxSchedulerHelper()));

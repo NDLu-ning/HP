@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/bg_question_item_selected_color"
+    android:minHeight="@dimen/dp_70"
+    android:padding="@dimen/dp_12">
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/adapter_question_no_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_question_num_tv"
+        android:gravity="center"
+        android:textColor="@color/md_white"
+        android:textSize="@dimen/sp_14"
+        app:layout_constraintBottom_toBottomOf="@id/adapter_question_content_tv"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/adapter_question_content_tv"
+        tools:text="1" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/adapter_question_content_tv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_12"
+        android:layout_marginEnd="@dimen/dp_12"
+        android:gravity="left"
+        android:textColor="@color/md_black"
+        android:textSize="@dimen/sp_16"
+        app:layout_constraintEnd_toStartOf="@id/adapter_question_selected_tv"
+        app:layout_constraintHorizontal_weight="0"
+        app:layout_constraintStart_toEndOf="@id/adapter_question_no_tv"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="请选择你的性别？" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/adapter_question_selected_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_12"
+        android:gravity="center"
+        android:textColor="@color/bg_answer_selected_color"
+        android:textSize="@dimen/sp_16"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="男" />
+
+    <RadioGroup
+        android:id="@+id/adapter_question_container_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_24"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/adapter_question_selected_tv">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp">
+
+            <RadioButton
+                android:id="@+id/adapter_answer_never_item"
+                android:layout_width="@dimen/dp_60"
+                android:layout_height="@dimen/dp_60"
+                android:background="@drawable/selector_single_selected_rb"
+                android:button="null"
+                android:gravity="center"
+                android:text="@string/never"
+                android:textColor="@color/selector_answer_rb"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/adapter_answer_less_item"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <RadioButton
+                android:id="@+id/adapter_answer_less_item"
+                android:layout_width="@dimen/dp_60"
+                android:layout_height="@dimen/dp_60"
+                android:layout_marginStart="@dimen/dp_10"
+                android:background="@drawable/selector_single_selected_rb"
+                android:button="null"
+                android:gravity="center"
+                android:text="@string/less"
+                android:textColor="@color/selector_answer_rb"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/adapter_answer_sometimes_item"
+                app:layout_constraintStart_toEndOf="@id/adapter_answer_never_item"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <RadioButton
+                android:id="@+id/adapter_answer_sometimes_item"
+                android:layout_width="@dimen/dp_60"
+                android:layout_height="@dimen/dp_60"
+                android:layout_marginStart="@dimen/dp_10"
+                android:background="@drawable/selector_single_selected_rb"
+                android:button="null"
+                android:gravity="center"
+                android:text="@string/sometimes"
+                android:textColor="@color/selector_answer_rb"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/adapter_answer_usually_item"
+                app:layout_constraintStart_toEndOf="@id/adapter_answer_less_item"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <RadioButton
+                android:id="@+id/adapter_answer_usually_item"
+                android:layout_width="@dimen/dp_60"
+                android:layout_height="@dimen/dp_60"
+                android:layout_marginStart="@dimen/dp_10"
+                android:background="@drawable/selector_single_selected_rb"
+                android:button="null"
+                android:gravity="center"
+                android:text="@string/usually"
+                android:textColor="@color/selector_answer_rb"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/adapter_answer_always_item"
+                app:layout_constraintStart_toEndOf="@id/adapter_answer_sometimes_item"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <RadioButton
+                android:id="@+id/adapter_answer_always_item"
+                android:layout_width="@dimen/dp_60"
+                android:layout_height="@dimen/dp_60"
+                android:layout_marginStart="@dimen/dp_10"
+                android:background="@drawable/selector_single_selected_rb"
+                android:button="null"
+                android:gravity="center"
+                android:text="@string/always"
+                android:textColor="@color/selector_answer_rb"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/adapter_answer_usually_item"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+        </android.support.constraint.ConstraintLayout>
+
+    </RadioGroup>
+
+</android.support.constraint.ConstraintLayout>

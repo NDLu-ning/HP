@@ -69,13 +69,15 @@ public class AttentionTabFragment extends RootFragment<AttentionTabPresenter>
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        mRefreshLayout.setOnLoadMoreListener(this);
+        mRefreshLayout.setOnRefreshListener(this);
         mAdapter.notifyDataSetChanged();
     }
 
     private AttentionItemProvider.AttentionItemClickListener mListener = new AttentionItemProvider.AttentionItemClickListener() {
         @Override
         public void onAttentionCbClick(long authorId, boolean focusOn) {
-
+            mPresenter.focusOnUser(authorId);
         }
 
         @Override
@@ -85,7 +87,6 @@ public class AttentionTabFragment extends RootFragment<AttentionTabPresenter>
             getActivity().startActivity(UserCenterActivity.createIntent(getContext(), userId, authorId));
         }
     };
-
 
     @Override
     protected void onLazyLoad() {
@@ -146,6 +147,12 @@ public class AttentionTabFragment extends RootFragment<AttentionTabPresenter>
         }
         mItems.addAll(newsLists);
         mAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void operateAttentionStateSuccess(boolean isFocusOn) {
+        showMessage(getString(isFocusOn ? R.string.tips_focus_on_success : R.string.tips_cancel_focus_on_success));
+        mPresenter.initialAttentionList();
     }
 
     @Override

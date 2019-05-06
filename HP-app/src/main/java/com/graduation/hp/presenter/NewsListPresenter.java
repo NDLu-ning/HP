@@ -38,7 +38,7 @@ public class NewsListPresenter extends BasePresenter<NewsListFragment, NewsModel
             mMvpView.showError(HPApplication.getStringById(R.string.tips_network_unavailable));
             return;
         }
-        mMvpModel.addSubscribe(mMvpModel.getNewsListByType(category, page.getOffset(), page.getLimit())
+        mMvpModel.addSubscribe(mMvpModel.getNewsListByTypeId(category, page.getOffset(), page.getLimit())
                 .doOnSuccess(newsList -> page.setOffset(page.getOffset() + page.getLimit()))
                 .doFinally(() -> mMvpView.dismissDialog())
                 .subscribe(newsList -> {

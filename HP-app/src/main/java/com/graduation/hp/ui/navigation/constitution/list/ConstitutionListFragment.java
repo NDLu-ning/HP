@@ -10,17 +10,31 @@ import android.view.View;
 
 import com.graduation.hp.R;
 import com.graduation.hp.app.constant.Key;
+import com.graduation.hp.app.di.component.DaggerFragmentComponent;
+import com.graduation.hp.app.di.module.FragmentModule;
 import com.graduation.hp.core.app.di.component.AppComponent;
 import com.graduation.hp.core.app.listener.OnItemClickListener;
 import com.graduation.hp.core.app.listener.SimpleItemClickListenerAdapter;
+import com.graduation.hp.core.mvp.State;
 import com.graduation.hp.core.ui.RootFragment;
 import com.graduation.hp.presenter.ConstitutionListPresenter;
 import com.graduation.hp.repository.contact.ConstitutionListContact;
 import com.graduation.hp.repository.http.entity.ArticleVO;
+import com.graduation.hp.repository.http.entity.InvitationVO;
+import com.graduation.hp.repository.http.entity.local.ConstitutionVO;
+import com.graduation.hp.ui.navigation.news.detail.NewsDetailActivity;
+import com.graduation.hp.ui.provider.ConstitutionItemBigProvider;
+import com.graduation.hp.ui.provider.ConstitutionItemMultiProvider;
+import com.graduation.hp.ui.provider.ConstitutionItemSingleProvider;
 import com.graduation.hp.ui.provider.NewsItemBigProvider;
 import com.graduation.hp.ui.provider.NewsItemMultiProvider;
 import com.graduation.hp.ui.provider.NewsItemSingleProvider;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.constant.RefreshState;
+import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -29,7 +43,7 @@ import me.drakeet.multitype.Items;
 import me.drakeet.multitype.MultiTypeAdapter;
 
 public class ConstitutionListFragment extends RootFragment<ConstitutionListPresenter>
-        implements ConstitutionListContact.View {
+        implements ConstitutionListContact.View, OnRefreshListener, OnLoadMoreListener {
 
     @BindView(R.id.view_main)
     RecyclerView mRecyclerView;
@@ -41,38 +55,52 @@ public class ConstitutionListFragment extends RootFragment<ConstitutionListPrese
     Items mItems;
 
     private RefreshLayout mRefreshLayout;
-    private int physicalId;
-    private int position;
+    private int mPosition;
+    private ConstitutionVO mConstitutionVO;
+
+    public static ConstitutionListFragment newInstance(int position, ConstitutionVO channelVo) {
+        ConstitutionListFragment fragment = new ConstitutionListFragment();
+        Bundle args = new Bundle();
+        args.putLong(Key.POSITION, position);
+        args.putParcelable(Key.CHANNEL, channelVo);
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     @Override
     protected void init(Bundle savedInstanceState, View rootView) {
         super.init(savedInstanceState, rootView);
-        Bundle args = getArguments();
-        position = args.getInt(Key.POSITION, 0);
-        physicalId = args.getInt(Key.PHYSICAL_ID, 0);
+        if (savedInstanceState != null) {
+            mConstitutionVO = savedInstanceState.getParcelable(Key.CHANNEL);
+            mPosition = savedInstanceState.getInt(Key.POSITION);
+        } else {
+            Bundle args = getArguments();
+            mPosition = args.getInt(Key.POSITION, 0);
+            mConstitutionVO = args.getParcelable(Key.CHANNEL);
+        }
         initMultiTypeAdapter();
     }
 
     private void initMultiTypeAdapter() {
-        mAdapter.register(ArticleVO.class).to(
-                new NewsItemSingleProvider(listener),
-                new NewsItemMultiProvider(listener),
-                new NewsItemBigProvider(listener)
+        mAdapter.register(InvitationVO.class).to(
+                new ConstitutionItemBigProvider(listener),
+                new ConstitutionItemMultiProvider(listener),
+                new ConstitutionItemSingleProvider(listener)
         ).withClassLinker((position, newsList) -> {
             String image = newsList.getImages();
             if (!TextUtils.isEmpty(image)) {
                 String[] images = image.split(",");
                 if (images.length >= 3) {
                     if (position % 2 == 0) {
-                        return NewsItemSingleProvider.class;
+                        return ConstitutionItemSingleProvider.class;
                     }
-                    return NewsItemMultiProvider.class;
+                    return ConstitutionItemMultiProvider.class;
                 }
             }
             if (position % 2 == 0) {
-                return NewsItemSingleProvider.class;
+                return ConstitutionItemSingleProvider.class;
             } else {
-                return NewsItemBigProvider.class;
+                return ConstitutionItemBigProvider.class;
             }
         });
         mAdapter.setItems(mItems);
@@ -82,13 +110,35 @@ public class ConstitutionListFragment extends RootFragment<ConstitutionListPrese
         mAdapter.notifyDataSetChanged();
     }
 
-    private OnItemClickListener listener = new SimpleItemClickListenerAdapter(){
+    @Override
+    public void dismissDialog() {
+        super.dismissDialog();
+        if (mRefreshLayout != null && mRefreshLayout.getState() == RefreshState.Refreshing) {
+            mRefreshLayout.finishRefresh();
+        }
+        if (mRefreshLayout != null && mRefreshLayout.getState() == RefreshState.Loading) {
+            mRefreshLayout.finishLoadMore();
+        }
+    }
 
+    private OnItemClickListener listener = new SimpleItemClickListenerAdapter() {
+        @Override
+        public void OnItemClick(View view, Object object, int position) {
+            InvitationVO articleVO = (InvitationVO) object;
+            startActivity(NewsDetailActivity.createIntent(getContext(), articleVO.getId()));
+        }
     };
 
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        outState.putInt(Key.POSITION, mPosition);
+        outState.putParcelable(Key.CHANNEL, mConstitutionVO);
+        super.onSaveInstanceState(outState);
+    }
 
     @Override
     protected void onLazyLoad() {
+        mPresenter.getConstitutionNewsList(State.STATE_INIT, mConstitutionVO.getId());
     }
 
     @Override
@@ -108,6 +158,37 @@ public class ConstitutionListFragment extends RootFragment<ConstitutionListPrese
 
     @Override
     public void setupFragmentComponent(@NonNull AppComponent appComponent) {
+        DaggerFragmentComponent.builder()
+                .appComponent(appComponent)
+                .fragmentModule(new FragmentModule(this))
+                .build()
+                .inject(this);
+    }
 
+    @Override
+    public void onLoadMore(RefreshLayout refreshLayout) {
+        if (!isAdded()) return;
+        if (refreshLayout == null) {
+            mRefreshLayout = refreshLayout;
+        }
+        mPresenter.getConstitutionNewsList(State.STATE_MORE, mConstitutionVO.getId());
+    }
+
+    @Override
+    public void onRefresh(RefreshLayout refreshLayout) {
+        if (!isAdded()) return;
+        if (refreshLayout == null) {
+            mRefreshLayout = refreshLayout;
+        }
+        mPresenter.getConstitutionNewsList(State.STATE_REFRESH, mConstitutionVO.getId());
+    }
+
+    @Override
+    public void onGetDataSuccess(State state, List<InvitationVO> articleVOList) {
+        if (mPresenter.isRefresh()) {
+            mItems.clear();
+        }
+        mItems.addAll(articleVOList);
+        mAdapter.notifyDataSetChanged();
     }
 }
