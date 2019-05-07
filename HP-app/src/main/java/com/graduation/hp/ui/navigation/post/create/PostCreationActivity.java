@@ -79,6 +79,7 @@ public class PostCreationActivity extends BaseActivity<PostCreationPresenter>
     @Override
     protected void initData(Bundle savedInstanceState) {
         mToolbarTitle.setText(getString(R.string.tips_create_post));
+        mUploadAvatarHelper = new UploadAvatarHelper(this, this);
         if (savedInstanceState != null) {
             options = savedInstanceState.getParcelableArrayList(Key.BOTTOM_SHEET_OPTIONS);
             mUploadAvatarHelper.onRestoreInstanceState(savedInstanceState);
@@ -91,7 +92,6 @@ public class PostCreationActivity extends BaseActivity<PostCreationPresenter>
             options.add(new BottomSheetOption(SHEET_ID_CANCEL,
                     HPApplication.getStringById(com.graduation.hp.core.R.string.tips_cancel)));
         }
-        mUploadAvatarHelper = new UploadAvatarHelper(this, this);
     }
 
     @Override

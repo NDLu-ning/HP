@@ -41,6 +41,7 @@ public class Key {
     public static final String TALKER_USER_ID = "talkerUserId ";
     public static final String FILE = "file";
     public static final String TITLE = "title";
+    public static final String TYPE = "type";
 
 
     /**
@@ -70,4 +71,6 @@ public class Key {
 
     public static final String KEYWORD = "keyword";
     public static final String BOTTOM_SHEET_OPTIONS = "bottom_sheet_options";
+    public static final String QUESTION_LIST = "question_list";
+    public static final String CUR_FRAGMENT = "cur_fragment";
 }

@@ -45,6 +45,4 @@ public interface ActivityComponent {
     void inject(SearchActivity searchActivity);
 
     void inject(PostCreationActivity postCreationActivity);
-
-    void inject(QuestionActivity questionActivity);
 }

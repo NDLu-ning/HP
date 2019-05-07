@@ -5,6 +5,7 @@
     android:id="@+id/adapter_question_container_cl"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@drawable/bg_question_not_enable"
     android:padding="@dimen/dp_12">
 
     <android.support.v7.widget.AppCompatTextView
@@ -25,10 +26,10 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dp_12"
         android:layout_marginEnd="@dimen/dp_12"
-        android:gravity="left"
-        android:textColor="@color/md_black"
+        android:paddingBottom="@dimen/dp_20"
+        android:gravity="start|top"
+        android:textColor="@color/selector_question_tv"
         android:textSize="@dimen/sp_16"
-        android:paddingBottom="@dimen/dp_10"
         app:layout_constraintEnd_toStartOf="@id/adapter_question_selected_tv"
         app:layout_constraintHorizontal_weight="0"
         app:layout_constraintStart_toEndOf="@id/adapter_question_no_tv"
@@ -52,11 +53,11 @@
         android:id="@+id/adapter_answer_container_rg"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_24"
+        android:layout_marginTop="@dimen/dp_12"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/adapter_question_selected_tv">
+        app:layout_constraintTop_toBottomOf="@id/adapter_question_content_tv">
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"

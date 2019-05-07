@@ -10,9 +10,9 @@
     <color name="question_num_dark">#92a3a8</color>
     <color name="question_num_light">#c8ced0</color>
     <color name="question_content_not_enable_color">#999999</color>
-    <color name="bg_question_item_selected_color">#DEF2F9</color>
+    <color name="bg_question_item_selected_color">#FFDFF1F9</color>
     <color name="bg_question_item_normal_color">@color/md_white</color>
-    <color name="bg_question_item_not_enable_color">#e0f3fa</color>
+    <color name="bg_question_item_not_enable_color">#FDFDFD</color>
 
     <color name="bg_answer_stroke_color">#ccecf1</color>
     <color name="bg_answer_selected_color">#00AAC6</color>

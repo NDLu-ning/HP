@@ -61,7 +61,7 @@ public class UploadAvatarHelper {
     public void onBottomSheetOptionSelected(final BottomSheetOption option) {
         final BaseActivity activity = mActivity.get();
         if (activity != null && !activity.isFinishing()) {
-            if (PermissionsUtils.hasPermission(activity, Manifest.permission.READ_EXTERNAL_STORAGE)) {
+            if (PermissionsUtils.hasPermission(activity, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.CAMERA)) {
                 onStoragePermissionGranted(option);
             } else {
                 activity.setPermissionCallback(new PermissionCallback() {
@@ -72,7 +72,7 @@ public class UploadAvatarHelper {
                 });
                 PermissionsUtils.checkAndRequestPermissions(activity,
                         R.string.read_external_storage_permission_message,
-                        Manifest.permission.READ_EXTERNAL_STORAGE);
+                        Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.CAMERA);
             }
         }
     }

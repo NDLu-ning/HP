@@ -7,7 +7,29 @@
 
     <include layout="@layout/view_toolbar_title" />
 
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <include layout="@layout/view_base_list" />
+        <include
+            layout="@layout/view_show_empty"
+            android:visibility="gone" />
+
+        <include
+            layout="@layout/view_show_error"
+            android:visibility="gone" />
+
+        <include
+            layout="@layout/view_show_loading"
+            android:visibility="gone" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/view_main"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/transparent"
+            android:overScrollMode="never" />
+
+    </FrameLayout>
 
 </LinearLayout>

@@ -45,12 +45,14 @@ public class QuestionItemProvider extends ItemViewBinder<QuestionVOWrapper, Ques
                 (item.isSelected() ? R.drawable.bg_question_selected : R.drawable.bg_question_normal));
         holder.adapterQuestionNoTv.setText(item.getNo() + "");
         holder.adapterQuestionNoTv.setEnabled(item.isEnable());
-        holder.adapterQuestionContentTv.setEnabled(item.isEnable());
         holder.adapterQuestionContentTv.setText(item.getQuestionVO().getContext());
+        holder.adapterQuestionContentTv.setEnabled(item.isEnable());
         holder.adapterAnswerContainerRg.setVisibility(item.isEnable() && item.isSelected() ? View.VISIBLE : View.GONE);
         if (item.getSelectAnswerPO() != null) {
             holder.adapterQuestionSelectedTv.setVisibility(View.VISIBLE);
             holder.adapterQuestionSelectedTv.setText(item.getSelectAnswerPO().getAnswerContext());
+        } else {
+            holder.adapterQuestionSelectedTv.setVisibility(View.GONE);
         }
         for (int i = 0; i < 5; i++) {
             RadioButton radioButton = holder.adapterAnswerItems[i];
@@ -60,6 +62,12 @@ public class QuestionItemProvider extends ItemViewBinder<QuestionVOWrapper, Ques
             } else {
                 radioButton.setChecked(false);
             }
+            radioButton.setOnClickListener(v -> {
+                if (!item.isEnable() || !item.isSelected()) return;
+                if (mListener != null) {
+                    mListener.onSelectAnswer(item.getNo(), radioButton.getText().toString());
+                }
+            });
         }
         holder.itemView.setOnClickListener(v -> {
             if (!item.isEnable()) {
@@ -67,12 +75,6 @@ public class QuestionItemProvider extends ItemViewBinder<QuestionVOWrapper, Ques
             }
             if (mListener != null) {
                 mListener.onSelectedQuestion(item.getNo());
-            }
-        });
-        holder.adapterAnswerContainerRg.setOnCheckedChangeListener((group, checkedId) -> {
-            if (!item.isEnable() || !item.isSelected()) return;
-            if (mListener != null) {
-                mListener.onSelectAnswer(item.getNo(), ((RadioButton) holder.itemView.findViewById(checkedId)).getText().toString());
             }
         });
     }

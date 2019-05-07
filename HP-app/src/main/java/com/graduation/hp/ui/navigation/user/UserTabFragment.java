@@ -22,6 +22,7 @@ import com.graduation.hp.repository.http.entity.vo.UserVO;
 import com.graduation.hp.ui.navigation.NavigationTabActivity;
 import com.graduation.hp.ui.navigation.user.center.UserCenterActivity;
 import com.graduation.hp.ui.navigation.user.info.UserInfoActivity;
+import com.graduation.hp.ui.question.QuestionActivity;
 import com.graduation.hp.ui.setting.SettingActivity;
 
 import org.greenrobot.eventbus.EventBus;
@@ -106,6 +107,7 @@ public class UserTabFragment extends BaseFragment<UserTabPresenter>
                     startActivity(UserInfoActivity.createIntent(getContext()));
                     break;
                 case R.id.my_test_cl:
+                    startActivity(QuestionActivity.createIntent(getContext(), mUser == null ? 0 : 1));
                     break;
             }
         }

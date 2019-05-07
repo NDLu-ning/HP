@@ -1,15 +1,16 @@
 package com.graduation.hp.repository.contact;
 
 import com.graduation.hp.repository.http.entity.pojo.AnswerPO;
-import com.graduation.hp.ui.question.QuestionListFragment;
+import com.graduation.hp.repository.http.entity.wrapper.QuestionVOWrapper;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public interface QuestionContact {
+public interface QuestionListContact {
 
-    interface View extends QuestionListFragment.QuestionListFragmentListener {
+    interface View {
 
-
+        void onGetQuestionsSuccess(ArrayList<QuestionVOWrapper> questions);
     }
 
     interface Presenter {

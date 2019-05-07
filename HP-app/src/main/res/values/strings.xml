@@ -160,6 +160,8 @@
     <string name="sometimes">有时</string>
     <string name="usually">经常</string>
     <string name="always">总是</string>
+    <string name="tips_constitution_test_title">体质测试</string>
+    <string name="action_commit">提交</string>
 
 
     <string-array name="user_center_tab_titles">

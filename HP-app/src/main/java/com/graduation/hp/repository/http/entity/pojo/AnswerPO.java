@@ -1,5 +1,8 @@
 package com.graduation.hp.repository.http.entity.pojo;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.Date;
 
 /**
@@ -7,7 +10,7 @@ import java.util.Date;
  * 
  * @author shengting_wang
  */
-public class AnswerPO {
+public class AnswerPO implements Parcelable {
 
     /**
      * 答案主键
@@ -40,6 +43,44 @@ public class AnswerPO {
     public AnswerPO(String answerContext) {
         this.answerContext = answerContext;
     }
+
+    public AnswerPO(Parcel in) {
+        if (in.readByte() == 0) {
+            id = null;
+        } else {
+            id = in.readLong();
+        }
+        answerContext = in.readString();
+        if (in.readByte() == 0) {
+            score = null;
+        } else {
+            score = in.readLong();
+        }
+        if (in.readByte() == 0) {
+            createTime = null;
+        } else {
+            long startTime = in.readLong();
+            createTime = new Date(startTime);
+        }
+        if (in.readByte() == 0) {
+            updateTime = null;
+        } else {
+            long endTime = in.readLong();
+            updateTime = new Date(endTime);
+        }
+    }
+
+    public static final Creator<AnswerPO> CREATOR = new Creator<AnswerPO>() {
+        @Override
+        public AnswerPO createFromParcel(Parcel in) {
+            return new AnswerPO(in);
+        }
+
+        @Override
+        public AnswerPO[] newArray(int size) {
+            return new AnswerPO[size];
+        }
+    };
 
     public Long getId() {
         return id;
@@ -79,5 +120,39 @@ public class AnswerPO {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        if (id == null) {
+            parcel.writeByte((byte) 0);
+        } else {
+            parcel.writeByte((byte) 1);
+            parcel.writeLong(id);
+        }
+        parcel.writeString(answerContext);
+        if (score == null) {
+            parcel.writeByte((byte) 0);
+        } else {
+            parcel.writeByte((byte) 1);
+            parcel.writeLong(score);
+        }
+        if (createTime == null) {
+            parcel.writeByte((byte) 0);
+        } else {
+            parcel.writeByte((byte) 1);
+            parcel.writeLong(createTime.getTime());
+        }
+        if (updateTime == null) {
+            parcel.writeByte((byte) 0);
+        } else {
+            parcel.writeByte((byte) 1);
+            parcel.writeLong(updateTime.getTime());
+        }
     }
 }
