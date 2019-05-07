@@ -4,7 +4,7 @@ import com.graduation.hp.core.HPApplication;
 import com.graduation.hp.R;
 import com.graduation.hp.core.mvp.BasePresenter;
 import com.graduation.hp.repository.contact.UserInfoContact;
-import com.graduation.hp.repository.http.entity.User;
+import com.graduation.hp.repository.http.entity.vo.UserVO;
 import com.graduation.hp.repository.model.impl.UploadModel;
 import com.graduation.hp.repository.model.impl.UserModel;
 import com.graduation.hp.ui.navigation.user.info.UserInfoActivity;
@@ -42,7 +42,7 @@ public class UserInfoPresenter extends BasePresenter<UserInfoActivity, UserModel
     }
 
     @Override
-    public void updateUserInfo(int type, User user) {
+    public void updateUserInfo(int type, UserVO user) {
         if (!mMvpView.isNetworkAvailable()) {
             mMvpView.showMessage(HPApplication.getStringById(R.string.tips_network_unavailable));
             return;

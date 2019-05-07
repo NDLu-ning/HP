@@ -15,7 +15,7 @@ import com.graduation.hp.core.mvp.State;
 import com.graduation.hp.core.ui.RootFragment;
 import com.graduation.hp.presenter.AttentionTabPresenter;
 import com.graduation.hp.repository.contact.AttentionTabContact;
-import com.graduation.hp.repository.http.entity.FocusPO;
+import com.graduation.hp.repository.http.entity.pojo.FocusPO;
 import com.graduation.hp.repository.preferences.PreferencesHelperImpl;
 import com.graduation.hp.ui.navigation.user.center.UserCenterActivity;
 import com.graduation.hp.ui.provider.AttentionItemProvider;

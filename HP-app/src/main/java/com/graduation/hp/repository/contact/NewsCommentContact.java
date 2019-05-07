@@ -1,7 +1,7 @@
 package com.graduation.hp.repository.contact;
 
 import com.graduation.hp.core.mvp.State;
-import com.graduation.hp.repository.http.entity.ArticleDiscussPO;
+import com.graduation.hp.repository.http.entity.pojo.ArticleDiscussPO;
 
 import java.util.List;
 

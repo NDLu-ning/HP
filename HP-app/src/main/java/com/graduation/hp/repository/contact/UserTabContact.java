@@ -1,11 +1,11 @@
 package com.graduation.hp.repository.contact;
 
-import com.graduation.hp.repository.http.entity.User;
+import com.graduation.hp.repository.http.entity.vo.UserVO;
 
 public interface UserTabContact {
 
     interface View {
-        void getCurrentUserInfoSuccess(User user);
+        void getCurrentUserInfoSuccess(UserVO user);
     }
 
     interface Presenter {

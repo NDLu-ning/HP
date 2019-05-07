@@ -1,6 +1,6 @@
 package com.graduation.hp.repository.contact;
 
-import com.graduation.hp.repository.http.entity.User;
+import com.graduation.hp.repository.http.entity.vo.UserVO;
 
 public interface SettingContact {
 
@@ -18,7 +18,7 @@ public interface SettingContact {
     }
 
     interface View {
-        void onGetUserInfoSuccess(User user);
+        void onGetUserInfoSuccess(UserVO user);
 
         void operateLocalTextSizeSuccess(int textSize);
 

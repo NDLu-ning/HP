@@ -10,7 +10,8 @@
     <string name="tips_attention_title">我的关注</string>
     <string name="tips_constitution_title">体质中心</string>
 
-    <string name="tips_search">搜索你感兴趣的:</string>
+    <string name="tips_search">搜索</string>
+    <string name="hint_search">搜索你感兴趣的:</string>
     <string name="tips_myself_login">登录账号享受更多优质体验</string>
     <string name="tips_myself_message">我的消息</string>
     <string name="tips_myself_test">体质测试</string>
@@ -144,6 +145,14 @@
     <string name="tips_upload_success">上传成功</string>
     <string name="tips_clear_search_history">清除搜索记录</string>
     <string name="tips_please_input_keywords">请输入检索内容</string>
+    <string name="tips_keywords_not_empty">输入检索关键字不能为空值</string>
+    <string name="tips_empty_search_history">暂无搜索记录</string>
+    <string name="tips_empty_search_result">未搜索到相关结果</string>
+    <string name="hint_post_whatever_you_want_to_share">分享你的养生经验...</string>
+    <string name="tips_camera_or_gallery">相机/相册</string>
+    <string name="tips_create_post">发布帖子</string>
+    <string name="tips_over_post_maximum">帖子内容文字数量超过最大值</string>
+    <string name="tips_choose_method">上传图片方式</string>
     <string name="tips_invitation_detail_title">帖子详情</string>
     <string name="tips_empty_question_list">未找到相关试题</string>
     <string name="never">没有</string>

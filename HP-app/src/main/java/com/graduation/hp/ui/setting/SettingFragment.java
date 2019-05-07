@@ -13,7 +13,7 @@ import com.graduation.hp.core.app.listener.SimpleItemClickListenerAdapter;
 import com.graduation.hp.core.ui.BaseFragment;
 import com.graduation.hp.core.utils.DialogUtils;
 import com.graduation.hp.core.utils.PhoneUtils;
-import com.graduation.hp.repository.http.entity.User;
+import com.graduation.hp.repository.http.entity.vo.UserVO;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -56,7 +56,7 @@ public class SettingFragment extends BaseFragment {
 
     private SettingFragmentListener mCallback;
     private int textSize = -1;
-    private User mUser;
+    private UserVO mUser;
 
 
     public static SettingFragment newInstance() {
@@ -90,7 +90,7 @@ public class SettingFragment extends BaseFragment {
     }
 
     @Subscribe(threadMode = ThreadMode.POSTING, priority = 3)
-    public void onGetUserInfoSuccess(User user) {
+    public void onGetUserInfoSuccess(UserVO user) {
         if (!isAdded()) return;
         this.mUser = user;
         getActivity().runOnUiThread(() -> setSettingView());

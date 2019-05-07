@@ -16,7 +16,7 @@ import com.graduation.hp.core.app.listener.OnItemClickListener;
 import com.graduation.hp.core.utils.DateUtils;
 import com.graduation.hp.core.utils.GlideUtils;
 import com.graduation.hp.core.utils.LogUtils;
-import com.graduation.hp.repository.http.entity.ArticleVO;
+import com.graduation.hp.repository.http.entity.vo.ArticleVO;
 
 import me.drakeet.multitype.ItemViewBinder;
 

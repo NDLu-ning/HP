@@ -1,6 +1,6 @@
 package com.graduation.hp.repository.contact;
 
-import com.graduation.hp.repository.http.entity.InvitationVO;
+import com.graduation.hp.repository.http.entity.vo.InvitationVO;
 
 public interface InvitationDetailContact {
 

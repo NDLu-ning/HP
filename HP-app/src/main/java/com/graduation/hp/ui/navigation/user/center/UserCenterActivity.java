@@ -26,8 +26,8 @@ import com.graduation.hp.core.utils.GlideUtils;
 import com.graduation.hp.core.utils.LogUtils;
 import com.graduation.hp.presenter.UserCenterPresenter;
 import com.graduation.hp.repository.contact.UserCenterContact;
-import com.graduation.hp.repository.http.entity.User;
-import com.graduation.hp.repository.http.entity.local.UserVO;
+import com.graduation.hp.repository.http.entity.vo.UserVO;
+import com.graduation.hp.repository.http.entity.wrapper.UserVOWrapper;
 import com.graduation.hp.ui.navigation.user.info.UserInfoActivity;
 import com.graduation.hp.widget.AttentionButton;
 import com.graduation.hp.widget.TriangleView;
@@ -40,7 +40,6 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.BindView;
-import butterknife.OnClick;
 
 public class UserCenterActivity extends BaseActivity<UserCenterPresenter>
         implements UserCenterContact.View, OnRefreshListener, OnLoadMoreListener {
@@ -78,7 +77,7 @@ public class UserCenterActivity extends BaseActivity<UserCenterPresenter>
     private long mUserId;
     private long mOwnerId;
     private UserCenterAdapter mAdapter;
-    private User mUser;
+    private UserVO mUser;
 
     public static Intent createIntent(Context context, long ownerId) {
         return createIntent(context, ownerId, ownerId);
@@ -139,7 +138,7 @@ public class UserCenterActivity extends BaseActivity<UserCenterPresenter>
     }
 
     @Override
-    public void onGetUserSuccess(UserVO userVo) {
+    public void onGetUserSuccess(UserVOWrapper userVo) {
         mUser = userVo.getUser();
         setUserData(mUser);
         setUserAttentionNumber(userVo.getAttentionCount());
@@ -152,7 +151,7 @@ public class UserCenterActivity extends BaseActivity<UserCenterPresenter>
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void setUserData(User user) {
+    public void setUserData(UserVO user) {
         GlideUtils.loadUserHead(mUserCenterIconIv, user.getHeadUrl());
         if (mOwnerId == mUserId) {
             mUserCenterSubCb.setVisibility(View.GONE);

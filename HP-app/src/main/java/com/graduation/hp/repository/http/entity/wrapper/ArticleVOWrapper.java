@@ -1,6 +1,6 @@
-package com.graduation.hp.repository.http.entity.local;
+package com.graduation.hp.repository.http.entity.wrapper;
 
-import com.graduation.hp.repository.http.entity.ArticleVO;
+import com.graduation.hp.repository.http.entity.vo.ArticleVO;
 
 public class ArticleVOWrapper {
 

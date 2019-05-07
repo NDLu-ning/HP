@@ -6,7 +6,6 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
 import android.view.View;
-import android.widget.Toast;
 
 import com.graduation.hp.R;
 import com.graduation.hp.app.event.UploadProfileEvent;
@@ -14,8 +13,7 @@ import com.graduation.hp.core.app.di.component.AppComponent;
 import com.graduation.hp.core.ui.BaseFragment;
 import com.graduation.hp.core.utils.GlideUtils;
 import com.graduation.hp.core.utils.ToastUtils;
-import com.graduation.hp.repository.http.entity.User;
-import com.graduation.hp.repository.preferences.PreferencesHelper;
+import com.graduation.hp.repository.http.entity.vo.UserVO;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -25,14 +23,14 @@ import butterknife.OnClick;
 
 public class UserInfoFragment extends BaseFragment {
 
-    private User mUser;
+    private UserVO mUser;
 
     public interface UserInfoFragmentListener {
         void getCurrentUserInfo();
 
         void logout();
 
-        void skipToUserUpdateView(int type, User user);
+        void skipToUserUpdateView(int type, UserVO user);
 
         void uploadProfileContainerClick();
     }
@@ -112,7 +110,7 @@ public class UserInfoFragment extends BaseFragment {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onGetUserInfoSuccess(User user) {
+    public void onGetUserInfoSuccess(UserVO user) {
         if (!isAdded()) return;
         this.mUser = user;
         mUserInfoNicknameTv.setText(user.getNickname());

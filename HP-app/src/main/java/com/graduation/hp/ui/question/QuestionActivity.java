@@ -7,13 +7,26 @@ import com.graduation.hp.app.di.component.DaggerActivityComponent;
 import com.graduation.hp.app.di.module.ActivityModule;
 import com.graduation.hp.core.app.di.component.AppComponent;
 import com.graduation.hp.core.ui.SingleFragmentActivity;
+import com.graduation.hp.presenter.QuestionPresenter;
+import com.graduation.hp.repository.contact.QuestionContact;
 
-public class QuestionActivity extends SingleFragmentActivity {
+public class QuestionActivity extends SingleFragmentActivity<QuestionPresenter>
+        implements QuestionContact.View {
 
 
     @Override
     protected Fragment createMainContentFragment() {
-        return null;
+        return new QuestionListFragment();
+    }
+
+    @Override
+    public void getQuestionList() {
+
+    }
+
+    @Override
+    public void commitAnswers() {
+
     }
 
     @Override

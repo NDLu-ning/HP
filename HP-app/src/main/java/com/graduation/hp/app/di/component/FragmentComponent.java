@@ -15,6 +15,7 @@ import com.graduation.hp.ui.navigation.news.list.NewsListFragment;
 import com.graduation.hp.ui.navigation.post.PostTabFragment;
 import com.graduation.hp.ui.navigation.user.center.UserNewsFragment;
 import com.graduation.hp.ui.navigation.user.center.UserPostFragment;
+import com.graduation.hp.ui.search.SearchResultFragment;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import dagger.Component;
@@ -52,6 +53,8 @@ public interface FragmentComponent {
     void inject(NewsDetailFragment newsDetailFragment);
 
     void inject(NewsCommentFragment newsCommentFragment);
+
+    void inject(SearchResultFragment searchResultFragment);
 
     void inject(ConstitutionListFragment constitutionListFragment);
 

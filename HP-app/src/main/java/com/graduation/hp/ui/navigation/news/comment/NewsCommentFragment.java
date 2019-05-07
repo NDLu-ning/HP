@@ -18,12 +18,10 @@ import com.graduation.hp.core.mvp.State;
 import com.graduation.hp.core.ui.RootFragment;
 import com.graduation.hp.presenter.NewsCommentPresenter;
 import com.graduation.hp.repository.contact.NewsCommentContact;
-import com.graduation.hp.repository.http.entity.ArticleDiscussPO;
+import com.graduation.hp.repository.http.entity.pojo.ArticleDiscussPO;
 import com.graduation.hp.ui.provider.CommentItemAdapter;
 import com.graduation.hp.widget.dialog.CommentDialog;
-import com.jcodecraeer.xrecyclerview.ProgressStyle;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
-import com.scwang.smartrefresh.layout.constant.RefreshState;
 
 import org.greenrobot.eventbus.EventBus;
 

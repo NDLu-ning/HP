@@ -77,6 +77,9 @@ dependencies {
     api(rootProject.ext.dependencies["image-cropper"]){
         exclude group: 'com.android.support'
     }
+    api(rootProject.ext.dependencies["pictureSelector"]){
+        exclude group: 'glide'
+    }
     api rootProject.ext.dependencies["wraplayout"]
     api rootProject.ext.dependencies["ninegridview"]
     api rootProject.ext.dependencies["fastjson"]

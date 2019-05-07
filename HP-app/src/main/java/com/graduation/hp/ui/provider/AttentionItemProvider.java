@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 
 import com.graduation.hp.R;
 import com.graduation.hp.core.utils.GlideUtils;
-import com.graduation.hp.repository.http.entity.FocusPO;
+import com.graduation.hp.repository.http.entity.pojo.FocusPO;
 import com.graduation.hp.utils.StringUtils;
 import com.graduation.hp.widget.AttentionButton;
 

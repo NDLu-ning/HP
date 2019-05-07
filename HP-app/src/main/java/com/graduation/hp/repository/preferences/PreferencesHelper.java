@@ -1,6 +1,6 @@
 package com.graduation.hp.repository.preferences;
 
-import com.graduation.hp.repository.http.entity.User;
+import com.graduation.hp.repository.http.entity.vo.UserVO;
 
 public interface PreferencesHelper {
 
@@ -16,7 +16,7 @@ public interface PreferencesHelper {
 
     void saveCurrentUserToken(String token);
 
-    void saveCurrentUserInfo(User user);
+    void saveCurrentUserInfo(UserVO user);
 
     String getCurrentUserRemark();
 
@@ -26,7 +26,7 @@ public interface PreferencesHelper {
 
     void saveCurrentUserGender(Integer gender);
 
-    User getCurrentUserInfo();
+    UserVO getCurrentUserInfo();
 
     void saveCurrentUserUsername(String username);
 

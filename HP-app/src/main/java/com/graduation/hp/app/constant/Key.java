@@ -1,7 +1,7 @@
 package com.graduation.hp.app.constant;
 
-import com.graduation.hp.repository.http.entity.local.ChannelVO;
-import com.graduation.hp.repository.http.entity.local.ConstitutionVO;
+import com.graduation.hp.repository.http.entity.wrapper.ChannelVO;
+import com.graduation.hp.repository.http.entity.wrapper.ConstitutionVO;
 
 /**
  *
@@ -40,6 +40,7 @@ public class Key {
     public static final String DISCUSS_TYPE = "discussType";
     public static final String TALKER_USER_ID = "talkerUserId ";
     public static final String FILE = "file";
+    public static final String TITLE = "title";
 
 
     /**
@@ -68,4 +69,5 @@ public class Key {
     public static final String NEWS = "news";
 
     public static final String KEYWORD = "keyword";
+    public static final String BOTTOM_SHEET_OPTIONS = "bottom_sheet_options";
 }

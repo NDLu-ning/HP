@@ -36,7 +36,11 @@
     <string name="yesterday">昨天</string>
     <string name="no_camera_found">未找到照相机</string>
     <string name="camera_not_supported">当前设备不支持照相机</string>
+    <string name="tips_choose_gallery">从相册中选择</string>
+    <string name="tips_choose_camera">通过相机拍摄</string>
+
     <string name="rotate_picture">旋转</string>
     <string name="use_picture">使用</string>
+    <string name="tips_upload_profile">上传头像</string>
 
 </resources>

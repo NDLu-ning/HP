@@ -1,8 +1,12 @@
 package com.graduation.hp.repository.contact;
 
+import com.graduation.hp.ui.search.SearchFragment;
+import com.graduation.hp.ui.search.SearchResultFragment;
+
 public interface SearchContact {
 
-    interface View {
+    interface View extends SearchFragment.SearchFragmentListener, SearchResultFragment.SearchResultFragmentListener {
+
 
     }
 

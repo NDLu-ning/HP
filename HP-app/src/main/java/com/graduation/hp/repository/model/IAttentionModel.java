@@ -1,6 +1,6 @@
 package com.graduation.hp.repository.model;
 
-import com.graduation.hp.repository.http.entity.FocusPO;
+import com.graduation.hp.repository.http.entity.pojo.FocusPO;
 
 import java.util.List;
 

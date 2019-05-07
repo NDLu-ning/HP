@@ -60,7 +60,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:gravity="center"
-                        android:text="@string/tips_search"
+                        android:text="@string/hint_search"
                         android:textColor="@color/green_dark_secondary_text"
                         android:textSize="@dimen/sp_12" />
 

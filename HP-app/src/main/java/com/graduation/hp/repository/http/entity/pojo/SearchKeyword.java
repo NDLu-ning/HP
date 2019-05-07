@@ -1,9 +1,8 @@
-package com.graduation.hp.repository.http.entity.local;
+package com.graduation.hp.repository.http.entity.pojo;
 
 
 import android.support.annotation.NonNull;
 
-import java.util.Comparator;
 import java.util.Date;
 
 /**

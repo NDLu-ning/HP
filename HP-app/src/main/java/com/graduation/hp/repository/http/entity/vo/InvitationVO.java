@@ -1,4 +1,4 @@
-package com.graduation.hp.repository.http.entity;
+package com.graduation.hp.repository.http.entity.vo;
 
 import android.os.Parcel;
 import android.os.Parcelable;

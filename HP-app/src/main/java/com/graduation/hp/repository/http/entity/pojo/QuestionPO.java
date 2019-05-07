@@ -1,4 +1,4 @@
-package com.graduation.hp.repository.http.entity;
+package com.graduation.hp.repository.http.entity.pojo;
 
 import java.util.Date;
 

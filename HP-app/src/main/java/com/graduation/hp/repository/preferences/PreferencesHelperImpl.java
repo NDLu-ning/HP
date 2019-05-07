@@ -1,16 +1,14 @@
 package com.graduation.hp.repository.preferences;
 
-import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
 
-import com.graduation.hp.app.constant.Key;
 import com.graduation.hp.core.HPApplication;
 import com.graduation.hp.core.utils.JsonUtils;
-import com.graduation.hp.repository.http.entity.User;
-import com.graduation.hp.repository.http.entity.local.SearchKeyword;
+import com.graduation.hp.repository.http.entity.vo.UserVO;
+import com.graduation.hp.repository.http.entity.pojo.SearchKeyword;
 
 import java.util.ArrayList;
 
@@ -37,7 +35,7 @@ public class PreferencesHelperImpl implements PreferencesHelper {
     }
 
     @Override
-    public void saveCurrentUserInfo(User user) {
+    public void saveCurrentUserInfo(UserVO user) {
         saveCurrentUserId(user.getId());
         saveCurrentUserUsername(user.getUsername());
         saveCurrentUserGender(user.getSex());
@@ -69,9 +67,9 @@ public class PreferencesHelperImpl implements PreferencesHelper {
     }
 
     @Override
-    public User getCurrentUserInfo() {
+    public UserVO getCurrentUserInfo() {
         if (!TextUtils.isEmpty(getCurrentUserToken())) {
-            User user = new User();
+            UserVO user = new UserVO();
             user.setId(getCurrentUserId());
             user.setNickname(getCurrentUserNickname());
             user.setRemark(getCurrentUserRemark());

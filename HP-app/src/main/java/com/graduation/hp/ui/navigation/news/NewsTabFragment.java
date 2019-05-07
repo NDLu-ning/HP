@@ -15,14 +15,16 @@ import com.graduation.hp.app.constant.Key;
 import com.graduation.hp.core.app.di.component.AppComponent;
 import com.graduation.hp.core.ui.BaseFragment;
 import com.graduation.hp.core.utils.LogUtils;
-import com.graduation.hp.repository.http.entity.local.ChannelVO;
+import com.graduation.hp.repository.http.entity.wrapper.ChannelVO;
 import com.graduation.hp.ui.navigation.news.list.NewsListFragment;
+import com.graduation.hp.ui.search.SearchActivity;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
  * Created by Ning on 2019/4/25.
@@ -106,6 +108,12 @@ public class NewsTabFragment extends BaseFragment
             }
             return null;
         }
+    }
+
+    @OnClick(R.id.news_search_rl)
+    public void wantToSearch(View view) {
+        getActivity().startActivity(SearchActivity.createIntent(getContext()));
+        getActivity().overridePendingTransition(R.anim.slide_in_to_left, R.anim.slide_out_to_left);
     }
 
 

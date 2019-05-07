@@ -1,4 +1,4 @@
-package com.graduation.hp.repository.http.entity;
+package com.graduation.hp.repository.http.entity.vo;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -12,7 +12,7 @@ import java.util.Date;
  *
  * @author shengting_wang
  */
-public class User extends Page implements Parcelable {
+public class UserVO extends Page implements Parcelable {
 
     /**
      * 用户id
@@ -69,10 +69,10 @@ public class User extends Page implements Parcelable {
      */
     private Date updateTime;
 
-    public User() {
+    public UserVO() {
     }
 
-    protected User(Parcel in) {
+    protected UserVO(Parcel in) {
         if (in.readByte() == 0) {
             id = null;
         } else {
@@ -96,15 +96,15 @@ public class User extends Page implements Parcelable {
         remark = in.readString();
     }
 
-    public static final Creator<User> CREATOR = new Creator<User>() {
+    public static final Creator<UserVO> CREATOR = new Creator<UserVO>() {
         @Override
-        public User createFromParcel(Parcel in) {
-            return new User(in);
+        public UserVO createFromParcel(Parcel in) {
+            return new UserVO(in);
         }
 
         @Override
-        public User[] newArray(int size) {
-            return new User[size];
+        public UserVO[] newArray(int size) {
+            return new UserVO[size];
         }
     };
 

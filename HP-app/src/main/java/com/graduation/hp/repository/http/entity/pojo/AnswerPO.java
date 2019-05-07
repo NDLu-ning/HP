@@ -1,4 +1,4 @@
-package com.graduation.hp.repository.http.entity;
+package com.graduation.hp.repository.http.entity.pojo;
 
 import java.util.Date;
 
@@ -34,6 +34,12 @@ public class AnswerPO {
      */
     private Date updateTime;
 
+    public AnswerPO() {
+    }
+
+    public AnswerPO(String answerContext) {
+        this.answerContext = answerContext;
+    }
 
     public Long getId() {
         return id;

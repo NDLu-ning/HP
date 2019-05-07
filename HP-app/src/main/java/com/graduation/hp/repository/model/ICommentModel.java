@@ -1,6 +1,6 @@
 package com.graduation.hp.repository.model;
 
-import com.graduation.hp.repository.http.entity.ArticleDiscussPO;
+import com.graduation.hp.repository.http.entity.pojo.ArticleDiscussPO;
 
 import java.util.List;
 

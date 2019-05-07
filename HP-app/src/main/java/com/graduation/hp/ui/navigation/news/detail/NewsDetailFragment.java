@@ -32,7 +32,7 @@ import com.graduation.hp.core.utils.GlideUtils;
 import com.graduation.hp.core.utils.LogUtils;
 import com.graduation.hp.presenter.NewsDetailPresenter;
 import com.graduation.hp.repository.contact.NewsDetailContact;
-import com.graduation.hp.repository.http.entity.ArticleVO;
+import com.graduation.hp.repository.http.entity.vo.ArticleVO;
 import com.graduation.hp.ui.navigation.news.comment.NewsCommentFragment;
 import com.graduation.hp.ui.navigation.news.comment.PrepareForDiscussionListener;
 import com.graduation.hp.utils.StringUtils;

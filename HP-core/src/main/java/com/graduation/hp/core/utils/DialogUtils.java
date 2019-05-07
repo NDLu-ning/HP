@@ -5,12 +5,18 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
+import com.graduation.hp.core.HPApplication;
 import com.graduation.hp.core.R;
 import com.graduation.hp.core.app.listener.OnItemClickListener;
+import com.graduation.hp.core.repository.entity.BottomSheetOption;
+import com.graduation.hp.core.ui.bottomsheet.ListSelectionBottomSheetFragment;
+
+import java.util.ArrayList;
 
 
 /**
@@ -98,5 +104,12 @@ public class DialogUtils {
         });
 
         return dialog;
+    }
+
+    public static void showListBottomSelectionOptionSheet(AppCompatActivity activity, ArrayList<BottomSheetOption> options, String title) {
+        if (activity != null && !activity.isFinishing()) {
+            ListSelectionBottomSheetFragment.newInstance(title,
+                    options).show(activity.getSupportFragmentManager());
+        }
     }
 }

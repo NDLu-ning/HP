@@ -1,16 +1,16 @@
-package com.graduation.hp.repository.http.entity;
+package com.graduation.hp.repository.http.entity.pojo;
 
 import java.util.Date;
 
 /**
- * t_invitation_discuss表对应实体
+ * t_article_discuss表对应实体
  * 
  * @author shengting_wang
  */
-public class InvitationDiscussPO {
+public class ArticleDiscussPO {
 
     /**
-     * 帖子评论主键
+     * 评论主键
      */
     private Long id;
 
@@ -20,22 +20,22 @@ public class InvitationDiscussPO {
     private Long userId;
 
     /**
-     * 类型（1：评论 2：:对话）
+     * 文章id
+     */
+    private Long articleId;
+
+    /**
+     * 类型（1：评论 2：对话）
      */
     private Integer discussType;
 
     /**
-     * 
+     * 交谈者用户id
      */
     private Long talkerUserId;
 
     /**
-     * 帖子id
-     */
-    private Long invitationId;
-
-    /**
-     * 内容
+     * 评论内容
      */
     private String context;
 
@@ -45,10 +45,10 @@ public class InvitationDiscussPO {
     private Date createTime;
 
     /**
-     * 评论时间
+     * 修改时间
      */
     private Date updateTime;
-    
+
     /**
      * 用户昵称
      */
@@ -59,8 +59,9 @@ public class InvitationDiscussPO {
      */
     private String talkNickname;
 
-    public InvitationDiscussPO() {
+    public ArticleDiscussPO() {
     }
+
 
     public Long getId() {
         return id;
@@ -78,6 +79,14 @@ public class InvitationDiscussPO {
         this.userId = userId;
     }
 
+    public Long getArticleId() {
+        return articleId;
+    }
+
+    public void setArticleId(Long articleId) {
+        this.articleId = articleId;
+    }
+
     public Integer getDiscussType() {
         return discussType;
     }
@@ -92,14 +101,6 @@ public class InvitationDiscussPO {
 
     public void setTalkerUserId(Long talkerUserId) {
         this.talkerUserId = talkerUserId;
-    }
-
-    public Long getInvitationId() {
-        return invitationId;
-    }
-
-    public void setInvitationId(Long invitationId) {
-        this.invitationId = invitationId;
     }
 
     public String getContext() {

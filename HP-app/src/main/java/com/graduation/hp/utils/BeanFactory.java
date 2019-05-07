@@ -1,8 +1,8 @@
 package com.graduation.hp.utils;
 
 import com.graduation.hp.R;
-import com.graduation.hp.repository.http.entity.ArticleDiscussPO;
-import com.graduation.hp.repository.http.entity.ArticleVO;
+import com.graduation.hp.repository.http.entity.pojo.ArticleDiscussPO;
+import com.graduation.hp.repository.http.entity.vo.ArticleVO;
 import com.graduation.hp.repository.http.entity.CommentItem;
 import com.graduation.hp.repository.http.entity.PostItem;
 

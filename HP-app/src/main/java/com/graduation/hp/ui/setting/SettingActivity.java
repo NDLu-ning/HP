@@ -17,7 +17,7 @@ import com.graduation.hp.core.ui.SingleFragmentActivity;
 import com.graduation.hp.core.utils.DialogUtils;
 import com.graduation.hp.presenter.SettingPresenter;
 import com.graduation.hp.repository.contact.SettingContact;
-import com.graduation.hp.repository.http.entity.User;
+import com.graduation.hp.repository.http.entity.vo.UserVO;
 import com.graduation.hp.ui.auth.AuthActivity;
 import com.graduation.hp.ui.navigation.NavigationTabActivity;
 
@@ -61,7 +61,7 @@ public class SettingActivity extends SingleFragmentActivity<SettingPresenter>
     }
 
     @Override
-    public void onGetUserInfoSuccess(User user) {
+    public void onGetUserInfoSuccess(UserVO user) {
         EventBus.getDefault().post(user);
     }
 

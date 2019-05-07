@@ -6,7 +6,7 @@ import com.graduation.hp.core.repository.http.HttpHelper;
 import com.graduation.hp.core.utils.JsonUtils;
 import com.graduation.hp.core.utils.RxUtils;
 import com.graduation.hp.repository.RepositoryHelper;
-import com.graduation.hp.repository.http.entity.InvitationVO;
+import com.graduation.hp.repository.http.entity.vo.InvitationVO;
 import com.graduation.hp.repository.http.service.InvitationService;
 import com.graduation.hp.repository.model.IInvitationModel;
 

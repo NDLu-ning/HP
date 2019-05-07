@@ -1,7 +1,8 @@
 package com.graduation.hp.repository.model;
 
 import com.graduation.hp.core.repository.http.bean.Result;
-import com.graduation.hp.repository.http.entity.local.SearchKeyword;
+import com.graduation.hp.repository.http.entity.vo.ArticleVO;
+import com.graduation.hp.repository.http.entity.pojo.SearchKeyword;
 
 import java.util.List;
 
@@ -13,4 +14,5 @@ public interface ISearchModel {
 
     Single<List<SearchKeyword>> getSearchKeywords();
 
+    Single<List<ArticleVO>> searchKeywords(String keyword, int offset, int limit);
 }

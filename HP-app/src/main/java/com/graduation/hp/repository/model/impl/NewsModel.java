@@ -8,7 +8,7 @@ import com.graduation.hp.core.repository.http.exception.ApiException;
 import com.graduation.hp.core.utils.JsonUtils;
 import com.graduation.hp.core.utils.RxUtils;
 import com.graduation.hp.repository.RepositoryHelper;
-import com.graduation.hp.repository.http.entity.ArticleVO;
+import com.graduation.hp.repository.http.entity.vo.ArticleVO;
 import com.graduation.hp.repository.http.service.ArticleService;
 import com.graduation.hp.repository.model.INewsModel;
 

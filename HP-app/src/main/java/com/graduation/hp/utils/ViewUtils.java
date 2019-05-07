@@ -14,7 +14,7 @@ import com.graduation.hp.core.utils.ScreenUtils;
 
 public class ViewUtils {
 
-    public static AppCompatTextView makeTagView(Context context, final String id, final String tag, final OnItemClickListener simpleItemClickListener) {
+    public static AppCompatTextView makeTagView(Context context, final String tag, final OnItemClickListener simpleItemClickListener) {
         AppCompatTextView tagView = new AppCompatTextView(context);
         tagView.setBackgroundResource(R.drawable.bg_common_tag_tv);
         int paSE = ScreenUtils.dip2px(context, 10);

@@ -4,14 +4,12 @@
     package="com.graduation.hp">
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA"/>
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-
-    <uses-feature
-        android:name="android.hardware.camera"
-        android:required="false" />
 
 
     <application
@@ -86,10 +84,12 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".core.ui.crop.AvatarCropWindowActivity"/>
+        <activity android:name=".core.ui.crop.AvatarCropWindowActivity" />
+        <activity android:name=".ui.search.SearchActivity" />
+        <activity android:name=".ui.navigation.post.create.PostCreationActivity" />
 
         <provider
-            android:name="android.support.v4.content.FileProvider"
+            android:name=".app.fileprovider.AppFileProvider"
             android:authorities="com.graduation.hp.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">

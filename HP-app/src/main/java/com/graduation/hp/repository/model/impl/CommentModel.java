@@ -10,8 +10,8 @@ import com.graduation.hp.core.repository.http.exception.ApiException;
 import com.graduation.hp.core.utils.JsonUtils;
 import com.graduation.hp.core.utils.RxUtils;
 import com.graduation.hp.repository.RepositoryHelper;
-import com.graduation.hp.repository.contact.ICommentModel;
-import com.graduation.hp.repository.http.entity.ArticleDiscussPO;
+import com.graduation.hp.repository.model.ICommentModel;
+import com.graduation.hp.repository.http.entity.pojo.ArticleDiscussPO;
 import com.graduation.hp.repository.http.service.DiscussService;
 
 import java.util.HashMap;

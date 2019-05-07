@@ -1,7 +1,6 @@
 package com.graduation.hp.repository.model;
 
-import com.graduation.hp.repository.http.entity.ArticleVO;
-import com.graduation.hp.repository.http.entity.InvitationVO;
+import com.graduation.hp.repository.http.entity.vo.InvitationVO;
 
 import java.util.List;
 

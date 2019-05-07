@@ -9,13 +9,12 @@ import com.graduation.hp.core.ui.RootFragment;
 
 public class QuestionListFragment extends RootFragment {
 
-    interface QuestionListFragmentListener {
+    public interface QuestionListFragmentListener {
 
         void getQuestionList();
 
         void commitAnswers();
     }
-
 
     public static QuestionListFragment newInstance() {
         QuestionListFragment fragment = new QuestionListFragment();

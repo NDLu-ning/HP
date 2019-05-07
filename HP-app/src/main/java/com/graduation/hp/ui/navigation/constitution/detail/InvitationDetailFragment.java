@@ -1,62 +1,38 @@
 package com.graduation.hp.ui.navigation.constitution.detail;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.constraint.ConstraintLayout;
-import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
-import android.text.Html;
-import android.text.TextUtils;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.ViewParent;
-import android.webkit.WebChromeClient;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
-import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
 import com.graduation.hp.R;
 import com.graduation.hp.app.constant.Key;
 import com.graduation.hp.app.di.component.DaggerFragmentComponent;
 import com.graduation.hp.app.di.module.FragmentModule;
-import com.graduation.hp.app.event.DiscussEvent;
-import com.graduation.hp.core.HPApplication;
 import com.graduation.hp.core.app.di.component.AppComponent;
 import com.graduation.hp.core.ui.RootFragment;
 import com.graduation.hp.core.utils.DateUtils;
 import com.graduation.hp.core.utils.GlideUtils;
-import com.graduation.hp.core.utils.LogUtils;
 import com.graduation.hp.presenter.InvitationDetailPresenter;
-import com.graduation.hp.presenter.NewsDetailPresenter;
 import com.graduation.hp.repository.contact.InvitationDetailContact;
-import com.graduation.hp.repository.contact.NewsDetailContact;
-import com.graduation.hp.repository.http.entity.ArticleVO;
-import com.graduation.hp.repository.http.entity.InvitationVO;
-import com.graduation.hp.ui.navigation.news.comment.NewsCommentFragment;
+import com.graduation.hp.repository.http.entity.vo.InvitationVO;
 import com.graduation.hp.ui.navigation.news.comment.PrepareForDiscussionListener;
 import com.graduation.hp.ui.navigation.user.center.UserCenterActivity;
 import com.graduation.hp.utils.StringUtils;
-import com.graduation.hp.widget.AttentionButton;
 import com.graduation.hp.widget.LikeButton;
 import com.graduation.hp.widget.dialog.CommentDialog;
 import com.lzy.ninegrid.ImageInfo;
 import com.lzy.ninegrid.NineGridView;
 import com.lzy.ninegrid.preview.NineGridViewClickAdapter;
 
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import retrofit2.http.Body;
 
 public class InvitationDetailFragment extends RootFragment<InvitationDetailPresenter>
         implements InvitationDetailContact.View {

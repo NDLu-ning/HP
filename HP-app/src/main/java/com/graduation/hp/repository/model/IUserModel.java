@@ -1,21 +1,20 @@
 package com.graduation.hp.repository.model;
 
 import com.graduation.hp.core.repository.http.bean.Result;
-import com.graduation.hp.repository.http.entity.User;
-import com.graduation.hp.repository.http.entity.local.UserVO;
+import com.graduation.hp.repository.http.entity.vo.UserVO;
+import com.graduation.hp.repository.http.entity.wrapper.UserVOWrapper;
 
 import io.reactivex.Single;
-import io.reactivex.disposables.Disposable;
 
 public interface IUserModel {
 
     Single<String> sendVerificationMessage(String phone);
 
-    Single<User> getCurrentInfo();
+    Single<UserVO> getCurrentInfo();
 
-    Single<UserVO> getUserInfo(long userId);
+    Single<UserVOWrapper> getUserInfo(long userId);
 
-    Single<User> login(String username, String password);
+    Single<UserVO> login(String username, String password);
 
     Single<Boolean> signup(String username, String password, String repassword, String phone);
 

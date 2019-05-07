@@ -3,28 +3,25 @@ package com.graduation.hp.ui.navigation.user.info;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.AppCompatEditText;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.Toast;
 
 import com.graduation.hp.R;
 import com.graduation.hp.app.constant.Key;
-import com.graduation.hp.app.event.UserUpdateEvent;
 import com.graduation.hp.core.app.di.component.AppComponent;
 import com.graduation.hp.core.ui.BaseFragment;
 import com.graduation.hp.core.utils.VerifyUtils;
-import com.graduation.hp.repository.http.entity.User;
+import com.graduation.hp.repository.http.entity.vo.UserVO;
 
 import butterknife.BindView;
 
 public class UserUpdateFragment extends BaseFragment implements RadioGroup.OnCheckedChangeListener {
 
     public interface UserUpdateFragmentListener {
-        void updateUserInfo(int type, User user);
+        void updateUserInfo(int type, UserVO user);
     }
 
     public static final int TYPE_NICKNAME = 0;
@@ -46,13 +43,13 @@ public class UserUpdateFragment extends BaseFragment implements RadioGroup.OnChe
     @BindView(R.id.user_update_female_rb)
     RadioButton userUpdateFemaleRb;
 
-    private User mUser;
+    private UserVO mUser;
     private int mType;
     private String[] mTitles;
 
     private UserUpdateFragmentListener mListener;
 
-    public static UserUpdateFragment newInstance(int type, User user) {
+    public static UserUpdateFragment newInstance(int type, UserVO user) {
         UserUpdateFragment fragment = new UserUpdateFragment();
         Bundle args = new Bundle();
         args.putInt(Key.UPDATE_TYPE, type);

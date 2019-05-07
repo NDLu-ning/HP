@@ -15,7 +15,7 @@ import com.graduation.hp.R;
 import com.graduation.hp.core.utils.DateUtils;
 import com.graduation.hp.core.utils.GlideUtils;
 import com.graduation.hp.core.utils.LogUtils;
-import com.graduation.hp.repository.http.entity.ArticleVO;
+import com.graduation.hp.repository.http.entity.vo.ArticleVO;
 import com.graduation.hp.ui.navigation.user.center.UserCenterTabListener;
 
 import me.drakeet.multitype.ItemViewBinder;

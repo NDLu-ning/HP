@@ -1,38 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/md_white">
+    android:background="@color/md_white"
+    android:orientation="vertical">
 
     <LinearLayout
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_40"
         android:orientation="horizontal"
+        android:paddingStart="@dimen/dp_12"
+        android:paddingTop="@dimen/dp_4"
         android:paddingEnd="@dimen/dp_12"
-        android:paddingStart="@dimen/dp_12">
+        android:paddingBottom="@dimen/dp_4">
 
-        <android.support.v7.widget.AppCompatImageView
-            android:layout_width="@dimen/dp_40"
-            android:layout_height="@dimen/dp_40"
-            android:padding="@dimen/dp_12"
+        <ImageButton
             android:id="@+id/toolbar_left_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:background="@android:color/transparent"
+            android:paddingStart="@dimen/dp_8"
+            android:paddingEnd="@dimen/dp_8"
             android:src="@mipmap/ic_navigation_back" />
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="@dimen/dp_28"
             android:layout_gravity="center_vertical"
-            android:layout_marginEnd="@dimen/dp_10"
             android:layout_marginStart="@dimen/dp_10"
+            android:layout_marginEnd="@dimen/dp_10"
             android:layout_weight="1"
             android:background="@drawable/bg_common_input_et"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:paddingEnd="@dimen/dp_10"
-            android:paddingStart="@dimen/dp_14">
+            android:paddingStart="@dimen/dp_12"
+            android:paddingEnd="@dimen/dp_12">
 
             <android.support.v7.widget.AppCompatImageView
                 android:layout_width="@dimen/dp_18"
@@ -67,20 +73,16 @@
             android:textColor="@color/md_grey_500"
             android:textSize="@dimen/sp_16"
             android:typeface="serif" />
-
     </LinearLayout>
 
     <View
-        android:id="@+id/line"
         android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:background="@color/md_grey_100"
-        app:layout_constraintTop_toBottomOf="@id/toolbar" />
+        android:layout_height="@dimen/dp_1"
+        android:background="@color/md_grey_100" />
 
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/dp_40">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -91,35 +93,34 @@
                 android:id="@+id/search_history_wrap_wl"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:paddingBottom="@dimen/dp_12"
-                android:paddingEnd="@dimen/dp_12"
-                android:paddingStart="@dimen/dp_12"
-                android:paddingTop="@dimen/dp_14"
+                android:padding="@dimen/dp_14"
                 app:wlyGravity="top"
                 app:wlyHorizontalSpacing="10dp"
                 app:wlyVerticalSpacing="@dimen/dp_10">
 
             </am.widget.wraplayout.WrapLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:background="@color/md_grey_100" />
-
             <android.support.v7.widget.AppCompatButton
                 android:id="@+id/search_history_clear_btn"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_35"
-                android:background="@color/md_white"
+                android:layout_height="@dimen/dp_45"
+                android:background="@drawable/bg_clear_records_btn"
                 android:text="@string/tips_clear_search_history"
                 android:textColor="@color/md_grey_500" />
 
-            <View
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/search_history_empty_tv"
                 android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:background="@color/md_grey_100" />
+                android:layout_height="@dimen/dp_45"
+                android:background="@drawable/bg_clear_records_btn"
+                android:gravity="center"
+                android:padding="@dimen/dp_12"
+                android:textColor="@color/md_grey_500"
+                android:visibility="gone"
+                android:text="@string/tips_empty_search_history" />
+
         </LinearLayout>
 
 
     </android.support.v4.widget.NestedScrollView>
-</android.support.design.widget.CoordinatorLayout>
+</LinearLayout>

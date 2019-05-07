@@ -1,25 +1,25 @@
-package com.graduation.hp.repository.http.entity.local;
+package com.graduation.hp.repository.http.entity.wrapper;
 
-import com.graduation.hp.repository.http.entity.User;
+import com.graduation.hp.repository.http.entity.vo.UserVO;
 
-public class UserVO {
+public class UserVOWrapper {
 
-    private User user;
+    private UserVO user;
     private long attentionCount;
 
-    public UserVO() {
+    public UserVOWrapper() {
     }
 
-    public UserVO(User user, long attentionCount) {
+    public UserVOWrapper(UserVO user, long attentionCount) {
         this.user = user;
         this.attentionCount = attentionCount;
     }
 
-    public User getUser() {
+    public UserVO getUser() {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setUser(UserVO user) {
         this.user = user;
     }
 

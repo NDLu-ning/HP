@@ -8,6 +8,7 @@ import com.graduation.hp.repository.RepositoryHelper;
 import com.graduation.hp.ui.SplashActivity;
 import com.graduation.hp.ui.auth.AuthActivity;
 import com.graduation.hp.ui.navigation.news.detail.NewsDetailActivity;
+import com.graduation.hp.ui.navigation.post.create.PostCreationActivity;
 import com.graduation.hp.ui.navigation.user.center.UserCenterActivity;
 import com.graduation.hp.ui.navigation.user.info.UserInfoActivity;
 import com.graduation.hp.ui.question.QuestionActivity;
@@ -42,6 +43,8 @@ public interface ActivityComponent {
     void inject(SettingActivity settingActivity);
 
     void inject(SearchActivity searchActivity);
+
+    void inject(PostCreationActivity postCreationActivity);
 
     void inject(QuestionActivity questionActivity);
 }

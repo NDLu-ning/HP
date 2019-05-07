@@ -11,8 +11,8 @@ import com.graduation.hp.core.repository.http.exception.ApiException;
 import com.graduation.hp.core.utils.JsonUtils;
 import com.graduation.hp.core.utils.RxUtils;
 import com.graduation.hp.repository.RepositoryHelper;
-import com.graduation.hp.repository.http.entity.User;
-import com.graduation.hp.repository.http.entity.local.UserVO;
+import com.graduation.hp.repository.http.entity.vo.UserVO;
+import com.graduation.hp.repository.http.entity.wrapper.UserVOWrapper;
 import com.graduation.hp.repository.http.service.AttentionService;
 import com.graduation.hp.repository.http.service.UserService;
 import com.graduation.hp.repository.model.IUserModel;
@@ -43,11 +43,11 @@ public class UserModel extends BaseModel
     }
 
     @Override
-    public Single<User> getCurrentInfo() {
+    public Single<UserVO> getCurrentInfo() {
         PreferencesHelper preferencesHelper = mRepositoryHelper.getPreferencesHelper();
-        return Single.create((SingleOnSubscribe<User>) emitter -> {
+        return Single.create((SingleOnSubscribe<UserVO>) emitter -> {
             if (!TextUtils.isEmpty(preferencesHelper.getCurrentUserToken())) {
-                User user = new User();
+                UserVO user = new UserVO();
                 user.setId(preferencesHelper.getCurrentUserId());
                 user.setHeadUrl(preferencesHelper.getCurrentUserIcon());
                 user.setRemark(preferencesHelper.getCurrentUserRemark());
@@ -63,24 +63,24 @@ public class UserModel extends BaseModel
     }
 
     @Override
-    public Single<UserVO> getUserInfo(long userId) {
+    public Single<UserVOWrapper> getUserInfo(long userId) {
         HttpHelper httpHelper = mRepositoryHelper.getHttpHelper();
 //        return Single.create((SingleOnSubscribe<Map<String, Object>>) emitter -> {
 //            Map<String, Object> map = new HashMap<>();
 //            map.put(Key.ID, userId);
 //        }).flatMap(result -> httpHelper.obtainRetrofitService(UserService.class)
 //                .getUserInfo(JsonUtils.mapToRequestBody(result))
-//                .compose(RxUtils.transformResultToData(User.class))
+//                .compose(RxUtils.transformResultToData(UserVO.class))
 //                .subscribeOn(Schedulers.io())
 //        ).flatMap(result -> httpHelper.obtainRetrofitService(AttentionService.class)
 //                .countAttentionNumber(JsonUtils.mapToRequestBody3(new String[]{"authorId"}, new Long[]{userId}))
 //                .compose(RxUtils.transformResultToData(Long.class))
-//                .map(attentionNumber -> new UserVO(result, attentionNumber))
+//                .map(attentionNumber -> new UserVOWrapper(result, attentionNumber))
 //                .compose(RxUtils.rxSchedulerHelper())
 //        );
         PreferencesHelper preferencesHelper = mRepositoryHelper.getPreferencesHelper();
-        return Single.create((SingleOnSubscribe<User>) emitter -> {
-            User user = new User();
+        return Single.create((SingleOnSubscribe<UserVO>) emitter -> {
+            UserVO user = new UserVO();
             user.setId(preferencesHelper.getCurrentUserId());
             user.setSex(preferencesHelper.getCurrentUserGender());
             user.setRemark(preferencesHelper.getCurrentUserRemark());
@@ -92,13 +92,13 @@ public class UserModel extends BaseModel
         }).flatMap(result -> httpHelper.obtainRetrofitService(AttentionService.class)
                 .countAttentionNumber(JsonUtils.mapToRequestBody3(new String[]{"authorId"}, new Long[]{userId}))
                 .compose(RxUtils.transformResultToData(Long.class))
-                .map(attentionNumber -> new UserVO(result, attentionNumber))
+                .map(attentionNumber -> new UserVOWrapper(result, attentionNumber))
                 .compose(RxUtils.rxSchedulerHelper())
         );
     }
 
     @Override
-    public Single<User> login(String username, String password) { // 登录验证数据
+    public Single<UserVO> login(String username, String password) { // 登录验证数据
         HttpHelper httpHelper = mRepositoryHelper.getHttpHelper();
         PreferencesHelper preferencesHelper = mRepositoryHelper.getPreferencesHelper();
         return Single.create((SingleOnSubscribe<Map<String, String>>) emitter -> {
@@ -116,7 +116,7 @@ public class UserModel extends BaseModel
             emitter.onSuccess(map);
         }).flatMap(result -> httpHelper.obtainRetrofitService(UserService.class)// 登录
                 .login(JsonUtils.mapToRequestBody2(result))
-                .compose(RxUtils.transformResultToData(User.class))
+                .compose(RxUtils.transformResultToData(UserVO.class))
                 .doOnSuccess(preferencesHelper::saveCurrentUserInfo)
         ).compose(RxUtils.rxSchedulerHelper());
     }
@@ -132,13 +132,13 @@ public class UserModel extends BaseModel
                 emitter.onError(new ApiException(ResponseCode.INPUT_PASSWORD_ERROR));
             }
             if (!VerifyUtils.isLengthVerified(repassword, 6, 16)) {
-                emitter.onError(new ApiException(ResponseCode.INPUT_REPASSWORD_ERROR));
+                emitter.onError(new ApiException(ResponseCode.INPUT_REPEAT_PASSWORD_ERROR));
             }
             if (!(!TextUtils.isEmpty(password) && password.equals(repassword))) {
                 emitter.onError(new ApiException(ResponseCode.NOT_SAME_ERROR));
             }
             if (!VerifyUtils.isPhoneVerified(phone)) {
-                emitter.onError(new ApiException(ResponseCode.INPUT_PHONENUMBER_ERROR));
+                emitter.onError(new ApiException(ResponseCode.INPUT_PHONE_NUMBER_ERROR));
             }
             Map<String, String> params = new HashMap<>();
             params.put(Key.USERNAME, username);

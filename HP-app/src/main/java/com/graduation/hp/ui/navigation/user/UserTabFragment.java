@@ -18,7 +18,7 @@ import com.graduation.hp.core.utils.GlideUtils;
 import com.graduation.hp.core.utils.ScreenUtils;
 import com.graduation.hp.presenter.UserTabPresenter;
 import com.graduation.hp.repository.contact.UserTabContact;
-import com.graduation.hp.repository.http.entity.User;
+import com.graduation.hp.repository.http.entity.vo.UserVO;
 import com.graduation.hp.ui.navigation.NavigationTabActivity;
 import com.graduation.hp.ui.navigation.user.center.UserCenterActivity;
 import com.graduation.hp.ui.navigation.user.info.UserInfoActivity;
@@ -49,7 +49,7 @@ public class UserTabFragment extends BaseFragment<UserTabPresenter>
     @BindView(R.id.my_center_cl)
     ConstraintLayout myCenterCl;
 
-    private User mUser;
+    private UserVO mUser;
 
     public static UserTabFragment newInstance() {
         UserTabFragment fragment = new UserTabFragment();
@@ -113,7 +113,7 @@ public class UserTabFragment extends BaseFragment<UserTabPresenter>
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     @Override
-    public void getCurrentUserInfoSuccess(User user) {
+    public void getCurrentUserInfoSuccess(UserVO user) {
         this.mUser = user;
         setViewByLoginState();
     }

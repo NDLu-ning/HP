@@ -1,13 +1,13 @@
 package com.graduation.hp.repository.contact;
 
-import com.graduation.hp.repository.http.entity.User;
+import com.graduation.hp.repository.http.entity.vo.UserVO;
 
 import java.io.File;
 
 public interface UserInfoContact {
 
     interface View {
-        void onGetUserInfoSuccess(User user);
+        void onGetUserInfoSuccess(UserVO user);
     }
 
     interface Presenter {
@@ -16,7 +16,7 @@ public interface UserInfoContact {
 
         void logout();
 
-        void updateUserInfo(int type, User user);
+        void updateUserInfo(int type, UserVO user);
 
         void uploadUserProfile(File file);
     }

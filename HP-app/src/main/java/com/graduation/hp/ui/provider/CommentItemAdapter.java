@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import android.content.res.Resources;
 
 import com.graduation.hp.R;
-import com.graduation.hp.repository.http.entity.ArticleDiscussPO;
+import com.graduation.hp.repository.http.entity.pojo.ArticleDiscussPO;
 
 import java.util.List;
 

@@ -2,8 +2,6 @@ package com.graduation.hp.ui.navigation.user.info;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -12,7 +10,6 @@ import android.support.v4.app.FragmentManager;
 import android.view.View;
 
 import com.graduation.hp.R;
-import com.graduation.hp.app.constant.Key;
 import com.graduation.hp.app.di.component.DaggerActivityComponent;
 import com.graduation.hp.app.di.module.ActivityModule;
 import com.graduation.hp.core.app.di.component.AppComponent;
@@ -23,7 +20,7 @@ import com.graduation.hp.core.utils.LogUtils;
 import com.graduation.hp.core.utils.UploadAvatarHelper;
 import com.graduation.hp.presenter.UserInfoPresenter;
 import com.graduation.hp.repository.contact.UserInfoContact;
-import com.graduation.hp.repository.http.entity.User;
+import com.graduation.hp.repository.http.entity.vo.UserVO;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -100,7 +97,7 @@ public class UserInfoActivity extends SingleFragmentActivity<UserInfoPresenter>
     }
 
     @Override
-    public void skipToUserUpdateView(int type, User user) {
+    public void skipToUserUpdateView(int type, UserVO user) {
         replaceMainContentFragment(UserUpdateFragment.newInstance(type, user), true);
     }
 
@@ -110,12 +107,12 @@ public class UserInfoActivity extends SingleFragmentActivity<UserInfoPresenter>
     }
 
     @Override
-    public void onGetUserInfoSuccess(User user) {
+    public void onGetUserInfoSuccess(UserVO user) {
         EventBus.getDefault().post(user);
     }
 
     @Override
-    public void updateUserInfo(int type, User user) {
+    public void updateUserInfo(int type, UserVO user) {
         LogUtils.d(type + "," + user.getNickname() + "," + user.getSex() + "," + user.getRemark());
 //        if (mCurFragment != FRAGMENT_IS_USER_INFO) {
 //            mPresenter.updateUserInfo(type, user);

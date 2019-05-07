@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 
+import com.graduation.hp.core.HPApplication;
 import com.graduation.hp.core.R;
 import com.graduation.hp.core.app.constant.Code;
 import com.graduation.hp.core.app.listener.PermissionCallback;
@@ -87,7 +88,6 @@ public class UploadAvatarHelper {
                 onGalleryResult(resultCode, data);
                 return true;
             }
-
             case Code.ATTACHMENT_CROP_PHOTO: {
                 onCropWindowResult(resultCode, data);
                 return true;
@@ -135,7 +135,6 @@ public class UploadAvatarHelper {
             final File file = CameraUtils.createExternalImageFile(activity);
             if (file != null) {
                 mCameraResultFilePath = file.getAbsolutePath();
-
                 ActivityUtils.startActivityForResult(activity,
                         CameraUtils.createImageCaptureIntent(activity, file),
                         Code.ATTACHMENT_NEW_PHOTO);
@@ -196,10 +195,10 @@ public class UploadAvatarHelper {
         if (activity != null && !activity.isFinishing()) {
             final ArrayList<BottomSheetOption> options = new ArrayList<>(2);
             options.add(new BottomSheetOption(SHEET_ID_CHOOSE_FROM_GALLERY,
-                    "从相册中选择"));
+                    HPApplication.getStringById(R.string.tips_choose_gallery)));
             options.add(new BottomSheetOption(SHEET_ID_USE_CAMERA,
-                    "通过相机拍摄"));
-            ListSelectionBottomSheetFragment.newInstance("上传头像",
+                    HPApplication.getStringById(R.string.tips_choose_camera)));
+            ListSelectionBottomSheetFragment.newInstance(HPApplication.getStringById(R.string.tips_upload_profile),
                     options).show(activity.getSupportFragmentManager());
         }
     }
