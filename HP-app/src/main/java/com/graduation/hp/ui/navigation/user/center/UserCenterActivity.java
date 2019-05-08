@@ -107,6 +107,11 @@ public class UserCenterActivity extends BaseActivity<UserCenterPresenter>
         initTabLayout();
         mRefreshLayout.setOnRefreshListener(this);
         mRefreshLayout.setOnLoadMoreListener(this);
+        mUserCenterSubCb.setAttentionButtonClickListener((v, focusOn) -> {
+            if (mUserId == -1L)
+                return;
+            mPresenter.attentionUser(mUserId);
+        });
     }
 
     private void initTabLayout() {
@@ -144,6 +149,17 @@ public class UserCenterActivity extends BaseActivity<UserCenterPresenter>
         setUserAttentionNumber(userVo.getAttentionCount());
     }
 
+    @Override
+    public void operateAttentionStateSuccess(boolean isFocusOn) {
+        onGetAttentionSuccess(isFocusOn);
+        showMessage(getString(isFocusOn ? R.string.tips_focus_on_success : R.string.tips_cancel_focus_on_success));
+    }
+
+    @Override
+    public void onGetAttentionSuccess(boolean isFocusOn) {
+        mUserCenterSubCb.setFocusOn(isFocusOn);
+    }
+
     private void setUserAttentionNumber(long attentionCount) {
         mUserCenterAttentionTv.setVisibility(View.VISIBLE);
         mUserCenterAttentionTv.setText(getString(R.string.tips_total_attention_template
@@ -161,6 +177,7 @@ public class UserCenterActivity extends BaseActivity<UserCenterPresenter>
             mUserCenterEditTv.setVisibility(View.GONE);
             mUserCenterSubCb.setVisibility(View.VISIBLE);
             mUserCenterSubCb.setAttentionButtonClickListener((compoundButton, checked) -> mPresenter.attentionUser(mOwnerId));
+            mPresenter.isFocusOn(mUser.getId());
         }
         mUserCenterSummaryTv.setText(user.getRemark());
         mUserCenterCollapsingTl.setTitle(user.getNickname());
@@ -211,7 +228,7 @@ public class UserCenterActivity extends BaseActivity<UserCenterPresenter>
                     break;
                 case 1:
                     if (mFragments[position] == null) {
-                        mFragments[position] = UserPostFragment.newInstance(mUserId);
+                        mFragments[position] = UserInvitationFragment.newInstance(mUserId);
                     }
                     break;
             }

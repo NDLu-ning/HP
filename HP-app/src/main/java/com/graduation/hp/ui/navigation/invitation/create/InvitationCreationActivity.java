@@ -206,6 +206,7 @@ public class InvitationCreationActivity extends BaseActivity<InvitationCreationP
                         .imageFormat(PictureMimeType.PNG)
                         .isZoomAnim(true)
                         .enableCrop(true)
+                        .isCamera(false)
                         .compress(true)
                         .withAspectRatio(1, 1)
                         .isGif(true)

@@ -14,16 +14,16 @@ import com.graduation.hp.app.di.module.FragmentModule;
 import com.graduation.hp.core.app.di.component.AppComponent;
 import com.graduation.hp.core.mvp.State;
 import com.graduation.hp.core.ui.RootFragment;
-import com.graduation.hp.presenter.UserPostPresenter;
-import com.graduation.hp.repository.contact.UserPostContact;
-import com.graduation.hp.repository.http.entity.PostItem;
-import com.graduation.hp.ui.provider.UserPostItemProvider;
+import com.graduation.hp.presenter.UserInvitationPresenter;
+import com.graduation.hp.repository.contact.UserInvitationContact;
+import com.graduation.hp.repository.http.entity.vo.InvitationVO;
+import com.graduation.hp.ui.navigation.constitution.detail.InvitationDetailActivity;
+import com.graduation.hp.ui.provider.UserInvitationItemProvider;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -32,12 +32,11 @@ import butterknife.BindView;
 import me.drakeet.multitype.Items;
 import me.drakeet.multitype.MultiTypeAdapter;
 
-public class UserPostFragment extends RootFragment<UserPostPresenter>
-        implements UserPostContact.View, OnLoadMoreListener, OnRefreshListener {
+public class UserInvitationFragment extends RootFragment<UserInvitationPresenter>
+        implements UserInvitationContact.View, OnLoadMoreListener, OnRefreshListener {
 
-
-    public static UserPostFragment newInstance(long userId) {
-        UserPostFragment fragment = new UserPostFragment();
+    public static UserInvitationFragment newInstance(long userId) {
+        UserInvitationFragment fragment = new UserInvitationFragment();
         Bundle args = new Bundle();
         args.putLong(Key.USER_ID, userId);
         fragment.setArguments(args);
@@ -72,12 +71,12 @@ public class UserPostFragment extends RootFragment<UserPostPresenter>
             mUserId = bundle.getLong(Key.USER_ID, -1L);
         }
         if (mUserId == -1L) {
-            throw new IllegalArgumentException("UserPostFragment must be passed user's id");
+            throw new IllegalArgumentException("UserInvitationFragment must be passed user's id");
         }
     }
 
     private void initMultiTypeAdapter() {
-        mAdapter.register(PostItem.class, new UserPostItemProvider(listener));
+        mAdapter.register(InvitationVO.class, new UserInvitationItemProvider(listener));
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -92,12 +91,14 @@ public class UserPostFragment extends RootFragment<UserPostPresenter>
 
         @Override
         public void onItemClick(boolean post, long id) {
-
+            if (!post) return;
+            startActivity(InvitationDetailActivity.createIntent(getContext(), id));
         }
 
         @Override
         public void onLikeClick(boolean post, long id, boolean liked) {
-
+            if(!post) return;
+            mPresenter.likeInvitation(id);
         }
     };
 
@@ -126,13 +127,23 @@ public class UserPostFragment extends RootFragment<UserPostPresenter>
     }
 
     @Override
-    public void onGetPostListSuccess(List<PostItem> list) {
+    public void onGetDataSuccess(State state, List<InvitationVO> list) {
         if (mPresenter.isRefresh()) {
             mItems.clear();
         }
         mItems.addAll(list);
         mAdapter.notifyDataSetChanged();
     }
+
+    @Override
+    public void operateLikeStateSuccess(boolean isLiked) {
+        showMessage(getString(isLiked ? R.string.tips_like_success : R.string.tips_cancel_like_success));
+    }
+
+    @Override
+    public void operateLikeStateError() {
+    }
+
 
     @Override
     public void dismissDialog() {

@@ -121,6 +121,7 @@ public class ArticleDetailPresenter extends BasePresenter<ArticleDetailFragment,
                                     return;
                                 }
                             }
+                            handlerApiError(throwable);
                         }));
     }
 

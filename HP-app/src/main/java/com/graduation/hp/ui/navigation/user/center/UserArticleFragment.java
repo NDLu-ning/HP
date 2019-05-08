@@ -16,7 +16,8 @@ import com.graduation.hp.core.ui.RootFragment;
 import com.graduation.hp.presenter.UserArticlePresenter;
 import com.graduation.hp.repository.contact.UserArticleContact;
 import com.graduation.hp.repository.http.entity.vo.ArticleVO;
-import com.graduation.hp.ui.provider.UserNewsItemProvider;
+import com.graduation.hp.ui.navigation.article.detail.ArticleDetailActivity;
+import com.graduation.hp.ui.provider.UserArticleItemProvider;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
@@ -69,12 +70,12 @@ public class UserArticleFragment extends RootFragment<UserArticlePresenter>
             mUserId = bundle.getLong(Key.USER_ID, -1L);
         }
         if (mUserId == -1L) {
-            throw new IllegalArgumentException("UserPostFragment must be passed user's id");
+            throw new IllegalArgumentException("UserInvitationFragment must be passed user's id");
         }
     }
 
     private void initMultiTypeAdapter() {
-        mAdapter.register(ArticleVO.class, new UserNewsItemProvider(listener));
+        mAdapter.register(ArticleVO.class, new UserArticleItemProvider(listener));
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -95,7 +96,7 @@ public class UserArticleFragment extends RootFragment<UserArticlePresenter>
 
         @Override
         public void onItemClick(boolean post, long id) {
-
+            startActivity(ArticleDetailActivity.createIntent(getContext(), id));
         }
     };
 

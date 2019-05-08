@@ -95,7 +95,7 @@ public class DiscussModel extends BaseModel
             }
             emitter.onSuccess(params);
         }).flatMap(params -> httpHelper.obtainRetrofitService(DiscussService.class)
-                .discuss(JsonUtils.mapToRequestBody(params))
+                .discussInvitation(JsonUtils.mapToRequestBody(params))
                 .map(RxUtils.mappingResponseToResult(Object.class))
                 .compose(RxUtils.mappingResultToCheck())
                 .compose(RxUtils.rxSchedulerHelper()));

@@ -3,26 +3,24 @@ package com.graduation.hp.ui.question;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.AppCompatTextView;
-import android.text.TextUtils;
 import android.view.View;
 
 import com.graduation.hp.R;
 import com.graduation.hp.app.constant.Key;
 import com.graduation.hp.core.app.di.component.AppComponent;
 import com.graduation.hp.core.ui.BaseFragment;
-import com.graduation.hp.core.utils.ToastUtils;
+import com.graduation.hp.repository.http.entity.pojo.PhysiquePO;
 
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import butterknife.BindView;
 
 public class TestResultFragment extends BaseFragment {
 
-    public static TestResultFragment newInstance(String result, boolean isCurUserLogin) {
+    public static TestResultFragment newInstance(PhysiquePO physiquePO, boolean isCurUserLogin) {
         TestResultFragment fragment = new TestResultFragment();
         Bundle args = new Bundle();
-        args.putString(Key.RESULT, result);
+        args.putParcelable(Key.RESULT, physiquePO);
         args.putBoolean(Key.IS_CURRENT_USER_LOGIN, isCurUserLogin);
         fragment.setArguments(args);
         return fragment;
@@ -47,24 +45,16 @@ public class TestResultFragment extends BaseFragment {
     @Override
     protected void init(Bundle savedInstanceState, View view) {
         initToolbar(view, getString(R.string.tips_test_result), R.mipmap.ic_close_white_32);
-        String result = getArguments().getString(Key.RESULT);
-        boolean isCurUserLogin = getArguments().getBoolean(Key.IS_CURRENT_USER_LOGIN);
-        if (TextUtils.isEmpty(result)) {
+        Bundle bundle = getArguments();
+        PhysiquePO result = bundle.getParcelable(Key.RESULT);
+        boolean isCurUserLogin = bundle.getBoolean(Key.IS_CURRENT_USER_LOGIN);
+        if (result == null) {
             throw new IllegalArgumentException("Result must be not null");
         }
-        Matcher matcher = pattern.matcher(result);
-        if (matcher.matches()) {
-            String typeName = matcher.group(0);
-            String description = matcher.group(1);
-            String method = matcher.group(2);
-            testResultWhatsTv.setText(getString(R.string.tips_whats_constitution, typeName));
-            testResultConstitutionTv.setText(typeName);
-            testResultDescriptionTv.setText(description);
-            testResultFitMethodTv.setText(method);
-        } else {
-            ToastUtils.show(getContext(), getString(R.string.tips_test_result_error));
-            getActivity().finish();
-        }
+        testResultWhatsTv.setText(getString(R.string.tips_whats_constitution, result.getTyped()));
+        testResultConstitutionTv.setText(result.getTyped());
+        testResultDescriptionTv.setText(result.getDetail());
+        testResultFitMethodTv.setText(result.getRecuperate());
 
     }
 

@@ -20,11 +20,11 @@ import com.graduation.hp.ui.navigation.user.center.UserCenterTabListener;
 
 import me.drakeet.multitype.ItemViewBinder;
 
-public class UserNewsItemProvider extends ItemViewBinder<ArticleVO, UserNewsItemProvider.ViewHolder> {
+public class UserArticleItemProvider extends ItemViewBinder<ArticleVO, UserArticleItemProvider.ViewHolder> {
 
     private final UserCenterTabListener mListener;
 
-    public UserNewsItemProvider(UserCenterTabListener listener) {
+    public UserArticleItemProvider(UserCenterTabListener listener) {
         this.mListener = listener;
     }
 

@@ -59,7 +59,7 @@ public class LikeModel extends BaseModel
             params.put(Key.ARTICLE_ID, invitationId);
             emitter.onSuccess(params);
         }).flatMap(params -> httpHelper.obtainRetrofitService(LikeService.class)
-                .like(JsonUtils.mapToRequestBody(params))
+                .likeInvitation(JsonUtils.mapToRequestBody(params))
                 .map(RxUtils.mappingResponseToResultWithNoException(String.class))
                 .map(checkLikeStatus())
                 .compose(RxUtils.rxSchedulerHelper()));

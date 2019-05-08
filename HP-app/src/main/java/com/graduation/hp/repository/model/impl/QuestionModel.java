@@ -4,12 +4,12 @@ import com.graduation.hp.app.constant.Key;
 import com.graduation.hp.core.mvp.BaseModel;
 import com.graduation.hp.core.repository.http.HttpHelper;
 import com.graduation.hp.core.repository.http.bean.ResponseCode;
-import com.graduation.hp.core.repository.http.bean.Result;
 import com.graduation.hp.core.repository.http.exception.ApiException;
 import com.graduation.hp.core.utils.JsonUtils;
 import com.graduation.hp.core.utils.RxUtils;
 import com.graduation.hp.repository.RepositoryHelper;
 import com.graduation.hp.repository.http.entity.pojo.AnswerPO;
+import com.graduation.hp.repository.http.entity.pojo.PhysiquePO;
 import com.graduation.hp.repository.http.entity.vo.QuestionVO;
 import com.graduation.hp.repository.http.entity.wrapper.QuestionVOWrapper;
 import com.graduation.hp.repository.http.service.QuestionService;
@@ -23,7 +23,8 @@ import java.util.Map;
 import javax.inject.Inject;
 
 import io.reactivex.Single;
-import io.reactivex.functions.Function;
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
 
 public class QuestionModel extends BaseModel
         implements IQuestionModel {
@@ -68,18 +69,19 @@ public class QuestionModel extends BaseModel
     }
 
     @Override
-    public Single<String> commit(List<AnswerPO> list) {
+    public Single<PhysiquePO> commit(List<AnswerPO> list) {
         HttpHelper httpHelper = mRepositoryHelper.getHttpHelper();
-        return Single.<Map<String, Object>>create(emitter -> {
+        return Single.<List<AnswerPO>>create(emitter -> {
             if (list == null || list.size() == 0) {
                 emitter.onError(new ApiException(ResponseCode.ILLEGAL_ARGUMENT));
             }
-            Map<String, Object> map = new HashMap<>();
-            map.put(Key.ALIST, list);
-            emitter.onSuccess(map);
+//            Map<String, Object> map = new HashMap<>();
+//            map.put(Key.ALIST, list);
+            emitter.onSuccess(list);
         }).flatMap(params -> httpHelper.obtainRetrofitService(QuestionService.class)
-                .commit(JsonUtils.mapToRequestBody(params))
-                .compose(RxUtils.transformResultToData(String.class))
+                .commit(RequestBody.create(MediaType.parse("application/json; charset=utf-8"),
+                        JsonUtils.objectToJson(params)))
+                .compose(RxUtils.transformResultToData(PhysiquePO.class))
                 .compose(RxUtils.rxSchedulerHelper()));
     }
 

@@ -47,7 +47,15 @@ public class QuestionListPresenter extends BasePresenter<QuestionListFragment, Q
         mMvpView.showDialog(HPApplication.getStringById(R.string.tips_upload_ing));
         mMvpModel.addSubscribe(mMvpModel.commit(list)
                 .doFinally(() -> mMvpView.dismissDialog())
-                .subscribe(result -> mMvpView.onCommitSuccess(result),
+                .subscribe(result -> {
+                            if (isCurUserLogin()) {
+                                RepositoryHelper repositoryHelper = mMvpModel.getRepositoryHelper();
+                                PreferencesHelper preferencesHelper = repositoryHelper.getPreferencesHelper();
+                                preferencesHelper.saveCurrentUserPhysiquId(result.getId());
+                            }
+                            mMvpView.onCommitSuccess(result);
+
+                        },
                         throwable -> handlerApiError(throwable)));
     }
 

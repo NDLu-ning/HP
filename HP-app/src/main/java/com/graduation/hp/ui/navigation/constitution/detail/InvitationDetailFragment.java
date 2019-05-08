@@ -26,6 +26,7 @@ import com.graduation.hp.repository.http.entity.pojo.InvitationDiscussPO;
 import com.graduation.hp.repository.http.entity.vo.InvitationVO;
 import com.graduation.hp.ui.navigation.article.comment.PrepareForDiscussionListener;
 import com.graduation.hp.ui.navigation.user.center.UserCenterActivity;
+import com.graduation.hp.utils.BeanFactory;
 import com.graduation.hp.utils.StringUtils;
 import com.graduation.hp.widget.LikeButton;
 import com.graduation.hp.widget.dialog.CommentDialog;
@@ -202,6 +203,14 @@ public class InvitationDetailFragment extends RootFragment<InvitationDetailPrese
         GlideUtils.loadUserHead(invitationPostIconIv, mInvitationVo.getHeadUrl());
         invitationDetailNameTv.setText(mInvitationVo.getNickname());
         invitationDetailTagTv.setText(mInvitationVo.getPhysiqueStr());
+        invitationDetailContentTv.setText(mInvitationVo.getContext());
+        int pid = Integer.parseInt(String.valueOf(mInvitationVo.getPhysiqueId()));
+        pid = pid - 1 >= 0 ? pid : 0;
+        invitationDetailTagTv.setText(BeanFactory.constitutions[pid]);
+        invitationDetailTagTv.setBackgroundResource(BeanFactory.constitutions_bg_res[pid]);
+        invitationDetailTagTv.setTextColor(BeanFactory.constitutions_color[pid]);
+        invitationDetailLikeNumTv.setText(getString(R.string.tips_total_like_count_template, mInvitationVo.getLikeNum()));
+        invitationDetailCommentNumTv.setText(String.valueOf(mInvitationVo.getDiscussNum()));
         invitationDetailDateTv.setText(DateUtils.formatPublishDate(mInvitationVo.getCreateTime()));
         List<ImageInfo> imageInfos = new ArrayList<>();
         String[] images = mInvitationVo.getImages().split(",");
@@ -214,10 +223,23 @@ public class InvitationDetailFragment extends RootFragment<InvitationDetailPrese
         invitationImageContainer.setAdapter(new NineGridViewClickAdapter(getContext(), imageInfos));
     }
 
+    @Override
+    public void onGetAttentionSuccess(boolean isFocusOn) {
+        showInvitationSubButton(isFocusOn);
+    }
+
+    @Override
+    public void onGetInvitationDiscussSuccess(List<InvitationDiscussPO> invitationDiscussPOList) {
+        invitationCommentContainer.removeAllViews();
+        for (InvitationDiscussPO invitationDiscussPO : invitationDiscussPOList) {
+            invitationCommentContainer.addView(createInvitationDiscussView(getContext(), invitationDiscussPO));
+        }
+    }
+
     private View createInvitationDiscussView(Context context, InvitationDiscussPO commentItem) {
         View rootView = LayoutInflater.from(context).inflate(R.layout.adapter_post_reply_item, null);
         AppCompatTextView replyTv = rootView.findViewById(R.id.adapter_post_reply_tv);
-        replyTv.setTextSize(TypedValue.COMPLEX_UNIT_SP,13.0F);
+        replyTv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 13.0F);
         String content;
         if (!TextUtils.isEmpty(commentItem.getTalkNickname())) {
             content = String.format(context.getString(R.string.comment_has_reply_object), commentItem.getNickname(), commentItem.getTalkNickname(), commentItem.getContext());
@@ -242,19 +264,6 @@ public class InvitationDetailFragment extends RootFragment<InvitationDetailPrese
         return replyTv;
     }
 
-
-    @Override
-    public void onGetAttentionSuccess(boolean isFocusOn) {
-        showInvitationSubButton(isFocusOn);
-    }
-
-    @Override
-    public void onGetInvitationDiscussSuccess(List<InvitationDiscussPO> invitationDiscussPOList) {
-        invitationCommentContainer.removeAllViews();
-        for (InvitationDiscussPO invitationDiscussPO : invitationDiscussPOList) {
-            invitationCommentContainer.addView(createInvitationDiscussView(getContext(), invitationDiscussPO));
-        }
-    }
 
     @Override
     public void operateLikeStateSuccess(boolean isLiked) {

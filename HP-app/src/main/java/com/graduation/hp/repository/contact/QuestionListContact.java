@@ -1,6 +1,7 @@
 package com.graduation.hp.repository.contact;
 
 import com.graduation.hp.repository.http.entity.pojo.AnswerPO;
+import com.graduation.hp.repository.http.entity.pojo.PhysiquePO;
 import com.graduation.hp.repository.http.entity.wrapper.QuestionVOWrapper;
 
 import java.util.ArrayList;
@@ -12,7 +13,7 @@ public interface QuestionListContact {
 
         void onGetQuestionsSuccess(ArrayList<QuestionVOWrapper> questions);
 
-        void onCommitSuccess(String text);
+        void onCommitSuccess(PhysiquePO physiquePO);
     }
 
     interface Presenter {

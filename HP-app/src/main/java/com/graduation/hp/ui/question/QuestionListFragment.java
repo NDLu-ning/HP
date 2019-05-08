@@ -18,6 +18,7 @@ import com.graduation.hp.core.utils.ToastUtils;
 import com.graduation.hp.presenter.QuestionListPresenter;
 import com.graduation.hp.repository.contact.QuestionListContact;
 import com.graduation.hp.repository.http.entity.pojo.AnswerPO;
+import com.graduation.hp.repository.http.entity.pojo.PhysiquePO;
 import com.graduation.hp.repository.http.entity.wrapper.QuestionVOWrapper;
 import com.graduation.hp.ui.auth.reset.InputPhoneFragment;
 import com.graduation.hp.ui.provider.QuestionItemProvider;
@@ -187,9 +188,9 @@ public class QuestionListFragment extends RootFragment<QuestionListPresenter>
     }
 
     @Override
-    public void onCommitSuccess(String text) {
+    public void onCommitSuccess(PhysiquePO physiquePO) {
         if (!isAdded()) return;
-        mListener.commitAnswersSuccess(text, mPresenter.isCurUserLogin());
+        mListener.commitAnswersSuccess(physiquePO, mPresenter.isCurUserLogin());
     }
 
     @Override
@@ -215,6 +216,6 @@ public class QuestionListFragment extends RootFragment<QuestionListPresenter>
     }
 
     public interface QuestionListFragmentListener {
-        void commitAnswersSuccess(String text, boolean isCurUserLogin);
+        void commitAnswersSuccess(PhysiquePO physiquePO, boolean isCurUserLogin);
     }
 }

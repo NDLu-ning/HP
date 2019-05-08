@@ -29,6 +29,7 @@ import javax.inject.Inject;
 
 import io.reactivex.Single;
 import io.reactivex.SingleOnSubscribe;
+import io.reactivex.schedulers.Schedulers;
 
 public class UserModel extends BaseModel
         implements IUserModel {
@@ -80,35 +81,37 @@ public class UserModel extends BaseModel
     @Override
     public Single<UserVOWrapper> getUserInfo(long userId) {
         HttpHelper httpHelper = mRepositoryHelper.getHttpHelper();
-//        return Single.create((SingleOnSubscribe<Map<String, Object>>) emitter -> {
-//            Map<String, Object> map = new HashMap<>();
-//            map.put(Key.ID, userId);
-//        }).flatMap(result -> httpHelper.obtainRetrofitService(UserService.class)
-//                .getUserInfo(JsonUtils.mapToRequestBody(result))
-//                .compose(RxUtils.transformResultToData(UserVO.class))
-//                .subscribeOn(Schedulers.io())
-//        ).flatMap(result -> httpHelper.obtainRetrofitService(AttentionService.class)
+        return Single.create((SingleOnSubscribe<Map<String, Object>>) emitter -> {
+            if (userId == 0) emitter.onError(new ApiException(ResponseCode.ILLEGAL_ARGUMENT));
+            Map<String, Object> map = new HashMap<>();
+            map.put(Key.ID, userId);
+            emitter.onSuccess(map);
+        }).flatMap(result -> httpHelper.obtainRetrofitService(UserService.class)
+                .getUserInfo(JsonUtils.mapToRequestBody(result))
+                .compose(RxUtils.transformResultToData(UserVO.class))
+                .subscribeOn(Schedulers.io())
+        ).flatMap(result -> httpHelper.obtainRetrofitService(AttentionService.class)
+                .countAttentionNumber(JsonUtils.mapToRequestBody3(new String[]{Key.ID}, new Long[]{userId}))
+                .compose(RxUtils.transformResultToData(Long.class))
+                .map(attentionNumber -> new UserVOWrapper(result, attentionNumber))
+                .compose(RxUtils.rxSchedulerHelper())
+        );
+//        PreferencesHelper preferencesHelper = mRepositoryHelper.getPreferencesHelper();
+//        return Single.create((SingleOnSubscribe<UserVO>) emitter -> {
+//            UserVO user = new UserVO();
+//            user.setId(preferencesHelper.getCurrentUserId());
+//            user.setSex(preferencesHelper.getCurrentUserGender());
+//            user.setRemark(preferencesHelper.getCurrentUserRemark());
+//            user.setPhysiquId(preferencesHelper.getCurrentUserPhysiquId());
+//            user.setHeadUrl(preferencesHelper.getCurrentUserIcon());
+//            user.setUsername(preferencesHelper.getCurrentUserUsername());
+//            user.setNickname(preferencesHelper.getCurrentUserNickname());
+//            emitter.onSuccess(user);
+//        }).flatMap(result -> httpHelper.obtainRetrofitService(AttentionService.class)
 //                .countAttentionNumber(JsonUtils.mapToRequestBody3(new String[]{"authorId"}, new Long[]{userId}))
 //                .compose(RxUtils.transformResultToData(Long.class))
 //                .map(attentionNumber -> new UserVOWrapper(result, attentionNumber))
-//                .compose(RxUtils.rxSchedulerHelper())
-//        );
-        PreferencesHelper preferencesHelper = mRepositoryHelper.getPreferencesHelper();
-        return Single.create((SingleOnSubscribe<UserVO>) emitter -> {
-            UserVO user = new UserVO();
-            user.setId(preferencesHelper.getCurrentUserId());
-            user.setSex(preferencesHelper.getCurrentUserGender());
-            user.setRemark(preferencesHelper.getCurrentUserRemark());
-            user.setPhysiquId(preferencesHelper.getCurrentUserPhysiquId());
-            user.setHeadUrl(preferencesHelper.getCurrentUserIcon());
-            user.setUsername(preferencesHelper.getCurrentUserUsername());
-            user.setNickname(preferencesHelper.getCurrentUserNickname());
-            emitter.onSuccess(user);
-        }).flatMap(result -> httpHelper.obtainRetrofitService(AttentionService.class)
-                .countAttentionNumber(JsonUtils.mapToRequestBody3(new String[]{"authorId"}, new Long[]{userId}))
-                .compose(RxUtils.transformResultToData(Long.class))
-                .map(attentionNumber -> new UserVOWrapper(result, attentionNumber))
-        ).compose(RxUtils.rxSchedulerHelper());
+//        ).compose(RxUtils.rxSchedulerHelper());
     }
 
     @Override

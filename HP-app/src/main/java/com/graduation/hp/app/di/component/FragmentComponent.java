@@ -14,7 +14,7 @@ import com.graduation.hp.ui.navigation.user.UserTabFragment;
 import com.graduation.hp.ui.navigation.article.list.ArticleListFragment;
 import com.graduation.hp.ui.navigation.invitation.InvitationTabFragment;
 import com.graduation.hp.ui.navigation.user.center.UserArticleFragment;
-import com.graduation.hp.ui.navigation.user.center.UserPostFragment;
+import com.graduation.hp.ui.navigation.user.center.UserInvitationFragment;
 import com.graduation.hp.ui.question.QuestionListFragment;
 import com.graduation.hp.ui.search.SearchResultFragment;
 import com.tbruyelle.rxpermissions2.RxPermissions;
@@ -47,7 +47,7 @@ public interface FragmentComponent {
 
     void inject(InvitationTabFragment postTabFragment);
 
-    void inject(UserPostFragment userPostFragment);
+    void inject(UserInvitationFragment userPostFragment);
 
     void inject(UserArticleFragment userNewsFragment);
 

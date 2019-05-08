@@ -12,6 +12,7 @@ import com.graduation.hp.R;
 import com.graduation.hp.app.constant.Key;
 import com.graduation.hp.core.app.di.component.AppComponent;
 import com.graduation.hp.core.ui.SingleFragmentActivity;
+import com.graduation.hp.repository.http.entity.pojo.PhysiquePO;
 
 public class QuestionActivity extends SingleFragmentActivity
         implements QuestionListFragment.QuestionListFragmentListener {
@@ -57,8 +58,8 @@ public class QuestionActivity extends SingleFragmentActivity
     }
 
     @Override
-    public void commitAnswersSuccess(String text, boolean isCurUserLogin) {
-        replaceMainContentFragment(TestResultFragment.newInstance(text, isCurUserLogin), false);
+    public void commitAnswersSuccess(PhysiquePO physiquePO, boolean isCurUserLogin) {
+        replaceMainContentFragment(TestResultFragment.newInstance(physiquePO, isCurUserLogin), false);
     }
 
     @Override

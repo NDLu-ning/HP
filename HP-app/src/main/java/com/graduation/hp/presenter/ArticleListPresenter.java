@@ -47,10 +47,7 @@ public class ArticleListPresenter extends BasePresenter<ArticleListFragment, Art
                 .subscribe(newsList -> {
                     mMvpView.onDownloadDataSuccess(newsList);
                     mMvpView.showMain();
-                }, throwable -> {
-                    handlerApiError(throwable);
-                    mMvpView.showError(HPApplication.getStringById(R.string.tips_error_general));
-                }));
+                }, throwable -> handlerApiError(throwable)));
     }
 
 
