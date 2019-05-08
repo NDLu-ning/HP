@@ -2,6 +2,7 @@ package com.graduation.hp.ui.navigation.article.detail;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
@@ -30,16 +31,20 @@ import com.graduation.hp.core.ui.RootFragment;
 import com.graduation.hp.core.utils.DateUtils;
 import com.graduation.hp.core.utils.GlideUtils;
 import com.graduation.hp.core.utils.LogUtils;
+import com.graduation.hp.core.utils.ScreenUtils;
+import com.graduation.hp.core.utils.ToastUtils;
 import com.graduation.hp.presenter.ArticleDetailPresenter;
 import com.graduation.hp.repository.contact.ArticleDetailContact;
 import com.graduation.hp.repository.http.entity.vo.ArticleVO;
 import com.graduation.hp.ui.navigation.article.comment.ArticleCommentFragment;
 import com.graduation.hp.ui.navigation.article.comment.PrepareForDiscussionListener;
+import com.graduation.hp.ui.navigation.user.center.UserCenterActivity;
 import com.graduation.hp.utils.StringUtils;
 import com.graduation.hp.widget.AttentionButton;
 import com.graduation.hp.widget.LikeButton;
 import com.graduation.hp.widget.dialog.CommentDialog;
 
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
@@ -168,6 +173,11 @@ public class ArticleDetailFragment extends RootFragment<ArticleDetailPresenter>
             case R.id.news_detail_author_info_cl:
             case R.id.news_detail_author_info_2_cl:
                 // 跳转用户主页
+                if (mNews == null) {
+                    ToastUtils.show(getContext(), HPApplication.getStringById(R.string.tips_happen_unknown_error));
+                    return;
+                }
+                startActivity(UserCenterActivity.createIntent(mContext, mPresenter.getLocalCurrentUserId(), mNews.getUserId()));
                 break;
             case R.id.news_detail_comment_tv:
             case R.id.news_detail_comment_iv_container:
@@ -212,6 +222,15 @@ public class ArticleDetailFragment extends RootFragment<ArticleDetailPresenter>
         showNewsContent();
         showNewsAuthorInfo();
         mPresenter.isFocusOn(articleVO.getUserId());
+    }
+
+    private void decideHaveToLoadComment(int webViewHeight) {
+        Point screen = ScreenUtils.getScreenDimension(getContext());
+        if (webViewHeight < screen.y && (mCommentFragment == null || !mCommentFragment.isAdded())) {
+            mCommentFragment = ArticleCommentFragment.newInstance(mNewsId);
+            getChildFragmentManager().beginTransaction()
+                    .replace(R.id.news_detail_comment_container, mCommentFragment).commit();
+        }
     }
 
     private void showNewsAuthorInfo() {
@@ -267,6 +286,7 @@ public class ArticleDetailFragment extends RootFragment<ArticleDetailPresenter>
         mDiscussionDialogListener.dismissCommentDialog();
         showMessage(getString(success ? R.string.tips_comment_success : R.string.tips_comment_failed));
         articleCommentSuccess(new DiscussEvent(true));
+        EventBus.getDefault().post(success);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -353,6 +373,8 @@ public class ArticleDetailFragment extends RootFragment<ArticleDetailPresenter>
             //重新测量
             mWebView.measure(w, h);
             showMain();
+            decideHaveToLoadComment(h);
+
         }
 
         @Override
@@ -366,6 +388,11 @@ public class ArticleDetailFragment extends RootFragment<ArticleDetailPresenter>
             LogUtils.d("拦截到URL信息为:" + url);
             return super.shouldOverrideUrlLoading(view, url);
         }
+    }
+
+    @Override
+    public void onToolbarLeftClickListener(View v) {
+        getActivity().finish();
     }
 
     @Override

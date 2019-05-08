@@ -113,7 +113,8 @@ public class DiscussModel extends BaseModel
             emitter.onSuccess(params);
         }).flatMap(params -> httpHelper.obtainRetrofitService(DiscussService.class)
                 .getInvitationDiscuss(JsonUtils.mapToRequestBody(params))
-                .compose(RxUtils.transformResultToList(InvitationDiscussPO.class))
+                .map(RxUtils.mappingResponseToResultList(InvitationDiscussPO.class))
+                .compose(RxUtils.<InvitationDiscussPO>mappingResultToListQiang())
                 .compose(RxUtils.rxSchedulerHelper()));
     }
 

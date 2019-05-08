@@ -14,7 +14,7 @@ public interface QuestionService {
     Single<String> getAllQuestion(@Query("type") int type);
 
     @Headers(value = {"Content-Type:application/json"})
-    @POST("question/getPhysiquet")
+    @POST("question/getPhysique")
     Single<String> commit(@Body RequestBody body);
 }
 

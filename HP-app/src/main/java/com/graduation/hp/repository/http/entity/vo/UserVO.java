@@ -17,7 +17,7 @@ public class UserVO extends Page implements Parcelable {
     /**
      * 用户id
      */
-    private Long id;
+    private long id;
 
     /**
      * 用户名(手机号码)
@@ -37,12 +37,12 @@ public class UserVO extends Page implements Parcelable {
     /**
      * 体质id
      */
-    private Long physiquId;
+    private long physiquId;
 
     /**
      * 性别(1:男，0:女)
      */
-    private Integer sex;
+    private int sex;
 
     /**
      * 头像url
@@ -72,25 +72,15 @@ public class UserVO extends Page implements Parcelable {
     public UserVO() {
     }
 
+
     protected UserVO(Parcel in) {
-        if (in.readByte() == 0) {
-            id = null;
-        } else {
-            id = in.readLong();
-        }
+        super(in);
+        id = in.readLong();
         username = in.readString();
         password = in.readString();
         nickname = in.readString();
-        if (in.readByte() == 0) {
-            physiquId = null;
-        } else {
-            physiquId = in.readLong();
-        }
-        if (in.readByte() == 0) {
-            sex = null;
-        } else {
-            sex = in.readInt();
-        }
+        physiquId = in.readLong();
+        sex = in.readInt();
         headUrl = in.readString();
         token = in.readString();
         remark = in.readString();
@@ -108,11 +98,11 @@ public class UserVO extends Page implements Parcelable {
         }
     };
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -140,19 +130,19 @@ public class UserVO extends Page implements Parcelable {
         this.nickname = nickname;
     }
 
-    public Long getPhysiquId() {
+    public long getPhysiquId() {
         return physiquId;
     }
 
-    public void setPhysiquId(Long physiquId) {
+    public void setPhysiquId(long physiquId) {
         this.physiquId = physiquId;
     }
 
-    public Integer getSex() {
+    public int getSex() {
         return sex;
     }
 
-    public void setSex(Integer sex) {
+    public void setSex(int sex) {
         this.sex = sex;
     }
 
@@ -203,27 +193,13 @@ public class UserVO extends Page implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
-        if (id == null) {
-            parcel.writeByte((byte) 0);
-        } else {
-            parcel.writeByte((byte) 1);
-            parcel.writeLong(id);
-        }
+        super.writeToParcel(parcel, i);
+        parcel.writeLong(id);
         parcel.writeString(username);
         parcel.writeString(password);
         parcel.writeString(nickname);
-        if (physiquId == null) {
-            parcel.writeByte((byte) 0);
-        } else {
-            parcel.writeByte((byte) 1);
-            parcel.writeLong(physiquId);
-        }
-        if (sex == null) {
-            parcel.writeByte((byte) 0);
-        } else {
-            parcel.writeByte((byte) 1);
-            parcel.writeInt(sex);
-        }
+        parcel.writeLong(physiquId);
+        parcel.writeInt(sex);
         parcel.writeString(headUrl);
         parcel.writeString(token);
         parcel.writeString(remark);

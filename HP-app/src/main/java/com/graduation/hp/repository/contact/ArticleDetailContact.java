@@ -31,5 +31,7 @@ public interface ArticleDetailContact {
         void likeArticle(long newsId);
 
         void focusOnAuthor(long authorId);
+
+        long getLocalCurrentUserId();
     }
 }

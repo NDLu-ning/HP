@@ -7,6 +7,7 @@ public enum ResponseCode {
     ALREADY_FOCUS_ON(201, "已关注该作者"),
     HAVE_NOT_FOCUS_ON(200, "未关注该作者"),
     CANCEL_FOCUS_ON(205, "取消关注成功"),
+    CANCEL_LIKED(206, "取消关注成功"),
     TIME_OUT(302, "请求超时"),
     DATA_NULL(404, "数据暂无"),
     TOKEN_ERROR(600, "尚未登录或登录令牌失效"),

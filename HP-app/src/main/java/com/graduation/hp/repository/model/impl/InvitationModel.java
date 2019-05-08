@@ -48,14 +48,13 @@ public class InvitationModel extends BaseModel
         HttpHelper httpHelper = mRepositoryHelper.getHttpHelper();
         return Single.create((SingleOnSubscribe<Map<String, Object>>) emitter -> {
             Map<String, Object> map = new HashMap<>();
-            map.put(Key.PHYSICAL_ID, physiqueId);
+            map.put(Key.PHYSIQUELD, physiqueId);
             map.put(Key.LIMIT, limit);
             map.put(Key.OFFSET, offset);
             emitter.onSuccess(map);
         }).flatMap(params -> httpHelper.obtainRetrofitService(InvitationService.class)
                 .dataGrid(JsonUtils.mapToRequestBody(params))
-                .map(RxUtils.mappingResponseToResultList(InvitationVO.class))
-                .compose(RxUtils.<InvitationVO>mappingResultToListQiang())
+                .compose(RxUtils.transformResultToList(InvitationVO.class))
                 .compose(RxUtils.rxSchedulerHelper()));
     }
 
@@ -70,8 +69,7 @@ public class InvitationModel extends BaseModel
             emitter.onSuccess(map);
         }).flatMap(params -> httpHelper.obtainRetrofitService(InvitationService.class)
                 .dataGrid(JsonUtils.mapToRequestBody(params))
-                .map(RxUtils.mappingResponseToResultList(InvitationVO.class))
-                .compose(RxUtils.<InvitationVO>mappingResultToListQiang())
+                .compose(RxUtils.transformResultToList(InvitationVO.class))
                 .compose(RxUtils.rxSchedulerHelper()));
     }
 
@@ -87,7 +85,6 @@ public class InvitationModel extends BaseModel
                 .compose(RxUtils.transformResultToData(InvitationVO.class))
                 .compose(RxUtils.rxSchedulerHelper()));
     }
-
 
 
     public RepositoryHelper getRepositoryHelper() {

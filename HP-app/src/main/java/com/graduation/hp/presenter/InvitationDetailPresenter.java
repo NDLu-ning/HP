@@ -61,7 +61,7 @@ public class InvitationDetailPresenter extends BasePresenter<InvitationDetailFra
             mMvpView.showError(HPApplication.getStringById(R.string.tips_network_unavailable));
             return;
         }
-        mMvpModel.addSubscribe(likeModel.like(invitationId)
+        mMvpModel.addSubscribe(likeModel.likeInvitation(invitationId)
                 .subscribe(
                         isLiked -> mMvpView.operateLikeStateSuccess(isLiked),
                         throwable -> {
@@ -70,6 +70,10 @@ public class InvitationDetailPresenter extends BasePresenter<InvitationDetailFra
                                 ApiException apiException = (ApiException) throwable;
                                 if (apiException.getCode() == ResponseCode.TOKEN_ERROR.getStatus()) {
                                     mMvpView.showMessage(HPApplication.getStringById(R.string.tips_please_login_first));
+                                    return;
+                                } else if (apiException.getCode() == ResponseCode.NOT_NEED_SHOW_MESSAGE.getStatus()) {
+                                    mMvpView.showMessage(HPApplication.getStringById(R.string.tips_happen_unknown_error));
+                                    mMvpView.operateLikeStateError();
                                     return;
                                 }
                             }

@@ -119,7 +119,7 @@ public class InvitationDetailFragment extends RootFragment<InvitationDetailPrese
         if (mInvitationId == 0L) {
             throw new IllegalArgumentException("InvitationDetailFragment must receive the news's id");
         }
-        initToolbar(rootView, getString(R.string.tips_invitation_detail_title), R.mipmap.ic_navigation_back);
+        initToolbar(rootView, getString(R.string.tips_invitation_detail_title), R.mipmap.ic_navigation_back_white);
         initListener();
     }
 
@@ -299,7 +299,7 @@ public class InvitationDetailFragment extends RootFragment<InvitationDetailPrese
 
     @Override
     public boolean useEventBus() {
-        return true;
+        return false;
     }
 
     private void showInvitationSubButton(boolean isFocusOn) {

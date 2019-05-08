@@ -76,4 +76,8 @@ public class ArticleModel extends BaseModel
                 .compose(RxUtils.transformResultToData(ArticleVO.class))
                 .compose(RxUtils.rxSchedulerHelper()));
     }
+
+    public RepositoryHelper getRepositoryHelper() {
+        return mRepositoryHelper;
+    }
 }

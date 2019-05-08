@@ -10,6 +10,7 @@ import com.graduation.hp.repository.model.impl.ArticleModel;
 import com.graduation.hp.repository.model.impl.AttentionModel;
 import com.graduation.hp.repository.model.impl.DiscussModel;
 import com.graduation.hp.repository.model.impl.LikeModel;
+import com.graduation.hp.repository.preferences.PreferencesHelper;
 import com.graduation.hp.ui.navigation.article.detail.ArticleDetailFragment;
 
 import javax.inject.Inject;
@@ -93,6 +94,10 @@ public class ArticleDetailPresenter extends BasePresenter<ArticleDetailFragment,
                                 if (apiException.getCode() == ResponseCode.TOKEN_ERROR.getStatus()) {
                                     mMvpView.showMessage(HPApplication.getStringById(R.string.tips_please_login_first));
                                     return;
+                                } else if (apiException.getCode() == ResponseCode.NOT_NEED_SHOW_MESSAGE.getStatus()) {
+                                    mMvpView.showMessage(HPApplication.getStringById(R.string.tips_happen_unknown_error));
+                                    mMvpView.operateLikeStateError();
+                                    return;
                                 }
                             }
                             handlerApiError(throwable);
@@ -117,5 +122,11 @@ public class ArticleDetailPresenter extends BasePresenter<ArticleDetailFragment,
                                 }
                             }
                         }));
+    }
+
+    @Override
+    public long getLocalCurrentUserId() {
+        PreferencesHelper preferencesHelper = getModel().getRepositoryHelper().getPreferencesHelper();
+        return preferencesHelper.getCurrentUserId();
     }
 }

@@ -46,7 +46,7 @@ public class Key {
     public static final String ARTICLE_ID = "articleId";
     public static final String CONTEXT = "context";
     public static final String DISCUSS_TYPE = "discussType";
-    public static final String TALKER_USER_ID = "talkerUserId ";
+    public static final String TALKER_USER_ID = "talkerUserId";
     public static final String FILE = "file";
     public static final String TITLE = "title";
     public static final String TYPE = "type";
@@ -55,7 +55,8 @@ public class Key {
     public static final String ALIST = "alist";
     public static final String RESULT = "result";
     public static final String INVITATION_ID_CAMEL_CASE = "invitationId";
-
+    public static final String PHYSIQUELD = "physiqueId";
+    public static final String HEADURL = "headUrl";
 
     /**
      * 页面传递常量
@@ -72,7 +73,6 @@ public class Key {
     public static final String SUB_TAB_ID = "sub_tab_id";
     public static final String IS_CURRENT_USER_LOGIN = "is_current_user_login";
     public static final String POSITION = "position";
-    public static final String PHYSICAL_ID = "physicalId";
     public static final String CHANNEL = "channel";
     public static final String USER_BMI = "user_bmi";
     public static final String PHONE_NUMBER = "phone_number";
@@ -88,4 +88,5 @@ public class Key {
     public static final String CUR_FRAGMENT = "cur_fragment";
 
     public static final String UPLOAD_IMAGES = "upload_images";
+    public static final String SEND_SUCCESS = "send_success";
 }

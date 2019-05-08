@@ -6,7 +6,9 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatEditText;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.View;
 
 import com.graduation.hp.R;
@@ -32,6 +34,8 @@ import butterknife.OnTextChanged;
 public class InputPhoneFragment extends BaseFragment {
 
     private InputPhoneFragmentListener mListener;
+    private int count = 60;
+    private boolean sendSuccess = false;
 
     public interface InputPhoneFragmentListener {
         void verifyCode(String phoneNumber, String code);
@@ -62,7 +66,6 @@ public class InputPhoneFragment extends BaseFragment {
     @BindView(R.id.register_send_btn)
     AppCompatButton registerSendBtn;
 
-
     private Timer mTimer;
     private CodeTimerTask mTask;
 
@@ -79,25 +82,37 @@ public class InputPhoneFragment extends BaseFragment {
 
     @Override
     protected void init(Bundle savedInstanceState, View view) {
+        if (savedInstanceState != null) {
+            sendSuccess = savedInstanceState.getBoolean(Key.SEND_SUCCESS, false);
+        }
         registerSendBtn.setOnClickListener(v -> {
             String phone = registerPhoneEt.getText().toString();
             mListener.onTryToSendCode(phone);
             startTimer();
+        });
+        registerCodeEt.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                String phoneNumber = registerPhoneEt.getText().toString();
+                String code = registerCodeEt.getText().toString();
+                if (!TextUtils.isEmpty(code)) {
+                    mListener.verifyCode(phoneNumber, code);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+            }
         });
     }
 
     @OnTextChanged(callback = OnTextChanged.Callback.TEXT_CHANGED, value = {R.id.register_phone_et})
     public void onPhoneTextChange(CharSequence charSequence, int start, int before, int after) {
         registerSendBtn.setEnabled(VerifyUtils.isPhoneVerified(String.valueOf(charSequence)));
-    }
-
-    @OnTextChanged(callback = OnTextChanged.Callback.TEXT_CHANGED, value = {R.id.register_code_et})
-    public void onCodeTextChange(CharSequence charSequence, int start, int before, int after) {
-        String phoneNumber = registerPhoneEt.getText().toString();
-        String code = registerCodeEt.getText().toString();
-        if(!TextUtils.isEmpty(code)){
-            mListener.verifyCode(phoneNumber, code);
-        }
     }
 
     @Override
@@ -122,13 +137,16 @@ public class InputPhoneFragment extends BaseFragment {
         } else if (event.getCode() == ResponseCode.INPUT_CODE_ERROR.getStatus()) {
             registerCodeTil.setError(event.getMsg());
         } else if (event.getCode() == AuthActivity.SEND_SUCCESS) {
+            sendSuccess = true;
+            startTimer();
+        } else if (event.getCode() == AuthActivity.VERIFY_SUCCESS) {
+            stopTimer();
         }
     }
 
     private static class CodeTimerTask extends TimerTask {
 
         private WeakReference<InputPhoneFragment> mFragments;
-        private int count = 60;
 
         CodeTimerTask(InputPhoneFragment fragment) {
             this.mFragments = new WeakReference<>(fragment);
@@ -137,15 +155,15 @@ public class InputPhoneFragment extends BaseFragment {
         @Override
         public void run() {
             InputPhoneFragment fragment = mFragments.get();
-            if (fragment != null && !fragment.isAdded()) {
+            if (fragment != null && fragment.isAdded()) {
                 fragment.getActivity().runOnUiThread(() -> {
-                    if (count-- > 0) {
-                        fragment.registerCodeEt.setText(count + "秒");
+                    if (fragment.count-- > 0) {
+                        fragment.registerSendBtn.setText(fragment.count + "秒");
                     } else {
-                        fragment.registerCodeEt.setText(HPApplication.getStringById(R.string.action_register_send_code));
+                        fragment.registerSendBtn.setText(HPApplication.getStringById(R.string.action_register_send_code));
                         fragment.stopTimer();
                     }
-                    fragment.registerCodeEt.setEnabled(count <= 0);
+                    fragment.registerSendBtn.setEnabled(fragment.count <= 0);
                 });
             } else {
                 cancel();
@@ -154,12 +172,21 @@ public class InputPhoneFragment extends BaseFragment {
     }
 
     @Override
-    public void onStop() {
+    public void onResume() {
+        super.onResume();
+        if (sendSuccess) {
+            startTimer();
+        }
+    }
+
+    @Override
+    public void onPause() {
         stopTimer();
-        super.onStop();
+        super.onPause();
     }
 
     private void startTimer() {
+        count = count <= 0 ? 60 : count;
         mTimer = new Timer();
         mTask = new CodeTimerTask(this);
         mTimer.schedule(mTask, 0, 1000);

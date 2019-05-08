@@ -102,7 +102,7 @@ public class InvitationTabFragment extends RootFragment<InvitationTabPresenter>
         @Override
         public void OnItemCheckChange(View view, Object object, boolean isChecked) {
             InvitationVO invitationVO = (InvitationVO) object;
-            mPresenter.likeArticle(invitationVO.getId());
+            mPresenter.likeInvitation(invitationVO.getId());
         }
     };
 
@@ -171,7 +171,6 @@ public class InvitationTabFragment extends RootFragment<InvitationTabPresenter>
 
     @Override
     public void operateLikeStateError() {
-
     }
 
     @Override

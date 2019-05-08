@@ -117,10 +117,15 @@ public class AuthPresenter extends BasePresenter<AuthActivity, UserModel>
         mMvpView.showDialog(HPApplication.getStringById(R.string.tips_updating));
         mMvpModel.addSubscribe(mMvpModel.updatePassword(phoneNumber, password, repassword)
                 .doFinally(() -> mMvpView.dismissDialog())
-                .subscribe(result -> {
-                    mMvpView.onRegisterSuccess();
-                }, throwable -> {
-//                    mMvpView.onRegisterInputError();
-                }));
+                .subscribe(result -> mMvpView.onRegisterSuccess(),
+                        throwable -> {
+                            if (throwable instanceof ApiException) {
+                                ApiException exception = (ApiException) throwable;
+                                mMvpView.onRegisterInputError(new AuthEvent(AuthActivity.FRAGMENT_IS_UPDATE_PASSWORD, exception.getCode(),
+                                        exception.getMessage()));
+                            } else {
+                                handlerApiError(throwable);
+                            }
+                        }));
     }
 }

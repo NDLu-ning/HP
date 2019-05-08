@@ -24,6 +24,8 @@ import com.graduation.hp.widget.dialog.CommentDialog;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -182,13 +184,14 @@ public class ArticleCommentFragment extends RootFragment<ArticleCommentPresenter
         mAdapter.notifyDataSetChanged();
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
     @Override
     public void operateArticleCommentStatus(boolean success) {
         mDiscussionDialogListener.dismissCommentDialog();
         showMessage(getString(success ? R.string.tips_comment_success : R.string.tips_comment_failed));
         EventBus.getDefault().post(new DiscussEvent(true));
         if (success) {
-            mPresenter.getArticleCommentList(State.STATE_INIT, mNewsId);
+            mPresenter.getArticleCommentList(State.STATE_REFRESH, mNewsId);
         }
     }
 }

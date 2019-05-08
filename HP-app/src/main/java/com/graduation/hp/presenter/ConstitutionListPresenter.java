@@ -32,6 +32,9 @@ public class ConstitutionListPresenter extends BasePresenter<ConstitutionListFra
         if (isRefresh()) {
             page = new Page();
         }
+        if (state == State.STATE_INIT) {
+            mMvpView.showLoading();
+        }
         if (!mMvpView.isNetworkAvailable()) {
             mMvpView.showError(HPApplication.getStringById(R.string.tips_network_unavailable));
             return;
@@ -42,10 +45,7 @@ public class ConstitutionListPresenter extends BasePresenter<ConstitutionListFra
                 .subscribe(newsList -> {
                     mMvpView.onGetDataSuccess(state, newsList);
                     mMvpView.showMain();
-                }, throwable -> {
-                    handlerApiError(throwable);
-                    mMvpView.showError(HPApplication.getStringById(R.string.tips_error_general));
-                }));
+                }, throwable -> handlerApiError(throwable)));
     }
 
 

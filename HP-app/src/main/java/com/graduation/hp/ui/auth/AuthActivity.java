@@ -36,9 +36,10 @@ public class AuthActivity extends SingleFragmentActivity<AuthPresenter>
     public static final int FRAGMENT_IS_SIGN_IN = 1;
     public static final int FRAGMENT_IS_SIGN_UP = 2;
     public static final int FRAGMENT_IS_INPUT_PHONE = 3;
-    private static final int FRAGMENT_IS_UPDATE_PASSWORD = 4;
+    public static final int FRAGMENT_IS_UPDATE_PASSWORD = 4;
 
     public static final int SEND_SUCCESS = 8001;
+    public static final int VERIFY_SUCCESS = 8002;
 
     private int mCurFragment;
     private String mSourceCode;
@@ -144,6 +145,7 @@ public class AuthActivity extends SingleFragmentActivity<AuthPresenter>
 
     @Override
     public void onVerifyPhoneNumberResult(String phoneNumber) {
+        EventBus.getDefault().post(new AuthEvent(FRAGMENT_IS_INPUT_PHONE, VERIFY_SUCCESS, ""));
         replaceMainContentFragment(UpdatePasswordFragment.newInstance(phoneNumber));
     }
 
@@ -159,6 +161,7 @@ public class AuthActivity extends SingleFragmentActivity<AuthPresenter>
 
     @Override
     public void onSendCodeSuccess(String code) {
+        mSourceCode = code;
         EventBus.getDefault().post(new AuthEvent(FRAGMENT_IS_INPUT_PHONE, SEND_SUCCESS, ""));
     }
 

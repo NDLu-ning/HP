@@ -43,7 +43,7 @@ public class LikeModel extends BaseModel
             emitter.onSuccess(params);
         }).flatMap(params -> httpHelper.obtainRetrofitService(LikeService.class)
                 .like(JsonUtils.mapToRequestBody(params))
-                .map(RxUtils.mappingResponseToResultWithNoException(Result.class))
+                .map(RxUtils.mappingResponseToResultWithNoException(String.class))
                 .map(checkLikeStatus())
                 .compose(RxUtils.rxSchedulerHelper()));
     }
@@ -60,7 +60,7 @@ public class LikeModel extends BaseModel
             emitter.onSuccess(params);
         }).flatMap(params -> httpHelper.obtainRetrofitService(LikeService.class)
                 .like(JsonUtils.mapToRequestBody(params))
-                .map(RxUtils.mappingResponseToResultWithNoException(Result.class))
+                .map(RxUtils.mappingResponseToResultWithNoException(String.class))
                 .map(checkLikeStatus())
                 .compose(RxUtils.rxSchedulerHelper()));
     }
@@ -69,10 +69,10 @@ public class LikeModel extends BaseModel
         return result -> {
             if (result.getStatus() == ResponseCode.FOCUS_ON.getStatus()) {
                 return true;
-            } else if (result.getStatus() == ResponseCode.CANCEL_FOCUS_ON.getStatus()) {
+            } else if (result.getStatus() == ResponseCode.CANCEL_LIKED.getStatus()) {
                 return false;
             }
-            throw new ApiException(result.getStatus(), result.getMsg());
+            throw new ApiException(ResponseCode.NOT_NEED_SHOW_MESSAGE.getStatus(), result.getMsg());
         };
     }
 }

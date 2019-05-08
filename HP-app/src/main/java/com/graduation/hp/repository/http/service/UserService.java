@@ -26,7 +26,7 @@ public interface UserService {
     Single<String> getUserInfo(@Body RequestBody requestBody);
 
     @Headers(value = {"Content-Type:application/json"})
-    @POST("user")
+    @POST("user/updatePassword")
     Single<String> updatePassword(@Body RequestBody requestBody);
 
     @Headers(value = {"Content-Type:application/json", "Cookie-Name:token"})

@@ -39,7 +39,7 @@ public class PostItemProvider extends ItemViewBinder<InvitationVO, PostItemProvi
     @NonNull
     @Override
     protected ViewHolder onCreateViewHolder(@NonNull LayoutInflater inflater, @NonNull ViewGroup parent) {
-        return new ViewHolder(inflater.inflate(R.layout.adapter_post_multi_item, parent, false));
+        return new ViewHolder(inflater.inflate(R.layout.adapter_post_tab_item, parent, false));
     }
 
     @Override
@@ -120,6 +120,7 @@ public class PostItemProvider extends ItemViewBinder<InvitationVO, PostItemProvi
         AppCompatImageView adapterPostCommentIv;
         @BindView(R.id.adapter_post_comment_num_tv)
         AppCompatTextView adapterPostCommentNumTv;
+
         @BindView(R.id.adapter_post_like_btn)
         LikeButton adapterPostLikeBtn;
         @BindView(R.id.adapter_post_like_num_tv)

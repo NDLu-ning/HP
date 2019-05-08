@@ -16,7 +16,7 @@ public interface IUserModel {
 
     Single<UserVO> login(String username, String password);
 
-    Single<Boolean> signup(String username,String password, String repassword, String phone);
+    Single<Boolean> signup(String username, String password, String repassword, String phone);
 
     Single<Boolean> updatePassword(String phoneNumber, String password, String repassword);
 
@@ -26,5 +26,5 @@ public interface IUserModel {
 
     Single<Result> logout();
 
-    Single<Boolean> updateUserInfo();
+    Single<String> updateUserProfile(String url);
 }

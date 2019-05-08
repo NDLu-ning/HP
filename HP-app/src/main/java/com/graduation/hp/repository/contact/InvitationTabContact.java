@@ -25,7 +25,7 @@ public interface InvitationTabContact {
 
         void downloadMoreData(State state);
 
-        void likeArticle(long mNewsId);
+        void likeInvitation(long mNewsId);
     }
 
 }
