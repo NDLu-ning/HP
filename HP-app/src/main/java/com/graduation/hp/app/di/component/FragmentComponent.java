@@ -5,15 +5,15 @@ import com.graduation.hp.app.di.module.GeneralModule;
 import com.graduation.hp.core.app.di.component.AppComponent;
 import com.graduation.hp.core.app.di.scope.FragmentScope;
 import com.graduation.hp.repository.RepositoryHelper;
+import com.graduation.hp.ui.navigation.article.detail.ArticleDetailFragment;
 import com.graduation.hp.ui.navigation.attention.AttentionTabFragment;
 import com.graduation.hp.ui.navigation.constitution.detail.InvitationDetailFragment;
 import com.graduation.hp.ui.navigation.constitution.list.ConstitutionListFragment;
-import com.graduation.hp.ui.navigation.news.comment.NewsCommentFragment;
-import com.graduation.hp.ui.navigation.news.detail.NewsDetailFragment;
+import com.graduation.hp.ui.navigation.article.comment.ArticleCommentFragment;
 import com.graduation.hp.ui.navigation.user.UserTabFragment;
-import com.graduation.hp.ui.navigation.news.list.NewsListFragment;
-import com.graduation.hp.ui.navigation.post.PostTabFragment;
-import com.graduation.hp.ui.navigation.user.center.UserNewsFragment;
+import com.graduation.hp.ui.navigation.article.list.ArticleListFragment;
+import com.graduation.hp.ui.navigation.invitation.InvitationTabFragment;
+import com.graduation.hp.ui.navigation.user.center.UserArticleFragment;
 import com.graduation.hp.ui.navigation.user.center.UserPostFragment;
 import com.graduation.hp.ui.question.QuestionListFragment;
 import com.graduation.hp.ui.search.SearchResultFragment;
@@ -39,21 +39,21 @@ public interface FragmentComponent {
 
     RxPermissions rxPermission();
 
-    void inject(NewsListFragment newsListFragment);
+    void inject(ArticleListFragment newsListFragment);
 
     void inject(AttentionTabFragment attentionTabFragment);
 
     void inject(UserTabFragment userCenterFragment);
 
-    void inject(PostTabFragment postTabFragment);
+    void inject(InvitationTabFragment postTabFragment);
 
     void inject(UserPostFragment userPostFragment);
 
-    void inject(UserNewsFragment userNewsFragment);
+    void inject(UserArticleFragment userNewsFragment);
 
-    void inject(NewsDetailFragment newsDetailFragment);
+    void inject(ArticleDetailFragment newsDetailFragment);
 
-    void inject(NewsCommentFragment newsCommentFragment);
+    void inject(ArticleCommentFragment newsCommentFragment);
 
     void inject(SearchResultFragment searchResultFragment);
 

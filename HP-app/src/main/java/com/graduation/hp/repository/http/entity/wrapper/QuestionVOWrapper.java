@@ -111,11 +111,13 @@ public class QuestionVOWrapper implements Parcelable {
         if (questionVO == null) {
             parcel.writeByte((byte) 0);
         } else {
+            parcel.writeByte((byte) 1);
             parcel.writeParcelable(questionVO, i);
         }
         if (selectAnswerPO == null) {
             parcel.writeByte((byte) 0);
         } else {
+            parcel.writeByte((byte) 1);
             parcel.writeParcelable(selectAnswerPO, i);
         }
         parcel.writeByte((byte) (enable ? 1 : 0));

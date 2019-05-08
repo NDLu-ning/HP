@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/dp_3"
+    android:layout_marginBottom="@dimen/dp_3"
+    android:background="@color/md_white"
+    android:paddingBottom="@dimen/dp_6">
+
+    <android.support.v7.widget.AppCompatImageView
+        android:id="@+id/adapter_post_icon_iv"
+        android:layout_width="@dimen/dp_30"
+        android:layout_height="@dimen/dp_30"
+        android:layout_marginStart="@dimen/dp_12"
+        android:layout_marginTop="@dimen/dp_12"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@mipmap/ic_user_default_photo" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/adapter_post_name_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_10"
+        android:textColor="@color/md_black"
+        android:textSize="@dimen/sp_14"
+        app:layout_constraintStart_toEndOf="@+id/adapter_post_icon_iv"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="来啊LIVALL" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/adapter_post_tag_tv"
+        android:layout_width="@dimen/dp_30"
+        android:layout_height="@dimen/dp_30"
+        android:layout_marginStart="@dimen/dp_10"
+        android:background="@drawable/healthy_yang_xu_tag"
+        android:gravity="center"
+        android:textColor="@color/md_white"
+        android:textSize="8sp"
+        app:layout_constraintBottom_toTopOf="@id/adapter_post_content_tv"
+        app:layout_constraintStart_toEndOf="@+id/adapter_post_name_tv"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="良好" />
+
+    <android.support.v7.widget.AppCompatImageView
+        android:id="@+id/adapter_post_hot_iv"
+        android:layout_width="@dimen/dp_35"
+        android:layout_height="@dimen/dp_35"
+        android:src="@mipmap/ic_hot_64"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/adapter_post_date_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_8"
+        android:textColor="@color/md_grey_500"
+        android:textSize="@dimen/sp_12"
+        app:layout_constraintBottom_toBottomOf="@+id/adapter_post_icon_iv"
+        app:layout_constraintStart_toEndOf="@+id/adapter_post_icon_iv"
+        app:layout_constraintTop_toBottomOf="@+id/adapter_post_name_tv"
+        tools:text="2天前" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/adapter_post_content_tv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_12"
+        android:paddingStart="@dimen/dp_12"
+        android:paddingEnd="@dimen/dp_12"
+        android:textColor="@color/md_black_300"
+        android:textSize="@dimen/sp_14"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/adapter_post_icon_iv"
+        tools:text="章子怡妆前妆后差距大，素颜吓呆众人，与梅婷相比甚远" />
+
+    <com.lzy.ninegrid.NineGridView
+        android:id="@+id/adapter_post_image_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_6"
+        android:paddingStart="@dimen/dp_12"
+        android:paddingEnd="@dimen/dp_12"
+        app:layout_constraintTop_toBottomOf="@id/adapter_post_content_tv"
+        app:ngv_gridSpacing="3dp"
+        app:ngv_maxSize="9"
+        app:ngv_mode="grid"
+        app:ngv_singleImageRatio="1"
+        app:ngv_singleImageSize="250dp" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/adapter_post_reviews_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_16"
+        android:textColor="@color/secondary_text"
+        android:textSize="@dimen/sp_12"
+        app:layout_constraintBottom_toTopOf="@id/line"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/adapter_post_image_container"
+        tools:text="游览24次" />
+
+    <View
+        android:id="@+id/line"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_1"
+        android:layout_marginStart="@dimen/dp_12"
+        android:layout_marginTop="@dimen/dp_12"
+        android:layout_marginEnd="@dimen/dp_12"
+        android:background="@color/md_grey_200"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/adapter_post_reviews_tv" />
+
+    <LinearLayout
+        android:id="@+id/adapter_user_news_comment_like_ll"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_marginEnd="@dimen/dp_12"
+        android:layout_marginBottom="@dimen/dp_10"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/adapter_user_news_comment_click_ll"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/line">
+
+        <com.graduation.hp.widget.LikeButton
+            android:id="@+id/adapter_post_like_btn"
+            android:layout_width="@dimen/dp_25"
+            android:layout_height="@dimen/dp_25"
+            android:scaleType="centerInside"
+            android:src="@drawable/selector_unliked_btn" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/adapter_post_like_num_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_2"
+            android:textSize="@dimen/sp_12"
+            tools:text="0" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/adapter_user_news_comment_click_ll"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_marginBottom="@dimen/dp_10"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/line">
+
+        <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/adapter_post_comment_iv"
+            android:layout_width="@dimen/dp_24"
+            android:layout_height="@dimen/dp_24"
+            android:src="@mipmap/ic_comment_48" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/adapter_post_comment_num_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_2"
+            tools:text="0" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/adapter_user_news_comment_share_ll"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_12"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_marginBottom="@dimen/dp_10"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/adapter_user_news_comment_click_ll"
+        app:layout_constraintTop_toBottomOf="@id/line">
+
+        <android.support.v7.widget.AppCompatImageView
+            android:layout_width="@dimen/dp_24"
+            android:layout_height="@dimen/dp_24"
+            android:scaleType="fitCenter"
+            android:src="@mipmap/ic_share" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_2"
+            android:text="@string/tips_share"
+            android:textSize="@dimen/sp_12" />
+
+    </LinearLayout>
+
+
+</android.support.constraint.ConstraintLayout>

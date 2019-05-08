@@ -32,22 +32,22 @@
 
 
     <android.support.design.widget.TextInputLayout
-        android:id="@+id/register_username_til"
+        android:id="@+id/register_phone_til"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_48"
+        android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dp_30"
         android:layout_marginTop="@dimen/dp_30"
         android:layout_marginEnd="@dimen/dp_30"
         app:errorEnabled="true"
-        app:layout_constraintTop_toBottomOf="@+id/login_subtitle_tv">
+        app:layout_constraintTop_toBottomOf="@id/login_subtitle_tv">
 
         <android.support.v7.widget.AppCompatEditText
-            android:id="@+id/register_username_et"
+            android:id="@+id/register_phone_et"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@null"
             android:ellipsize="end"
-            android:hint="@string/hint_please_input_username"
+            android:hint="@string/hint_please_input_phone"
             android:imeOptions="actionNext"
             android:inputType="textPhonetic"
             android:maxLength="16"
@@ -60,10 +60,11 @@
 
     </android.support.design.widget.TextInputLayout>
 
+
     <android.support.design.widget.TextInputLayout
         android:id="@+id/register_password_til"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_48"
+        android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dp_30"
         android:layout_marginTop="@dimen/dp_16"
         android:layout_marginEnd="@dimen/dp_30"
@@ -72,7 +73,7 @@
         app:errorEnabled="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/register_username_til"
+        app:layout_constraintTop_toBottomOf="@+id/register_phone_til"
         app:passwordToggleEnabled="true">
 
         <android.support.v7.widget.AppCompatEditText
@@ -97,7 +98,7 @@
     <android.support.design.widget.TextInputLayout
         android:id="@+id/register_repassword_til"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_48"
+        android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dp_30"
         android:layout_marginTop="@dimen/dp_16"
         android:layout_marginEnd="@dimen/dp_30"
@@ -129,14 +130,14 @@
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
-        android:id="@+id/register_phone_til"
+        android:id="@+id/register_nickname_til"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_48"
+        android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dp_30"
         android:layout_marginTop="@dimen/dp_16"
         android:layout_marginEnd="@dimen/dp_30"
         app:counterEnabled="true"
-        app:counterMaxLength="16"
+        app:counterMaxLength="10"
         app:errorEnabled="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_weight="2"
@@ -144,14 +145,12 @@
         app:layout_constraintTop_toBottomOf="@id/register_repassword_til">
 
         <android.support.v7.widget.AppCompatEditText
-            android:id="@+id/register_phone_et"
+            android:id="@+id/register_nickname_et"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@null"
             android:ellipsize="end"
-            android:hint="@string/hint_please_input_phone"
-            android:imeOptions="actionNext"
-            android:inputType="phone"
+            android:hint="@string/hint_edit_nickname"
             android:maxLength="16"
             android:maxLines="1"
             android:singleLine="true"
@@ -160,19 +159,17 @@
         </android.support.v7.widget.AppCompatEditText>
     </android.support.design.widget.TextInputLayout>
 
-
     <android.support.v7.widget.AppCompatButton
         android:id="@+id/register_btn"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_45"
         android:layout_marginStart="@dimen/dp_30"
-        android:layout_marginTop="@dimen/dp_10"
         android:layout_marginEnd="@dimen/dp_30"
+        android:layout_marginBottom="@dimen/dp_30"
         android:background="@drawable/selector_login_btn"
         android:text="@string/action_register_with_space"
         android:textColor="@color/md_white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/register_phone_til" />
+        app:layout_constraintBottom_toBottomOf="parent" />
 
 
 </android.support.constraint.ConstraintLayout>

@@ -1,5 +1,6 @@
 package com.graduation.hp.app.constant;
 
+import com.graduation.hp.R;
 import com.graduation.hp.repository.http.entity.wrapper.ChannelVO;
 import com.graduation.hp.repository.http.entity.wrapper.ConstitutionVO;
 
@@ -24,12 +25,19 @@ public class Key {
             new ConstitutionVO(9, "平和型", "特点是:体型匀称健壮，睡眠好，二便正常，平时不容易得病，性格开朗，社会和自然适应能力强。饮食不要过抱、过饥、过冷、过热；多吃五谷杂粮、蔬菜瓜果，少食过于油腻以及辛辣之物，适度运动锻炼。")
     };
 
+    public static final int[] CONSTITUTIONS_IMAGE_RES = {
+            R.mipmap.ic_yangxu, R.mipmap.ic_yinxu, R.mipmap.ic_qixu,
+            R.mipmap.ic_tanshi, R.mipmap.ic_shire, R.mipmap.ic_xueyu,
+            R.mipmap.ic_guomin, R.mipmap.ic_qiyu, R.mipmap.ic_pinghe
+    };
+
 
     /**
      * 请求参数常量
      */
     public static final String USERNAME = "username";
     public static final String PASSWORD = "password";
+    public static final String REPASSWORD = "confirmPassword";
     public static final String AUTHOR_ID = "authorId";
     public static final String OFFSET = "offset";
     public static final String LIMIT = "limit";
@@ -42,6 +50,11 @@ public class Key {
     public static final String FILE = "file";
     public static final String TITLE = "title";
     public static final String TYPE = "type";
+    public static final String NICKNAME = "nickname";
+    public static final String PHONE = "phone";
+    public static final String ALIST = "alist";
+    public static final String RESULT = "result";
+    public static final String INVITATION_ID_CAMEL_CASE = "invitationId";
 
 
     /**
@@ -73,4 +86,6 @@ public class Key {
     public static final String BOTTOM_SHEET_OPTIONS = "bottom_sheet_options";
     public static final String QUESTION_LIST = "question_list";
     public static final String CUR_FRAGMENT = "cur_fragment";
+
+    public static final String UPLOAD_IMAGES = "upload_images";
 }

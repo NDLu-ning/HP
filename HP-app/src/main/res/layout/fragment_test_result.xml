@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/md_white"
+    android:orientation="vertical">
+
+    <include layout="@layout/view_toolbar_title" />
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/test_result_constitution_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/dp_6"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/sp_22"
+                tools:text="气虚质" />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/test_result_whats_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_10"
+                android:background="@drawable/bg_question_title"
+                android:drawableStart="@mipmap/ic_question"
+                android:drawablePadding="@dimen/dp_20"
+                android:gravity="center_vertical"
+                android:paddingStart="@dimen/dp_12"
+                android:paddingTop="@dimen/dp_6"
+                android:paddingEnd="@dimen/dp_12"
+                android:paddingBottom="@dimen/dp_6"
+                android:text="@string/tips_whats_constitution" />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/test_result_constitution_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dp_12"
+                tools:text="说话没劲，容易呼吸短促，容易出虚汗，经常疲乏无力，
+                肌肉松软不实。易患感冒，不耐寒暑，生病抗病能力弱，难痊愈，易患内脏下垂如胃下垂等。说话没劲，容易呼吸短促，容易出虚汗，经常疲乏无力，肌肉松软不实。易患感冒，不耐寒暑，生病抗病能力弱，难痊愈，易患内脏下垂如胃下垂等。" />
+
+
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_10"
+                android:background="@drawable/bg_question_title"
+                android:drawableStart="@mipmap/ic_question"
+                android:drawablePadding="@dimen/dp_20"
+                android:gravity="center_vertical"
+                android:paddingStart="@dimen/dp_12"
+                android:paddingTop="@dimen/dp_6"
+                android:paddingEnd="@dimen/dp_12"
+                android:paddingBottom="@dimen/dp_6"
+                android:text="@string/tips_keep_fit_method" />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/test_result_fit_method_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dp_12"
+                tools:text="多吃鱼油益气健脾的食物，如黄豆、白扁豆、香菇、大枣、桂圆、蜂蜜等。以柔缓运动，如散步、太极等为主。" />
+
+
+
+
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+
+</LinearLayout>

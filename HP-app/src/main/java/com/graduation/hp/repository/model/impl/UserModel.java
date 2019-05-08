@@ -38,8 +38,20 @@ public class UserModel extends BaseModel
     }
 
     @Override
-    public Single<String> sendVerificationMessage(String phone) {
-        return null;
+    public Single<Integer> sendVerificationMessage(String phone) {
+        HttpHelper httpHelper = mRepositoryHelper.getHttpHelper();
+        return Single.create((SingleOnSubscribe<Map<String, String>>) emitter -> {
+            boolean usernamePassed = VerifyUtils.isPhoneVerified(phone);
+            if (!usernamePassed) {
+                emitter.onError(new ApiException(ResponseCode.INPUT_PHONE_NUMBER_ERROR));
+            }
+            Map<String, String> map = new HashMap<>();
+            map.put(Key.PHONE, phone);
+            emitter.onSuccess(map);
+        }).flatMap(result -> httpHelper.obtainRetrofitService(UserService.class)// 登录
+                .sms(JsonUtils.mapToRequestBody2(result))
+                .compose(RxUtils.transformResultToData(Integer.class))
+        ).compose(RxUtils.rxSchedulerHelper());
     }
 
     @Override
@@ -93,8 +105,7 @@ public class UserModel extends BaseModel
                 .countAttentionNumber(JsonUtils.mapToRequestBody3(new String[]{"authorId"}, new Long[]{userId}))
                 .compose(RxUtils.transformResultToData(Long.class))
                 .map(attentionNumber -> new UserVOWrapper(result, attentionNumber))
-                .compose(RxUtils.rxSchedulerHelper())
-        );
+        ).compose(RxUtils.rxSchedulerHelper());
     }
 
     @Override
@@ -105,9 +116,8 @@ public class UserModel extends BaseModel
             boolean usernamePassed = VerifyUtils.isLengthVerified(username, 1, 16);
             boolean passwordPassed = VerifyUtils.isLengthVerified(password, 1, 16);
             if (!usernamePassed) {
-                emitter.onError(new ApiException(ResponseCode.INPUT_USERNAME_ERROR));
-            }
-            if (!passwordPassed) {
+                emitter.onError(new ApiException(ResponseCode.INPUT_PHONE_NUMBER_ERROR));
+            } else if (!passwordPassed) {
                 emitter.onError(new ApiException(ResponseCode.INPUT_PASSWORD_ERROR));
             }
             Map<String, String> map = new HashMap<>();
@@ -122,34 +132,31 @@ public class UserModel extends BaseModel
     }
 
     @Override
-    public Single<Boolean> signup(String username, String password, String repassword, String phone) {
+    public Single<Boolean> signup(String phone, String password, String repassword, String nickname) {
         HttpHelper httpHelper = mRepositoryHelper.getHttpHelper();
         return Single.create((SingleOnSubscribe<Map<String, String>>) emitter -> {
-            if (!VerifyUtils.isLengthVerified(username, 6, 16)) {
-                emitter.onError(new ApiException(ResponseCode.INPUT_USERNAME_ERROR));
-            }
-            if (!VerifyUtils.isLengthVerified(password, 6, 16)) {
-                emitter.onError(new ApiException(ResponseCode.INPUT_PASSWORD_ERROR));
-            }
-            if (!VerifyUtils.isLengthVerified(repassword, 6, 16)) {
-                emitter.onError(new ApiException(ResponseCode.INPUT_REPEAT_PASSWORD_ERROR));
-            }
-            if (!(!TextUtils.isEmpty(password) && password.equals(repassword))) {
-                emitter.onError(new ApiException(ResponseCode.NOT_SAME_ERROR));
-            }
             if (!VerifyUtils.isPhoneVerified(phone)) {
                 emitter.onError(new ApiException(ResponseCode.INPUT_PHONE_NUMBER_ERROR));
+            } else if (!VerifyUtils.isLengthVerified(password, 6, 16)) {
+                emitter.onError(new ApiException(ResponseCode.INPUT_PASSWORD_ERROR));
+            } else if (!VerifyUtils.isLengthVerified(repassword, 6, 16)) {
+                emitter.onError(new ApiException(ResponseCode.INPUT_REPEAT_PASSWORD_ERROR));
+            } else if (!(!TextUtils.isEmpty(password) && password.equals(repassword))) {
+                emitter.onError(new ApiException(ResponseCode.NOT_SAME_ERROR));
+            } else if (!VerifyUtils.isLengthVerified(nickname, 0, 10)) {
+                emitter.onError(new ApiException(ResponseCode.INPUT_NICKNAME_ERROR));
             }
             Map<String, String> params = new HashMap<>();
-            params.put(Key.USERNAME, username);
+            params.put(Key.USERNAME, phone);
             params.put(Key.PASSWORD, password);
-            params.put("phone", phone);
+            params.put(Key.REPASSWORD, repassword);
+            params.put(Key.NICKNAME, nickname);
             emitter.onSuccess(params);
         }).flatMap(result -> httpHelper.obtainRetrofitService(UserService.class)
                 .singup(JsonUtils.mapToRequestBody2(result))
                 .map(RxUtils.mappingResponseToResult(Boolean.class))
-                .compose(RxUtils.rxSchedulerHelper())
-                .compose(RxUtils.mappingResultToCheck()));
+                .compose(RxUtils.mappingResultToCheck())
+                .compose(RxUtils.rxSchedulerHelper()));
     }
 
     @Override

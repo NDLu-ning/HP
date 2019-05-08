@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.view.View;
 
 import com.graduation.hp.R;
 import com.graduation.hp.app.constant.Key;
@@ -55,8 +57,18 @@ public class QuestionActivity extends SingleFragmentActivity
     }
 
     @Override
-    public void commitAnswersSuccess() {
+    public void commitAnswersSuccess(String text, boolean isCurUserLogin) {
+        replaceMainContentFragment(TestResultFragment.newInstance(text, isCurUserLogin), false);
+    }
 
+    @Override
+    public void onToolbarLeftClickListener(View v) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        if (fragmentManager.getBackStackEntryCount() > 0) {
+            fragmentManager.popBackStack();
+        } else {
+            finish();
+        }
     }
 
     @Override

@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import com.graduation.hp.core.app.event.TokenInvalidEvent;
 
+import io.reactivex.Single;
 import io.reactivex.disposables.Disposable;
 
 public interface BaseContact {
@@ -105,5 +106,6 @@ public interface BaseContact {
          *
          */
         void onDestroy();
+
     }
 }

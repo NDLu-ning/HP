@@ -36,7 +36,7 @@
             tools:text="过敏质" />
 
         <android.support.v7.widget.AppCompatTextView
-            android:id="@+id/constitution_Introduction"
+            android:id="@+id/constitution_introduction"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/dp_12"

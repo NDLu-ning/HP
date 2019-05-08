@@ -22,7 +22,7 @@ import com.graduation.hp.core.ui.RootFragment;
 import com.graduation.hp.presenter.SearchResultPresenter;
 import com.graduation.hp.repository.contact.SearchResultContact;
 import com.graduation.hp.repository.http.entity.vo.ArticleVO;
-import com.graduation.hp.ui.navigation.news.detail.NewsDetailActivity;
+import com.graduation.hp.ui.navigation.article.detail.ArticleDetailActivity;
 import com.graduation.hp.ui.provider.NewsItemBigProvider;
 import com.graduation.hp.ui.provider.NewsItemMultiProvider;
 import com.graduation.hp.ui.provider.NewsItemSingleProvider;
@@ -223,7 +223,7 @@ public class SearchResultFragment extends RootFragment<SearchResultPresenter>
         @Override
         public void OnItemClick(View view, Object object, int position) {
             ArticleVO articleVO = (ArticleVO) object;
-            startActivity(NewsDetailActivity.createIntent(getContext(), articleVO.getId()));
+            startActivity(ArticleDetailActivity.createIntent(getContext(), articleVO.getId()));
         }
     };
 

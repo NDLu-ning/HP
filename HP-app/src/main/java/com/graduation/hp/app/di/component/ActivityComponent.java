@@ -7,11 +7,9 @@ import com.graduation.hp.core.app.di.scope.ActivityScope;
 import com.graduation.hp.repository.RepositoryHelper;
 import com.graduation.hp.ui.SplashActivity;
 import com.graduation.hp.ui.auth.AuthActivity;
-import com.graduation.hp.ui.navigation.news.detail.NewsDetailActivity;
-import com.graduation.hp.ui.navigation.post.create.PostCreationActivity;
+import com.graduation.hp.ui.navigation.invitation.create.InvitationCreationActivity;
 import com.graduation.hp.ui.navigation.user.center.UserCenterActivity;
 import com.graduation.hp.ui.navigation.user.info.UserInfoActivity;
-import com.graduation.hp.ui.question.QuestionActivity;
 import com.graduation.hp.ui.search.SearchActivity;
 import com.graduation.hp.ui.setting.SettingActivity;
 import com.tbruyelle.rxpermissions2.RxPermissions;
@@ -44,5 +42,5 @@ public interface ActivityComponent {
 
     void inject(SearchActivity searchActivity);
 
-    void inject(PostCreationActivity postCreationActivity);
+    void inject(InvitationCreationActivity postCreationActivity);
 }

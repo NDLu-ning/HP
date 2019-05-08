@@ -14,30 +14,26 @@ import com.graduation.hp.app.di.component.DaggerFragmentComponent;
 import com.graduation.hp.app.di.module.FragmentModule;
 import com.graduation.hp.core.app.di.component.AppComponent;
 import com.graduation.hp.core.ui.RootFragment;
-import com.graduation.hp.core.utils.JsonUtils;
-import com.graduation.hp.core.utils.LogUtils;
+import com.graduation.hp.core.utils.ToastUtils;
 import com.graduation.hp.presenter.QuestionListPresenter;
 import com.graduation.hp.repository.contact.QuestionListContact;
 import com.graduation.hp.repository.http.entity.pojo.AnswerPO;
-import com.graduation.hp.repository.http.entity.vo.QuestionVO;
 import com.graduation.hp.repository.http.entity.wrapper.QuestionVOWrapper;
+import com.graduation.hp.ui.auth.reset.InputPhoneFragment;
 import com.graduation.hp.ui.provider.QuestionItemProvider;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 import me.drakeet.multitype.Items;
 import me.drakeet.multitype.MultiTypeAdapter;
 
 public class QuestionListFragment extends RootFragment<QuestionListPresenter>
         implements QuestionListContact.View {
-
-    public interface QuestionListFragmentListener {
-
-        void commitAnswersSuccess();
-    }
 
     public static QuestionListFragment newInstance(int type) {
         QuestionListFragment fragment = new QuestionListFragment();
@@ -56,10 +52,9 @@ public class QuestionListFragment extends RootFragment<QuestionListPresenter>
     @BindView(R.id.view_main)
     RecyclerView mRecyclerView;
 
-    private QuestionListFragmentListener mListener;
     private ArrayList<QuestionVOWrapper> mQuestionList;
     private int mType;
-
+    private QuestionListFragmentListener mListener;
 
     @Override
     public void onAttach(Context context) {
@@ -67,7 +62,7 @@ public class QuestionListFragment extends RootFragment<QuestionListPresenter>
             mListener = (QuestionListFragmentListener) context;
         } catch (ClassCastException e) {
             throw new ClassCastException(context.toString()
-                    + " must implement QuestionListFragmentListener");
+                    + " must implement InputPhoneFragmentListener");
         }
         super.onAttach(context);
     }
@@ -82,7 +77,7 @@ public class QuestionListFragment extends RootFragment<QuestionListPresenter>
             Bundle args = getArguments();
             mType = args.getInt(Key.TYPE, 0);
         }
-        initToolbar(rootView, getString(R.string.tips_constitution_test_title), R.mipmap.ic_navigation_back_white, 0);
+        initToolbar(rootView, getString(R.string.tips_constitution_test_title), R.mipmap.ic_navigation_back_white, getString(R.string.action_commit), R.color.md_white);
         initMultiTypeAdapter();
     }
 
@@ -128,7 +123,6 @@ public class QuestionListFragment extends RootFragment<QuestionListPresenter>
 
         @Override
         public void onSelectAnswer(int no, String answer) {
-            LogUtils.d(mLatestNo + "," + no);
             mLatestNo = mLatestNo - 1 > no ? mLatestNo : no + 1;
             if (mQuestionList != null) {
                 for (int i = 0; i < mQuestionList.size(); i++) {
@@ -146,9 +140,6 @@ public class QuestionListFragment extends RootFragment<QuestionListPresenter>
                     }
                 }
             }
-            LogUtils.d(mLatestNo + "," + no);
-            LogUtils.d(JsonUtils.objectToJson(mQuestionList));
-            LogUtils.d(JsonUtils.objectToJson(mItems));
             mAdapter.notifyDataSetChanged();
             mRecyclerView.smoothScrollToPosition(mLatestNo);
         }
@@ -196,7 +187,34 @@ public class QuestionListFragment extends RootFragment<QuestionListPresenter>
     }
 
     @Override
-    public void onToolbarLeftClickListener(View v) {
+    public void onCommitSuccess(String text) {
+        if (!isAdded()) return;
+        mListener.commitAnswersSuccess(text, mPresenter.isCurUserLogin());
+    }
 
+    @Override
+    public void onToolbarLeftClickListener(View v) {
+        ((QuestionActivity) getActivity()).onToolbarLeftClickListener(v);
+    }
+
+    @Override
+    public void onToolbarRightClickListener(View v) {
+        if (!isAdded() && (mQuestionList == null || mQuestionList.size() == 0)) return;
+        List<AnswerPO> list = new ArrayList<>();
+        for (int i = 0; i < mQuestionList.size(); i++) {
+            QuestionVOWrapper wrapper = mQuestionList.get(i);
+            if (wrapper.getSelectAnswerPO() == null) {
+                ToastUtils.show(getContext(), getString(R.string.tips_have_not_finish, wrapper.getNo()));
+                break;
+            }
+            list.add(wrapper.getSelectAnswerPO());
+        }
+        if (list.size() == mQuestionList.size()) {
+            mPresenter.commitAnswer(list);
+        }
+    }
+
+    public interface QuestionListFragmentListener {
+        void commitAnswersSuccess(String text, boolean isCurUserLogin);
     }
 }

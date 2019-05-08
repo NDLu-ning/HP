@@ -18,7 +18,7 @@ public interface UserService {
     Single<String> login(@Body RequestBody requestBody);
 
     @Headers(value = {"Content-Type:application/json"})
-    @POST("user/signup")
+    @POST("user/register")
     Single<String> singup(@Body RequestBody requestBody);
 
     @Headers(value = {"Content-Type:application/json", "Cookie-Name:token"})
@@ -32,4 +32,12 @@ public interface UserService {
     @Headers(value = {"Content-Type:application/json", "Cookie-Name:token"})
     @POST("user/logout")
     Single<String> logout();
+
+    @Headers(value = {"Content-Type:application/json"})
+    @POST("user/sms")
+    Single<String> sms(@Body RequestBody body);
+
+    @Headers(value = {"Content-Type:application/json"})
+    @POST("user/updateById")
+    Single<String> update(@Body RequestBody body);
 }

@@ -7,9 +7,10 @@ import com.graduation.hp.core.repository.http.bean.ResponseCode;
 import com.graduation.hp.core.repository.http.exception.ApiException;
 import com.graduation.hp.repository.contact.InvitationDetailContact;
 import com.graduation.hp.repository.model.impl.AttentionModel;
-import com.graduation.hp.repository.model.impl.CommentModel;
+import com.graduation.hp.repository.model.impl.DiscussModel;
 import com.graduation.hp.repository.model.impl.InvitationModel;
 import com.graduation.hp.repository.model.impl.LikeModel;
+import com.graduation.hp.repository.model.impl.UserModel;
 import com.graduation.hp.ui.navigation.constitution.detail.InvitationDetailFragment;
 
 import javax.inject.Inject;
@@ -24,7 +25,10 @@ public class InvitationDetailPresenter extends BasePresenter<InvitationDetailFra
     LikeModel likeModel;
 
     @Inject
-    CommentModel commentModel;
+    DiscussModel discussModel;
+
+    @Inject
+    UserModel userModel;
 
     @Inject
     public InvitationDetailPresenter(InvitationModel mMvpModel) {
@@ -52,8 +56,25 @@ public class InvitationDetailPresenter extends BasePresenter<InvitationDetailFra
     }
 
     @Override
-    public void likeInvitation(long mInvitationId) {
-
+    public void likeInvitation(long invitationId) {
+        if (!mMvpView.isNetworkAvailable()) {
+            mMvpView.showError(HPApplication.getStringById(R.string.tips_network_unavailable));
+            return;
+        }
+        mMvpModel.addSubscribe(likeModel.like(invitationId)
+                .subscribe(
+                        isLiked -> mMvpView.operateLikeStateSuccess(isLiked),
+                        throwable -> {
+                            mMvpView.operateLikeStateError();
+                            if (throwable instanceof ApiException) {
+                                ApiException apiException = (ApiException) throwable;
+                                if (apiException.getCode() == ResponseCode.TOKEN_ERROR.getStatus()) {
+                                    mMvpView.showMessage(HPApplication.getStringById(R.string.tips_please_login_first));
+                                    return;
+                                }
+                            }
+                            handlerApiError(throwable);
+                        }));
     }
 
     @Override
@@ -62,8 +83,8 @@ public class InvitationDetailPresenter extends BasePresenter<InvitationDetailFra
             mMvpView.showError(HPApplication.getStringById(R.string.tips_network_unavailable));
             return;
         }
-        mMvpModel.addSubscribe(commentModel.discuss(invitationId, content,
-                talkerUserId == -1L ? CommentModel.DISCUSS_COMMENT : CommentModel.DISCUSS_REPLY, talkerUserId)
+        mMvpModel.addSubscribe(discussModel.discussInvitation(invitationId, content,
+                talkerUserId <= 0 ? DiscussModel.DISCUSS_COMMENT : DiscussModel.DISCUSS_REPLY, talkerUserId)
                 .doFinally(() -> mMvpView.dismissDialog())
                 .subscribe(success -> mMvpView.operateArticleCommentStatus(true),
                         throwable -> {
@@ -90,11 +111,30 @@ public class InvitationDetailPresenter extends BasePresenter<InvitationDetailFra
     }
 
     @Override
-    public void getInvitationDetailById(long invitationId) {
-//        mMvpView.showLoading();
-//        mMvpModel.addSubscribe(mMvpModel.getNewsById(newsId)
-//                .subscribe(articles -> {
-//                    mMvpView.onGetNewsDetailInfoSuccess(articles);
-//                }, throwable -> handlerApiError(throwable)));
+    public void getInvitationDetail(long invitationId) {
+        mMvpView.showLoading();
+        mMvpModel.addSubscribe(mMvpModel.getInvitationById(invitationId)
+                .subscribe(articles -> {
+                    mMvpView.onGetInvitationDetailInfoSuccess(articles);
+                    mMvpView.showMain();
+                }, throwable -> handlerApiError(throwable)));
+    }
+
+    @Override
+    public void getInvitationDiscuss(long invitationId) {
+        mMvpModel.addSubscribe(discussModel.getInvitationDiscuss(invitationId)
+                .subscribe(discussPOS -> {
+                    mMvpView.onGetInvitationDiscussSuccess(discussPOS);
+                    mMvpView.showMain();
+                }, throwable -> {
+                    if (throwable instanceof ApiException) {
+                        ApiException exception = (ApiException) throwable;
+                        if (exception.getCode() == ResponseCode.DATA_EMPTY.getStatus()) {
+                            mMvpView.onGetInvitationDiscussEmpty();
+                            return;
+                        }
+                    }
+                    handlerApiError(throwable);
+                }));
     }
 }

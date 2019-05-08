@@ -15,11 +15,13 @@ public enum ResponseCode {
 
     NOT_NEED_SHOW_MESSAGE(1000, "无关紧要的消息"),
     ILLEGAL_ARGUMENT(5000, "参数无效"),
-    INPUT_USERNAME_ERROR(9001, "昵称输入长度小于6个字符"),
-    INPUT_PHONE_NUMBER_ERROR(9002, "手机号码输入不符合规则"),
-    INPUT_PASSWORD_ERROR(9003, "密码输入长度小于6个字符"),
-    INPUT_REPEAT_PASSWORD_ERROR(9004, "确认密码输入长度小于6个字符"),
-    NOT_SAME_ERROR(9003, "两次密码不一致"),
+
+    INPUT_PHONE_NUMBER_ERROR(9001, "手机号码输入不符合规则"),
+    INPUT_PASSWORD_ERROR(9003, "密码输入长度应大于6个字符，小于16个字符"),
+    NOT_SAME_ERROR(9004, "两次密码不一致"),
+    INPUT_REPEAT_PASSWORD_ERROR(9004, "确认密码输入长度应大于6个字符，小于16个字符"),
+    INPUT_NICKNAME_ERROR(9005, "昵称输入长度应大于6个字符，小于10个字符"),
+    INPUT_CODE_ERROR(9006,"验证码输入错误"),
     DATA_EMPTY(10001, "数据集为空");
     private final int status;
     private final String msg;

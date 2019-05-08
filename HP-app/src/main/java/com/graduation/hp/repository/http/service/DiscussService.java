@@ -16,4 +16,13 @@ public interface DiscussService {
     @POST("article/getDiscuss")
     Single<String> getDiscuss(@Body RequestBody body);
 
+
+    @Headers(value = {"Content-Type:application/json"})
+    @POST("invitation/getDiscuss")
+    Single<String> getInvitationDiscuss(@Body RequestBody body);
+
+
+    @Headers(value = {"Content-Type:application/json", "Cookie-Name:token"})
+    @POST("invitation/getDiscuss")
+    Single<String> discussInvitation(@Body RequestBody body);
 }

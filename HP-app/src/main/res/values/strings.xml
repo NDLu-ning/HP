@@ -162,6 +162,16 @@
     <string name="always">总是</string>
     <string name="tips_constitution_test_title">体质测试</string>
     <string name="action_commit">提交</string>
+    <string name="tips_signup_ing">正在注册...</string>
+    <string name="tips_signup_success">注册成功</string>
+    <string name="tips_send_success">发送验证码成功</string>
+    <string name="tips_verify_phone_success">验证成功</string>
+    <string name="tips_have_not_finish">请作答第 %d 题</string>
+    <string name="tips_whats_constitution">什么是 %s ?</string>
+    <string name="tips_keep_fit_method">想改善，怎么办 ?</string>
+    <string name="tips_test_result">测试结果</string>
+    <string name="tips_test_result_error">测试报告出现异常现象</string>
+    <string name="tips_share">分享</string>
 
 
     <string-array name="user_center_tab_titles">

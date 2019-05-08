@@ -16,7 +16,7 @@ public interface InvitationService {
     @POST("invitation/queryByCondition")
     Single<String> queryByCondition(@Body RequestBody body);
 
-    @Headers(value = {"Content-Type:application/json","Cookie-Name:token"})
+    @Headers(value = {"Content-Type:application/json", "Cookie-Name:token"})
     @POST("invitation/saveData")
     Single<String> saveData(@Body RequestBody body);
 }

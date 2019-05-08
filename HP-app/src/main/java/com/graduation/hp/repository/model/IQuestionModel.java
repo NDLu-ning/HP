@@ -12,6 +12,6 @@ public interface IQuestionModel {
 
     Single<ArrayList<QuestionVOWrapper>> getAllQuestions(int type);
 
-    Single<Boolean> commit(List<AnswerPO> list);
+    Single<String> commit(List<AnswerPO> list);
 
 }

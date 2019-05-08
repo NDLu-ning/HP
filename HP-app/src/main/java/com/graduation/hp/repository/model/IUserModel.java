@@ -8,7 +8,7 @@ import io.reactivex.Single;
 
 public interface IUserModel {
 
-    Single<String> sendVerificationMessage(String phone);
+    Single<Integer> sendVerificationMessage(String phone);
 
     Single<UserVO> getCurrentInfo();
 
@@ -16,7 +16,7 @@ public interface IUserModel {
 
     Single<UserVO> login(String username, String password);
 
-    Single<Boolean> signup(String username, String password, String repassword, String phone);
+    Single<Boolean> signup(String username,String password, String repassword, String phone);
 
     Single<Boolean> updatePassword(String phoneNumber, String password, String repassword);
 

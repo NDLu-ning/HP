@@ -206,7 +206,7 @@ public class UserCenterActivity extends BaseActivity<UserCenterPresenter>
             switch (position) {
                 case 0:
                     if (mFragments[position] == null) {
-                        mFragments[position] = UserNewsFragment.newInstance(mUserId);
+                        mFragments[position] = UserArticleFragment.newInstance(mUserId);
                     }
                     break;
                 case 1:

@@ -11,6 +11,8 @@ public interface QuestionListContact {
     interface View {
 
         void onGetQuestionsSuccess(ArrayList<QuestionVOWrapper> questions);
+
+        void onCommitSuccess(String text);
     }
 
     interface Presenter {
@@ -18,6 +20,8 @@ public interface QuestionListContact {
         void getQuestionList(int type);
 
         void commitAnswer(List<AnswerPO> list);
+
+        boolean isCurUserLogin();
 
     }
 }

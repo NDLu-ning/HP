@@ -148,12 +148,8 @@ public abstract class BaseFragment<P extends BasePresenter> extends BaseLazyLoad
 
     private void initToolbar(View rootView) {
         mToolbarLeftBtn = rootView.findViewById(R.id.toolbar_left_btn);
-        View view = rootView.findViewById(R.id.toolbar_right_btn);
-        if (view instanceof ImageButton) {
-            mToolbarRightBtn = (ImageButton) view;
-        } else if(view instanceof AppCompatTextView){
-            mToolbarRightTv = (AppCompatTextView) view;
-        }
+        mToolbarRightBtn = rootView.findViewById(R.id.toolbar_right_btn);
+        mToolbarRightTv = rootView.findViewById(R.id.toolbar_right_tv);
         mToolbarTitle = rootView.findViewById(R.id.toolbar_title);
         mToolbar = rootView.findViewById(R.id.toolbar);
         if (mToolbarLeftBtn != null) {

@@ -12,4 +12,8 @@ public interface LikeService {
     @POST("article/like")
     Single<String> like(@Body RequestBody requestBody);
 
+
+    @Headers(value = {"Content-Type:application/json", "Cookie-Name:token"})
+    @POST("invitation/like")
+    Single<String> likeInvitation(@Body RequestBody requestBody);
 }

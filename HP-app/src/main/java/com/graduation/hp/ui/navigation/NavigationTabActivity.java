@@ -16,14 +16,13 @@ import com.graduation.hp.core.ui.BaseActivity;
 import com.graduation.hp.core.widget.BaseViewPager;
 import com.graduation.hp.core.widget.RegisteredFragmentPagerAdapter;
 import com.graduation.hp.ui.auth.AuthActivity;
+import com.graduation.hp.ui.navigation.article.ArticleTabFragment;
 import com.graduation.hp.ui.navigation.attention.AttentionTabFragment;
 import com.graduation.hp.ui.navigation.constitution.ConstitutionTabFragment;
 import com.graduation.hp.ui.navigation.user.UserTabFragment;
-import com.graduation.hp.ui.navigation.news.NewsTabFragment;
-import com.graduation.hp.ui.navigation.post.PostTabFragment;
+import com.graduation.hp.ui.navigation.invitation.InvitationTabFragment;
 import com.graduation.hp.widget.NavigationTabView;
 
-import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 import org.jetbrains.annotations.NotNull;
@@ -125,8 +124,8 @@ public class NavigationTabActivity extends BaseActivity {
         if (fragment != null) {
             switch (mAdapter.getTabAtPosition(currentPosition)) {
                 case TAB_ID_NEWS: {
-                    if (fragment instanceof NewsTabFragment) {
-//                        ((NewsTabFragment) fragment).scrollToTop();
+                    if (fragment instanceof ArticleTabFragment) {
+//                        ((ArticleTabFragment) fragment).scrollToTop();
                     }
                     break;
                 }
@@ -249,7 +248,7 @@ public class NavigationTabActivity extends BaseActivity {
         public Fragment getItem(int position) {
             switch (mTabIds[position]) {
                 case TAB_ID_NEWS: {
-                    final NewsTabFragment fragment = NewsTabFragment.newInstance();
+                    final ArticleTabFragment fragment = ArticleTabFragment.newInstance();
                     return fragment;
                 }
                 case TAB_ID_ATTENTION: {
@@ -261,7 +260,7 @@ public class NavigationTabActivity extends BaseActivity {
                     return fragment;
                 }
                 case TAB_ID_POST: {
-                    final PostTabFragment fragment = PostTabFragment.newInstance();
+                    final InvitationTabFragment fragment = InvitationTabFragment.newInstance();
                     return fragment;
                 }
                 case TAB_ID_MYSELF: {

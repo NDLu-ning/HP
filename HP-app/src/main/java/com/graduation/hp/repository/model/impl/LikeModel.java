@@ -48,6 +48,23 @@ public class LikeModel extends BaseModel
                 .compose(RxUtils.rxSchedulerHelper()));
     }
 
+    @Override
+    public Single<Boolean> likeInvitation(long invitationId) {
+        HttpHelper httpHelper = mRepositoryHelper.getHttpHelper();
+        return Single.create((SingleOnSubscribe<Map<String, Object>>) emitter -> {
+            if (invitationId == 0L) {
+                emitter.onError(new ApiException(ResponseCode.ILLEGAL_ARGUMENT));
+            }
+            Map<String, Object> params = new HashMap<>();
+            params.put(Key.ARTICLE_ID, invitationId);
+            emitter.onSuccess(params);
+        }).flatMap(params -> httpHelper.obtainRetrofitService(LikeService.class)
+                .like(JsonUtils.mapToRequestBody(params))
+                .map(RxUtils.mappingResponseToResultWithNoException(Result.class))
+                .map(checkLikeStatus())
+                .compose(RxUtils.rxSchedulerHelper()));
+    }
+
     private Function<Result, Boolean> checkLikeStatus() {
         return result -> {
             if (result.getStatus() == ResponseCode.FOCUS_ON.getStatus()) {

@@ -1,25 +1,20 @@
 package com.graduation.hp.ui.provider;
 
-import android.content.Context;
 import android.content.res.Resources;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
-import android.text.Html;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 
 import com.graduation.hp.R;
 import com.graduation.hp.core.app.listener.OnItemClickListener;
 import com.graduation.hp.core.utils.DateUtils;
 import com.graduation.hp.core.utils.GlideUtils;
-import com.graduation.hp.core.utils.ToastUtils;
-import com.graduation.hp.repository.http.entity.CommentItem;
-import com.graduation.hp.repository.http.entity.PostItem;
+import com.graduation.hp.repository.http.entity.vo.InvitationVO;
 import com.graduation.hp.utils.BeanFactory;
 import com.graduation.hp.widget.LikeButton;
 import com.lzy.ninegrid.ImageInfo;
@@ -33,7 +28,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import me.drakeet.multitype.ItemViewBinder;
 
-public class PostItemProvider extends ItemViewBinder<PostItem, PostItemProvider.ViewHolder> {
+public class PostItemProvider extends ItemViewBinder<InvitationVO, PostItemProvider.ViewHolder> {
 
     private final OnItemClickListener mListener;
 
@@ -48,21 +43,39 @@ public class PostItemProvider extends ItemViewBinder<PostItem, PostItemProvider.
     }
 
     @Override
-    protected void onBindViewHolder(@NonNull ViewHolder holder, @NonNull PostItem item) {
+    protected void onBindViewHolder(@NonNull ViewHolder holder, @NonNull InvitationVO item) {
         Resources resources = holder.itemView.getResources();
-        GlideUtils.loadUserHead(holder.adapterPostIconIv, item.getAuthorIcon());
-        holder.adapterPostNameTv.setText(item.getAuthor());
-        holder.adapterPostContentTv.setText(item.getContent());
-        holder.adapterPostReviewsTv.setText(String.format(resources.getString(R.string.tips_total_views_template), item.getViews()));
-        holder.adapterPostLikeNumTv.setText(String.format(resources.getString(R.string.tips_total_like_count_template), item.getLikeCount()));
-        holder.adapterPostDateTv.setText(DateUtils.formatPublishDate(item.getCreated()));
-        holder.adapterPostTagTv.setText(BeanFactory.constitutions[Integer.parseInt(item.getConstitution())]);
-        holder.adapterPostTagTv.setTextColor(resources.getColor(BeanFactory.constitutions_color[Integer.parseInt(item.getConstitution())]));
-        holder.adapterPostTagTv.setBackgroundResource(BeanFactory.constitutions_bg_res[Integer.parseInt(item.getConstitution())]);
+        GlideUtils.loadUserHead(holder.adapterPostIconIv, item.getHeadUrl());
+        holder.adapterPostNameTv.setText(item.getNickname());
+        holder.adapterPostDateTv.setText(DateUtils.formatPublishDate(item.getCreateTime()));
+        int index = 0;
+        for (; index < BeanFactory.constitutions.length; index++) {
+            String constitution = BeanFactory.constitutions[index];
+            if (constitution.equals(item.getPhysiqueStr())) {
+                break;
+            }
+        }
+        holder.adapterPostTagTv.setText(BeanFactory.constitutions[index]);
+        holder.adapterPostTagTv.setTextColor(resources.getColor(BeanFactory.constitutions_color[index]));
+        holder.adapterPostTagTv.setBackgroundResource(BeanFactory.constitutions_bg_res[index]);
         holder.adapterPostHotIv.setVisibility(View.VISIBLE);
+        holder.adapterPostContentTv.setText(item.getContext());
+        holder.adapterPostReviewsTv.setText(String.format(resources.getString(R.string.tips_total_views_template), item.getLikeNum()));
+        holder.adapterPostLikeBtn.setLiked(false);
+        holder.adapterPostLikeNumTv.setText(String.valueOf(item.getLikeNum()));
+        holder.adapterPostCommentNumTv.setText(String.valueOf(item.getDiscussNum()));
+        holder.adapterPostHotIv.setVisibility(item.getLikeNum() > 10 ? View.VISIBLE : View.GONE);
         List<ImageInfo> imageInfos = new ArrayList<>();
+        String[] arrays = new String[3];
+        arrays[0] = item.getPic();
+        arrays[1] = item.getPic();
+        arrays[2] = item.getPic();
         String[] images = item.getImages().split(",");
-        for (String image : images) {
+        for (int i = 0; i < arrays.length; i++) {
+            String image = arrays[i];
+            if (TextUtils.isEmpty(image)) {
+                continue;
+            }
             ImageInfo imageInfo = new ImageInfo();
             imageInfo.setBigImageUrl(image);
             imageInfo.setThumbnailUrl(image);
@@ -70,31 +83,19 @@ public class PostItemProvider extends ItemViewBinder<PostItem, PostItemProvider.
         }
         holder.adapterPostImageContainer.setAdapter(new NineGridViewClickAdapter(holder.itemView.getContext(), imageInfos));
         holder.adapterPostImageContainer.setVisibility(images.length == 0 ? View.GONE : View.VISIBLE);
-        List<CommentItem> commentItems = item.getCommentItems();
-        if (commentItems != null && commentItems.size() > 0) {
-            holder.adapterPostCommentContainer.setVisibility(View.VISIBLE);
-            holder.adapterPostMoreTv.setVisibility(commentItems.size() > 15 ? View.VISIBLE : View.GONE);
-            holder.adapterPostMoreTv.setOnClickListener(v -> {
-                ToastUtils.show(holder.itemView.getContext(), "More Click");
-            });
-            int showSize = commentItems.size() > 15 ? 15 : commentItems.size();
-            for (int i = 0; i < showSize; i++) {
-                holder.adapterPostCommentContainer.addView(createCommentView(holder.itemView.getContext(), commentItems.get(i)));
+        holder.itemView.setOnClickListener(v -> {
+            if (mListener != null) {
+                mListener.OnItemClick(holder.itemView, item);
             }
-        }
-    }
-
-    private View createCommentView(Context context, CommentItem commentItem) {
-        View rootView = LayoutInflater.from(context).inflate(R.layout.adapter_post_reply_item, null);
-        AppCompatTextView replyTv = rootView.findViewById(R.id.adapter_post_reply_tv);
-        String content;
-        if (!TextUtils.isEmpty(commentItem.getReplyUserName())) {
-            content = String.format(context.getString(R.string.comment_has_reply_object), commentItem.getCommentUserName(), commentItem.getReplyUserName(), commentItem.getContent());
-        } else {
-            content = String.format(context.getString(R.string.comment_has_no_reply_object), commentItem.getCommentUserName(), commentItem.getContent());
-        }
-        replyTv.setText(Html.fromHtml(content));
-        return replyTv;
+        });
+        holder.adapterPostLikeBtn.setLikeButtonClickListener((v, isLiked) -> {
+            if (mListener != null) {
+                holder.adapterPostLikeBtn.setLiked(!isLiked);
+                item.setLikeNum(!isLiked ? item.getLikeNum() + 1 : item.getLikeNum() - 1);
+                holder.adapterPostLikeNumTv.setText(String.valueOf(item.getLikeNum()));
+                mListener.OnItemCheckChange(holder.itemView, item, isLiked);
+            }
+        });
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
@@ -117,14 +118,12 @@ public class PostItemProvider extends ItemViewBinder<PostItem, PostItemProvider.
         AppCompatTextView adapterPostReviewsTv;
         @BindView(R.id.adapter_post_comment_iv)
         AppCompatImageView adapterPostCommentIv;
+        @BindView(R.id.adapter_post_comment_num_tv)
+        AppCompatTextView adapterPostCommentNumTv;
         @BindView(R.id.adapter_post_like_btn)
         LikeButton adapterPostLikeBtn;
         @BindView(R.id.adapter_post_like_num_tv)
         AppCompatTextView adapterPostLikeNumTv;
-        @BindView(R.id.adapter_post_comment_container)
-        LinearLayout adapterPostCommentContainer;
-        @BindView(R.id.adapter_post_more_tv)
-        AppCompatTextView adapterPostMoreTv;
 
         ViewHolder(View itemView) {
             super(itemView);

@@ -6,6 +6,8 @@
     android:layout_height="wrap_content"
     android:layout_marginTop="@dimen/dp_2"
     android:layout_marginBottom="@dimen/dp_2"
+    android:paddingTop="@dimen/dp_4"
+    android:paddingBottom="@dimen/dp_4"
     android:textColor="@color/md_black_300"
     android:textSize="@dimen/sp_12"
     android:background="@drawable/selector_comment_item_tv"/>

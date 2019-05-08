@@ -16,5 +16,4 @@ public interface ArticleService {
     @Headers(value = {"Content-Type:application/json"})
     @POST("article/queryByCondition")
     Single<String> queryByCondition(@Body RequestBody body);
-
 }

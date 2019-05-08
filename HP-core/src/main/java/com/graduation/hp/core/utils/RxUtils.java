@@ -8,6 +8,8 @@ import com.graduation.hp.core.repository.http.exception.ApiException;
 import java.util.List;
 
 import io.reactivex.MaybeTransformer;
+import io.reactivex.Single;
+import io.reactivex.SingleSource;
 import io.reactivex.SingleTransformer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Function;
@@ -73,8 +75,23 @@ public class RxUtils {
         };
     }
 
+    public static <T> SingleTransformer<Result, List<T>> mappingResultToListQiang() {
+        return upstream -> upstream.map((Function<Result, List<T>>) result -> {
+            if (result.getData() != null) {
+                List<T> data = (List<T>) result.getData();
+                if (data.size() > 0) {
+                    return data;
+                } else {
+                    throw new ApiException(ResponseCode.DATA_EMPTY);
+                }
+            }
+            throw new ApiException(ResponseCode.DATA_EMPTY);
+        });
+    }
+
     public static <T> SingleTransformer<String, T> transformResultToData(final Class<T> clazz) {
         return upstream -> upstream.map((Function<String, T>) response -> {
+            LogUtils.d(response);
             Result result = Result.formatToPojo(response, clazz);
             if (result.getStatus() != 200) {
                 throw new ApiException(result.getStatus(), result.getMsg());
@@ -89,6 +106,7 @@ public class RxUtils {
 
     public static <T> SingleTransformer<String, List<T>> transformResultToList(final Class<T> clazz) {
         return upstream -> upstream.map((Function<String, List<T>>) response -> {
+            LogUtils.d(response);
             Result result = Result.formatToPojo(response, DataGrid.class);
             if (result.getStatus() != 200) {
                 throw new ApiException(result.getStatus(), result.getMsg());

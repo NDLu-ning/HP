@@ -1,6 +1,9 @@
 package com.graduation.hp.repository.contact;
 
+import com.graduation.hp.repository.http.entity.pojo.InvitationDiscussPO;
 import com.graduation.hp.repository.http.entity.vo.InvitationVO;
+
+import java.util.List;
 
 public interface InvitationDetailContact {
 
@@ -10,11 +13,13 @@ public interface InvitationDetailContact {
 
         void likeInvitation(long invitationId);
 
-        void addComment(long invitationId, String content,long talkerUserId);
+        void addComment(long invitationId, String content, long talkerUserId);
 
         void isFocusOn(long userId);
 
-        void getInvitationDetailById(long invitationId);
+        void getInvitationDetail(long invitationId);
+
+        void getInvitationDiscuss(long invitationId);
     }
 
     interface View {
@@ -23,6 +28,8 @@ public interface InvitationDetailContact {
 
         void onGetAttentionSuccess(boolean isFocusOn);
 
+        void onGetInvitationDiscussSuccess(List<InvitationDiscussPO> invitationDiscussPOList);
+
         void operateLikeStateSuccess(boolean isLiked);
 
         void operateLikeStateError();
@@ -30,5 +37,7 @@ public interface InvitationDetailContact {
         void operateAttentionStateSuccess(boolean isFocusOn);
 
         void operateArticleCommentStatus(boolean success);
+
+        void onGetInvitationDiscussEmpty();
     }
 }

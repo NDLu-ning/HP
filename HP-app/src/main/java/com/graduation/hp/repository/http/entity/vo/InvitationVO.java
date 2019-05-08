@@ -127,6 +127,19 @@ public class InvitationVO extends Page
         nickname = in.readString();
         headUrl = in.readString();
         physiqueStr = in.readString();
+        if (in.readByte() == 0) {
+            createTime = null;
+        } else {
+            long startTime = in.readLong();
+            createTime = new Date(startTime);
+        }
+        if (in.readByte() == 0) {
+            updateTime = null;
+        } else {
+            long endTime = in.readLong();
+            updateTime = new Date(endTime);
+        }
+
     }
 
     public static final Creator<InvitationVO> CREATOR = new Creator<InvitationVO>() {
@@ -327,5 +340,17 @@ public class InvitationVO extends Page
         parcel.writeString(nickname);
         parcel.writeString(headUrl);
         parcel.writeString(physiqueStr);
+        if (createTime == null) {
+            parcel.writeByte((byte) 0);
+        } else {
+            parcel.writeByte((byte) 1);
+            parcel.writeLong(createTime.getTime());
+        }
+        if (updateTime == null) {
+            parcel.writeByte((byte) 0);
+        } else {
+            parcel.writeByte((byte) 1);
+            parcel.writeLong(updateTime.getTime());
+        }
     }
 }

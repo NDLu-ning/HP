@@ -7,4 +7,6 @@ public interface ILikeModel {
 
     Single<Boolean> like(long articleId);
 
+    Single<Boolean> likeInvitation(long invitationId);
+
 }

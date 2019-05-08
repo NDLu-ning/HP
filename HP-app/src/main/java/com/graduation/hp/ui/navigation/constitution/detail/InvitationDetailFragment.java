@@ -5,6 +5,10 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
+import android.text.Html;
+import android.text.TextUtils;
+import android.util.TypedValue;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
 
@@ -18,8 +22,9 @@ import com.graduation.hp.core.utils.DateUtils;
 import com.graduation.hp.core.utils.GlideUtils;
 import com.graduation.hp.presenter.InvitationDetailPresenter;
 import com.graduation.hp.repository.contact.InvitationDetailContact;
+import com.graduation.hp.repository.http.entity.pojo.InvitationDiscussPO;
 import com.graduation.hp.repository.http.entity.vo.InvitationVO;
-import com.graduation.hp.ui.navigation.news.comment.PrepareForDiscussionListener;
+import com.graduation.hp.ui.navigation.article.comment.PrepareForDiscussionListener;
 import com.graduation.hp.ui.navigation.user.center.UserCenterActivity;
 import com.graduation.hp.utils.StringUtils;
 import com.graduation.hp.widget.LikeButton;
@@ -81,6 +86,8 @@ public class InvitationDetailFragment extends RootFragment<InvitationDetailPrese
     @BindView(R.id.invitation_detail_sub_iv)
     AppCompatImageView invitationDetailSubIv;
 
+    @BindView(R.id.adapter_post_empty_tv)
+    AppCompatTextView invitationDetailEmptyTv;
 
     private long mInvitationId;
     private int mLikeNum = 0;
@@ -119,7 +126,7 @@ public class InvitationDetailFragment extends RootFragment<InvitationDetailPrese
     @Override
     protected void onLazyLoad() {
         if (mInvitationVo == null) {
-            mPresenter.getInvitationDetailById(mInvitationId);
+            mPresenter.getInvitationDetail(mInvitationId);
         } else {
             onGetInvitationDetailInfoSuccess(mInvitationVo);
         }
@@ -148,8 +155,8 @@ public class InvitationDetailFragment extends RootFragment<InvitationDetailPrese
             case R.id.invitation_detail_comment_iv:
             case R.id.invitation_detail_comment_tv:
             case R.id.adapter_post_comment_iv:
-                mDiscussionDialogListener.showCommentDialog(getString(R.string.hint_comment), listener);
                 // 进行评论
+                mDiscussionDialogListener.showCommentDialog(getString(R.string.hint_comment), listener);
                 break;
         }
     }
@@ -166,7 +173,7 @@ public class InvitationDetailFragment extends RootFragment<InvitationDetailPrese
 
     @Override
     protected void onRetryClick() {
-        mPresenter.getInvitationDetailById(mInvitationId);
+        mPresenter.getInvitationDetail(mInvitationId);
     }
 
     @Override
@@ -182,13 +189,13 @@ public class InvitationDetailFragment extends RootFragment<InvitationDetailPrese
                 .build()
                 .inject(this);
     }
-    // TODO
 
     @Override
     public void onGetInvitationDetailInfoSuccess(InvitationVO articleVO) {
         this.mInvitationVo = articleVO;
         showInvitationAuthorInfo();
-        mPresenter.isFocusOn(articleVO.getUserId());
+        mPresenter.isFocusOn(mInvitationVo.getUserId());
+        mPresenter.getInvitationDiscuss(mInvitationId);
     }
 
     private void showInvitationAuthorInfo() {
@@ -207,10 +214,46 @@ public class InvitationDetailFragment extends RootFragment<InvitationDetailPrese
         invitationImageContainer.setAdapter(new NineGridViewClickAdapter(getContext(), imageInfos));
     }
 
+    private View createInvitationDiscussView(Context context, InvitationDiscussPO commentItem) {
+        View rootView = LayoutInflater.from(context).inflate(R.layout.adapter_post_reply_item, null);
+        AppCompatTextView replyTv = rootView.findViewById(R.id.adapter_post_reply_tv);
+        replyTv.setTextSize(TypedValue.COMPLEX_UNIT_SP,13.0F);
+        String content;
+        if (!TextUtils.isEmpty(commentItem.getTalkNickname())) {
+            content = String.format(context.getString(R.string.comment_has_reply_object), commentItem.getNickname(), commentItem.getTalkNickname(), commentItem.getContext());
+        } else {
+            content = String.format(context.getString(R.string.comment_has_no_reply_object), commentItem.getNickname(), commentItem.getContext());
+        }
+        replyTv.setText(Html.fromHtml(content));
+        replyTv.setOnClickListener(v -> {
+            mDiscussionDialogListener.showCommentDialog(getString(R.string.hint_comment_template, commentItem.getNickname()), new CommentDialog.CommentDialogClickListener() {
+                @Override
+                public void onDialogBackPressed() {
+                    mDiscussionDialogListener.dismissCommentDialog();
+                    mPresenter.getModel().cancelSubscribe();
+                }
+
+                @Override
+                public void onSendMessage(String content) {
+                    mPresenter.addComment(mInvitationId, content, commentItem.getUserId());
+                }
+            });
+        });
+        return replyTv;
+    }
+
 
     @Override
     public void onGetAttentionSuccess(boolean isFocusOn) {
         showInvitationSubButton(isFocusOn);
+    }
+
+    @Override
+    public void onGetInvitationDiscussSuccess(List<InvitationDiscussPO> invitationDiscussPOList) {
+        invitationCommentContainer.removeAllViews();
+        for (InvitationDiscussPO invitationDiscussPO : invitationDiscussPOList) {
+            invitationCommentContainer.addView(createInvitationDiscussView(getContext(), invitationDiscussPO));
+        }
     }
 
     @Override
@@ -240,6 +283,17 @@ public class InvitationDetailFragment extends RootFragment<InvitationDetailPrese
         showMessage(getString(success ? R.string.tips_comment_success : R.string.tips_comment_failed));
         invitationDetailCommentNumTv.setText(StringUtils.getFormattedOverMaximumString(
                 success ? ++mDiscussNum : mDiscussNum, 999, R.string.tips_over_maximum));
+        invitationCommentContainer.setVisibility(success ? View.VISIBLE : View.INVISIBLE);
+        invitationDetailEmptyTv.setVisibility(success ? View.GONE : View.VISIBLE);
+        if (success) {
+            mPresenter.getInvitationDiscuss(mInvitationId);
+        }
+    }
+
+    @Override
+    public void onGetInvitationDiscussEmpty() {
+        invitationCommentContainer.setVisibility(View.INVISIBLE);
+        invitationDetailEmptyTv.setVisibility(View.VISIBLE);
     }
 
 

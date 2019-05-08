@@ -68,7 +68,22 @@ public class QuestionModel extends BaseModel
     }
 
     @Override
-    public Single<Boolean> commit(List<AnswerPO> list) {
-        return null;
+    public Single<String> commit(List<AnswerPO> list) {
+        HttpHelper httpHelper = mRepositoryHelper.getHttpHelper();
+        return Single.<Map<String, Object>>create(emitter -> {
+            if (list == null || list.size() == 0) {
+                emitter.onError(new ApiException(ResponseCode.ILLEGAL_ARGUMENT));
+            }
+            Map<String, Object> map = new HashMap<>();
+            map.put(Key.ALIST, list);
+            emitter.onSuccess(map);
+        }).flatMap(params -> httpHelper.obtainRetrofitService(QuestionService.class)
+                .commit(JsonUtils.mapToRequestBody(params))
+                .compose(RxUtils.transformResultToData(String.class))
+                .compose(RxUtils.rxSchedulerHelper()));
+    }
+
+    public RepositoryHelper getRepositoryHelper() {
+        return mRepositoryHelper;
     }
 }

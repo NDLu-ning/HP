@@ -13,7 +13,7 @@ import com.graduation.hp.core.app.di.component.AppComponent;
 import com.graduation.hp.core.app.event.TokenInvalidEvent;
 import com.graduation.hp.core.ui.SingleFragmentActivity;
 import com.graduation.hp.ui.auth.AuthActivity;
-import com.graduation.hp.ui.navigation.news.comment.PrepareForDiscussionListener;
+import com.graduation.hp.ui.navigation.article.comment.PrepareForDiscussionListener;
 import com.graduation.hp.widget.dialog.CommentDialog;
 
 import org.greenrobot.eventbus.EventBus;

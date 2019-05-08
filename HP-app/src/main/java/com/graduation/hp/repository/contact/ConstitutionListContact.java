@@ -14,7 +14,7 @@ public interface ConstitutionListContact {
 
     interface Presenter {
 
-        void getConstitutionNewsList(State state, long typeId);
+        void getConstitutionInvitationList(State state, long typeId);
     }
 
 

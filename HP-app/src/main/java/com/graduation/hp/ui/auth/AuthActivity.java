@@ -12,8 +12,8 @@ import android.view.View;
 import com.graduation.hp.R;
 import com.graduation.hp.app.di.component.DaggerActivityComponent;
 import com.graduation.hp.app.di.module.ActivityModule;
+import com.graduation.hp.app.event.AuthEvent;
 import com.graduation.hp.core.app.di.component.AppComponent;
-import com.graduation.hp.core.repository.http.bean.ResponseCode;
 import com.graduation.hp.core.ui.SingleFragmentActivity;
 import com.graduation.hp.presenter.AuthPresenter;
 import com.graduation.hp.repository.contact.AuthContact;
@@ -38,7 +38,10 @@ public class AuthActivity extends SingleFragmentActivity<AuthPresenter>
     public static final int FRAGMENT_IS_INPUT_PHONE = 3;
     private static final int FRAGMENT_IS_UPDATE_PASSWORD = 4;
 
+    public static final int SEND_SUCCESS = 8001;
+
     private int mCurFragment;
+    private String mSourceCode;
 
     public static Intent createIntent(Context context) {
         return new Intent(context, AuthActivity.class);
@@ -110,8 +113,8 @@ public class AuthActivity extends SingleFragmentActivity<AuthPresenter>
     }
 
     @Override
-    public void verifyPhoneNumber(String phoneNumber) {
-        mPresenter.verifyPhoneNumber(phoneNumber);
+    public void verifyCode(String phoneNumber, String code) {
+        mPresenter.verifyCode(phoneNumber, code, mSourceCode);
     }
 
     @Override
@@ -134,17 +137,14 @@ public class AuthActivity extends SingleFragmentActivity<AuthPresenter>
     }
 
     @Override
-    public void onRegisterInputError(ResponseCode responseCode) {
-        EventBus.getDefault().post(responseCode);
+    public void onRegisterInputError(AuthEvent authEvent) {
+//        ((RegisterFragment) getMainContentFragment()).onRegisterError(authEvent);
+        EventBus.getDefault().post(authEvent);
     }
 
     @Override
     public void onVerifyPhoneNumberResult(String phoneNumber) {
-        if (!TextUtils.isEmpty(phoneNumber)) {
-            replaceMainContentFragment(UpdatePasswordFragment.newInstance(phoneNumber), true);
-        } else {
-//            EventBus.getDefault().post();
-        }
+        replaceMainContentFragment(UpdatePasswordFragment.newInstance(phoneNumber));
     }
 
     @Override
@@ -158,8 +158,18 @@ public class AuthActivity extends SingleFragmentActivity<AuthPresenter>
     }
 
     @Override
-    public void onTryToSignup(String username, String password, String repassword, String phoneNumber) {
-        mPresenter.onTryToSignup(username, password, repassword, phoneNumber);
+    public void onSendCodeSuccess(String code) {
+        EventBus.getDefault().post(new AuthEvent(FRAGMENT_IS_INPUT_PHONE, SEND_SUCCESS, ""));
+    }
+
+    @Override
+    public void onTryToSendCode(String phone) {
+        mPresenter.onTryToSendCode(phone);
+    }
+
+    @Override
+    public void onTryToSignup(String phone, String password, String repassword, String nickname) {
+        mPresenter.onTryToSignup(phone, password, repassword, nickname);
     }
 
     @Override

@@ -1,5 +1,8 @@
 package com.graduation.hp.repository.http.entity.pojo;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.Date;
 
 /**
@@ -7,7 +10,7 @@ import java.util.Date;
  * 
  * @author shengting_wang
  */
-public class InvitationDiscussPO {
+public class InvitationDiscussPO implements Parcelable {
 
     /**
      * 帖子评论主键
@@ -61,6 +64,61 @@ public class InvitationDiscussPO {
 
     public InvitationDiscussPO() {
     }
+
+    protected InvitationDiscussPO(Parcel in) {
+        if (in.readByte() == 0) {
+            id = null;
+        } else {
+            id = in.readLong();
+        }
+        if (in.readByte() == 0) {
+            userId = null;
+        } else {
+            userId = in.readLong();
+        }
+        if (in.readByte() == 0) {
+            discussType = null;
+        } else {
+            discussType = in.readInt();
+        }
+        if (in.readByte() == 0) {
+            talkerUserId = null;
+        } else {
+            talkerUserId = in.readLong();
+        }
+        if (in.readByte() == 0) {
+            invitationId = null;
+        } else {
+            invitationId = in.readLong();
+        }
+        context = in.readString();
+        nickname = in.readString();
+        talkNickname = in.readString();
+        if (in.readByte() == 0) {
+            createTime = null;
+        } else {
+            long startTime = in.readLong();
+            createTime = new Date(startTime);
+        }
+        if (in.readByte() == 0) {
+            updateTime = null;
+        } else {
+            long endTime = in.readLong();
+            updateTime = new Date(endTime);
+        }
+    }
+
+    public static final Creator<InvitationDiscussPO> CREATOR = new Creator<InvitationDiscussPO>() {
+        @Override
+        public InvitationDiscussPO createFromParcel(Parcel in) {
+            return new InvitationDiscussPO(in);
+        }
+
+        @Override
+        public InvitationDiscussPO[] newArray(int size) {
+            return new InvitationDiscussPO[size];
+        }
+    };
 
     public Long getId() {
         return id;
@@ -140,5 +198,59 @@ public class InvitationDiscussPO {
 
     public void setTalkNickname(String talkNickname) {
         this.talkNickname = talkNickname;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        if (id == null) {
+            parcel.writeByte((byte) 0);
+        } else {
+            parcel.writeByte((byte) 1);
+            parcel.writeLong(id);
+        }
+        if (userId == null) {
+            parcel.writeByte((byte) 0);
+        } else {
+            parcel.writeByte((byte) 1);
+            parcel.writeLong(userId);
+        }
+        if (discussType == null) {
+            parcel.writeByte((byte) 0);
+        } else {
+            parcel.writeByte((byte) 1);
+            parcel.writeInt(discussType);
+        }
+        if (talkerUserId == null) {
+            parcel.writeByte((byte) 0);
+        } else {
+            parcel.writeByte((byte) 1);
+            parcel.writeLong(talkerUserId);
+        }
+        if (invitationId == null) {
+            parcel.writeByte((byte) 0);
+        } else {
+            parcel.writeByte((byte) 1);
+            parcel.writeLong(invitationId);
+        }
+        parcel.writeString(context);
+        parcel.writeString(nickname);
+        parcel.writeString(talkNickname);
+        if (createTime == null) {
+            parcel.writeByte((byte) 0);
+        } else {
+            parcel.writeByte((byte) 1);
+            parcel.writeLong(createTime.getTime());
+        }
+        if (updateTime == null) {
+            parcel.writeByte((byte) 0);
+        } else {
+            parcel.writeByte((byte) 1);
+            parcel.writeLong(updateTime.getTime());
+        }
     }
 }
