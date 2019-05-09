@@ -10,6 +10,7 @@ import android.view.View;
 import com.graduation.hp.R;
 import com.graduation.hp.app.di.component.DaggerFragmentComponent;
 import com.graduation.hp.app.di.module.FragmentModule;
+import com.graduation.hp.app.event.PublishEvent;
 import com.graduation.hp.core.app.di.component.AppComponent;
 import com.graduation.hp.core.app.listener.OnItemClickListener;
 import com.graduation.hp.core.app.listener.SimpleItemClickListenerAdapter;
@@ -29,6 +30,10 @@ import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.tbruyelle.rxpermissions2.RxPermissions;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
 
@@ -171,6 +176,20 @@ public class InvitationTabFragment extends RootFragment<InvitationTabPresenter>
 
     @Override
     public void operateLikeStateError() {
+    }
+
+    @Subscribe(threadMode = ThreadMode.POSTING, priority = 2)
+    public void onReceivePublishEvent(PublishEvent event) {
+        if (!isAdded()) return;
+        EventBus.getDefault().cancelEventDelivery(event);
+        if (event.getCode() == PublishEvent.INVITATION_SUCCESS.getCode()) {
+            mPresenter.downloadInitialData();
+        }
+    }
+
+    @Override
+    public boolean useEventBus() {
+        return true;
     }
 
     @Override

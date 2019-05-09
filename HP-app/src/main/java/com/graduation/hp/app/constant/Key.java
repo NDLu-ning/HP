@@ -57,6 +57,8 @@ public class Key {
     public static final String INVITATION_ID_CAMEL_CASE = "invitationId";
     public static final String PHYSIQUELD = "physiqueId";
     public static final String HEADURL = "headUrl";
+    public static final String PIC = "pic%s";
+
 
     /**
      * 页面传递常量

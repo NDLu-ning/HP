@@ -17,4 +17,6 @@ public interface IInvitationModel {
 
     Single<InvitationVO> getInvitationById(long invitationId);
 
+    Single<Boolean> createInvitation(String title, String content, List<String> pics);
+
 }

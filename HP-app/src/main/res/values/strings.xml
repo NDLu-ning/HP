@@ -110,6 +110,7 @@
     </string>
     <string name="tips_publish_comment">发表</string>
     <string name="tips_content_not_null">评论内容不能为空</string>
+    <string name="tips_post_content_not_null">发布帖子标题和内容不能为空</string>
     <string name="tips_all_discussions_title">全部评论</string>
     <string name="tips_like_success">点赞成功</string>
     <string name="tips_cancel_like_success">取消赞成功</string>
@@ -143,6 +144,7 @@
     <string name="tips_update_signature_error">输入签名长度应满足0-120个字符</string>
     <string name="tips_upload_ing">正在上传</string>
     <string name="tips_upload_success">上传成功</string>
+    <string name="tips_publish_success">发表成功</string>
     <string name="tips_clear_search_history">清除搜索记录</string>
     <string name="tips_please_input_keywords">请输入检索内容</string>
     <string name="tips_keywords_not_empty">输入检索关键字不能为空值</string>
@@ -172,7 +174,9 @@
     <string name="tips_test_result">测试结果</string>
     <string name="tips_test_result_error">测试报告出现异常现象</string>
     <string name="tips_share">分享</string>
-
+    <string name="tips_make_a_title">给帖子定个小标题</string>
+    <string name="tips_post_title">帖子标题</string>
+    <string name="tips_post_content">帖子内容</string>
 
     <string-array name="user_center_tab_titles">
         <item>文章</item>

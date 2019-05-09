@@ -2,26 +2,24 @@ package com.graduation.hp.ui.navigation.invitation.create;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.widget.AppCompatEditText;
-import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
-import android.view.LayoutInflater;
+import android.text.TextUtils;
 import android.view.View;
 
 import com.graduation.hp.R;
 import com.graduation.hp.app.constant.Key;
 import com.graduation.hp.app.di.component.DaggerActivityComponent;
 import com.graduation.hp.app.di.module.ActivityModule;
+import com.graduation.hp.app.event.PublishEvent;
 import com.graduation.hp.app.event.UploadProfileEvent;
 import com.graduation.hp.core.HPApplication;
 import com.graduation.hp.core.app.constant.Code;
 import com.graduation.hp.core.app.di.component.AppComponent;
-import com.graduation.hp.core.app.listener.OnItemClickListener;
 import com.graduation.hp.core.repository.entity.BottomSheetOption;
 import com.graduation.hp.core.ui.BaseActivity;
 import com.graduation.hp.core.ui.bottomsheet.ListSelectionBottomSheetFragment;
@@ -36,6 +34,8 @@ import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.config.PictureMimeType;
 import com.luck.picture.lib.entity.LocalMedia;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -56,9 +56,17 @@ public class InvitationCreationActivity extends BaseActivity<InvitationCreationP
     private static final int SHEET_ID_USE_CAMERA = 1;
     private static final int SHEET_ID_CANCEL = 2;
 
-    private static final int MAX_CONTENT_LENGTH = 120;
+    private static final int MAX_TITLE_LENGTH = 20;
+    private static final int MAX_CONTENT_LENGTH = 200;
     @BindView(R.id.post_picture_container_wl)
     WrapLayout mWrapLayout;
+
+    @BindView(R.id.post_title_et)
+    AppCompatEditText mPostTitleEt;
+
+    @BindView(R.id.post_title_il)
+    TextInputLayout mPostTitleIl;
+
 
     @BindView(R.id.post_content_et)
     AppCompatEditText mPostContentEt;
@@ -74,7 +82,7 @@ public class InvitationCreationActivity extends BaseActivity<InvitationCreationP
     private ArrayList<BottomSheetOption> options;
     private UploadAvatarHelper mUploadAvatarHelper;
 
-    private ArrayList<String> uploaded = new ArrayList<>();
+    private ArrayList<String> uploaded;
 
     public static Intent createIntent(Context context) {
         Intent intent = new Intent(context, InvitationCreationActivity.class);
@@ -115,9 +123,22 @@ public class InvitationCreationActivity extends BaseActivity<InvitationCreationP
         super.onSaveInstanceState(outState);
     }
 
+    @OnTextChanged(callback = OnTextChanged.Callback.TEXT_CHANGED, value = {R.id.post_title_et})
+    public void onPostTitleTextChanged(CharSequence s, int start, int before, int count) {
+        mToolbarRightTv.setEnabled(mPostContentEt.getText().length() > 0 && s.length() > 0);
+        if (s.length() > MAX_TITLE_LENGTH) {
+            mPostTitleIl.setError(getString(R.string.tips_over_post_maximum));
+        } else if (s.length() == 0) {
+            mPostTitleIl.setError(getString(R.string.tips_over_post_maximum));
+        } else {
+            mPostTitleIl.setError(null);
+        }
+    }
+
+
     @OnTextChanged(callback = OnTextChanged.Callback.TEXT_CHANGED, value = {R.id.post_content_et})
     public void onPostContentTextChanged(CharSequence s, int start, int before, int count) {
-        mToolbarRightTv.setEnabled(s.length() > 0);
+        mToolbarRightTv.setEnabled(s.length() > 0 && mPostTitleEt.getText().length() > 0);
         if (s.length() > MAX_CONTENT_LENGTH) {
             mPostContentIl.setError(getString(R.string.tips_over_post_maximum));
         } else {
@@ -134,7 +155,12 @@ public class InvitationCreationActivity extends BaseActivity<InvitationCreationP
     @OnClick(R.id.toolbar_right_tv)
     @Override
     public void onToolbarRightClickListener(View v) {
-
+        String content = mPostContentEt.getText().toString();
+        String title = mPostTitleEt.getText().toString();
+        if (TextUtils.isEmpty(content) || TextUtils.isEmpty(title)) {
+            ToastUtils.show(this, getString(R.string.tips_post_content_not_null));
+        }
+        mPresenter.publishInvitation(title, content, uploaded);
     }
 
     @OnClick(R.id.post_add_picture_ll)
@@ -237,29 +263,6 @@ public class InvitationCreationActivity extends BaseActivity<InvitationCreationP
         mPresenter.uploadPicture(index, file);
     }
 
-
-    public static View createUploadImage(Context context, Bitmap bitmap, OnItemClickListener listener) {
-        View view = LayoutInflater.from(context).inflate(R.layout.adapter_post_add_picture_item, null);
-        AppCompatImageView image = view.findViewById(R.id.upload_image);
-        AppCompatImageView close = view.findViewById(R.id.upload_close);
-        image.setImageBitmap(bitmap);
-        view.setOnLongClickListener(new View.OnLongClickListener() {
-            private boolean show = false;
-
-            @Override
-            public boolean onLongClick(View view) {
-                close.setVisibility(show ? View.GONE : View.VISIBLE);
-                show = !show;
-                return false;
-            }
-        });
-        close.setOnClickListener(v -> {
-            if (listener != null)
-                listener.OnItemClick(null, null);
-        });
-        return view;
-    }
-
     @Override
     public void dismissPictureLoading(int index) {
         View childAt = mWrapLayout.getChildAt(index);
@@ -282,6 +285,13 @@ public class InvitationCreationActivity extends BaseActivity<InvitationCreationP
     @Override
     public void onUploadFileSuccess(int index, UploadProfileEvent event) {
         uploaded.add(event.getUrl());
+    }
+
+    @Override
+    public void onPublishInvitationSuccess() {
+        ToastUtils.show(this, getString(R.string.tips_publish_success));
+        EventBus.getDefault().post(PublishEvent.INVITATION_SUCCESS);
+        finish();
     }
 
     @Override

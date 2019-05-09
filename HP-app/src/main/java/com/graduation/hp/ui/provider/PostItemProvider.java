@@ -66,13 +66,9 @@ public class PostItemProvider extends ItemViewBinder<InvitationVO, PostItemProvi
         holder.adapterPostCommentNumTv.setText(String.valueOf(item.getDiscussNum()));
         holder.adapterPostHotIv.setVisibility(item.getLikeNum() > 10 ? View.VISIBLE : View.GONE);
         List<ImageInfo> imageInfos = new ArrayList<>();
-        String[] arrays = new String[3];
-        arrays[0] = item.getPic();
-        arrays[1] = item.getPic();
-        arrays[2] = item.getPic();
         String[] images = item.getImages().split(",");
-        for (int i = 0; i < arrays.length; i++) {
-            String image = arrays[i];
+        for (int i = 0; i < images.length; i++) {
+            String image = images[i];
             if (TextUtils.isEmpty(image)) {
                 continue;
             }
