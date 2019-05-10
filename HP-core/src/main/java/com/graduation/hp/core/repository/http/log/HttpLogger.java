@@ -6,6 +6,7 @@ import com.graduation.hp.core.utils.LogUtils;
 import okhttp3.Headers;
 
 /**
+ * 网络请求的数据调试信息接口类
  * Created by Ning on 2018/11/20.
  */
 

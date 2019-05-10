@@ -20,6 +20,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 /**
+ * Application 生命周期代理类
  * Created by Ning on 2019/2/5.
  */
 
@@ -51,6 +52,10 @@ public class AppDelegate implements App, AppLifecycle {
         }
     }
 
+    /**
+     * 应用开启的第一个配置的生命周期
+     * @param base
+     */
     @Override
     public void attachBaseContext(@NonNull Context base) {
         //遍历 mAppLifecycles, 执行所有已注册的 AppLifecycles 的 attachBaseContext() 方法 (框架外部, 开发者扩展的逻辑)
@@ -59,6 +64,10 @@ public class AppDelegate implements App, AppLifecycle {
         }
     }
 
+    /**
+     *
+     * @param application
+     */
     @Override
     public void onCreate(@NonNull Application application) {
         this.mApplication = application;
@@ -82,6 +91,10 @@ public class AppDelegate implements App, AppLifecycle {
         }
     }
 
+    /**
+     * 应用终止 注销所配置的接口以及实体类
+     * @param application
+     */
     @Override
     public void onTerminate(@NonNull Application application) {
         if (mActivityLifecycle != null) {

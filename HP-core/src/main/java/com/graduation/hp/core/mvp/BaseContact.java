@@ -7,6 +7,9 @@ import com.graduation.hp.core.app.event.TokenInvalidEvent;
 import io.reactivex.Single;
 import io.reactivex.disposables.Disposable;
 
+/**
+ * 契约类
+ */
 public interface BaseContact {
 
     interface View {

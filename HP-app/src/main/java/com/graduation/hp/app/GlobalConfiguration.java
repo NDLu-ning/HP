@@ -18,13 +18,15 @@ public class GlobalConfiguration implements ConfigModule {
     @Override
     public void applyOptions(Context ctx, GlobalConfigModule.Builder configBuilder) {
         configBuilder
-                .runUrlManager(true)
-                .debug(true)
-                .validate(true)
-                .startAdvancedUrl("http://47.52.157.78:8080/")
-                .multiDomain("UPLOAD_URL", "http://39.106.49.168:8080/")
-                .addParamsAdder(new TokenAdder())
-                .level(DebugInterceptor.Level.BASIC)
+                .runUrlManager(true) // 是否需要运行时URL切换
+                .debug(true)         // 是否需要调试网络数据
+                .validate(true)      // 是否需要数据验证
+                .startAdvancedUrl("http://47.52.157.78:8080/")  // 第二种模式的基本URL，切换URL的时候被覆盖URL
+                .multiDomain("UPLOAD_URL", "http://39.106.49.168:8080/") // 第二种模式的替换URL，即只需要在请求头中设置Domain-Name:UPLOAD_URL,
+                                                                                    // 访问原路径为http://47.52.157.78：8080/upload
+                                                                                    // 就会被替换为http://39.106.49.168:8080/upload
+                .addParamsAdder(new TokenAdder())   // 通用数据添加，只需要在所需要添加的接口的请求头上加上Cookie-Name:token,就会自动往当前请求的请求头上添加Token
+                .level(DebugInterceptor.Level.BASIC)    // 网络数据调试等级
                 .okHttpConfiguration((context, builder) -> {
 
                 }).retrofitConfiguration((context, builder) -> {

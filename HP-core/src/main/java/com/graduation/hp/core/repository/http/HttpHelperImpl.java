@@ -27,12 +27,14 @@ public class HttpHelperImpl implements HttpHelper {
     @Inject
     Lazy<Retrofit> mRefrofit;
 
-    private LruCache<String, Object> mRetrofitServiceCache;
-
-
     @Inject
     public HttpHelperImpl() {
     }
+
+    private LruCache<String, Object> mRetrofitServiceCache;
+
+
+
 
     /**
      * 根据传入的 Class 获取对应的 Retrofit service
