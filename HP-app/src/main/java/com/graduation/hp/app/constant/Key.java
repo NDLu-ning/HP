@@ -91,4 +91,5 @@ public class Key {
 
     public static final String UPLOAD_IMAGES = "upload_images";
     public static final String SEND_SUCCESS = "send_success";
+    public static final String TEST_RESULT = "test_result";
 }

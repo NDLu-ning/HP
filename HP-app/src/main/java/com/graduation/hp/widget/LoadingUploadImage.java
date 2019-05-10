@@ -9,6 +9,9 @@ import android.widget.FrameLayout;
 
 import com.graduation.hp.R;
 
+/**
+ * 等待上传的图片控件
+ */
 public class LoadingUploadImage extends FrameLayout {
 
     private AppCompatImageView mImageView;

@@ -23,7 +23,6 @@ import javax.inject.Named;
  * Application 生命周期代理类
  * Created by Ning on 2019/2/5.
  */
-
 public class AppDelegate implements App, AppLifecycle {
 
     private Application mApplication;

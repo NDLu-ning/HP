@@ -10,5 +10,7 @@ public interface UserTabContact {
 
     interface Presenter {
         void getCurrentUserInfo();
+
+        String getTestResult();
     }
 }

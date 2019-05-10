@@ -106,7 +106,7 @@ public interface BaseContact {
         void cancelSubscribe();
 
         /**
-         *
+         * 销毁Model
          */
         void onDestroy();
 

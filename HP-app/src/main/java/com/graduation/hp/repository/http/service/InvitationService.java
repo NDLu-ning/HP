@@ -6,6 +6,9 @@ import retrofit2.http.Body;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
 
+/**
+ * 帖子接口
+ */
 public interface InvitationService {
 
     @Headers(value = {"Content-Type:application/json"})

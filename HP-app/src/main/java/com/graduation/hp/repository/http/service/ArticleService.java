@@ -7,6 +7,9 @@ import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
 
+/**
+ * 文章接口
+ */
 public interface ArticleService {
 
     @Headers(value = {"Content-Type:application/json"})

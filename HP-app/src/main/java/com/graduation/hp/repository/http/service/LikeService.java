@@ -6,6 +6,9 @@ import retrofit2.http.Body;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
 
+/**
+ *
+ */
 public interface LikeService {
 
     @Headers(value = {"Content-Type:application/json", "Cookie-Name:token"})

@@ -1,7 +1,5 @@
 package com.graduation.hp.core.repository.http.interceptor;
 
-import android.text.TextUtils;
-
 import com.graduation.hp.core.repository.http.bean.ResponseCode;
 import com.graduation.hp.core.repository.http.bean.Result;
 import com.graduation.hp.core.repository.http.exception.ApiException;
@@ -23,6 +21,7 @@ import okhttp3.Response;
 import okhttp3.ResponseBody;
 
 /**
+ * 配置框架---网络通用参数添加，URL切换请求拦截器
  * Created by Ning on 2019/2/4.
  */
 
@@ -52,15 +51,14 @@ public class RequestInterceptor implements Interceptor {
             try {
                 paramsAdder.addParams(request, newBuilder);
             } catch (ApiException e) {
-                return getResponse(request, JsonUtils.objectToJson(Result.build(ResponseCode.TOKEN_ERROR)));
+                return getResponse(request,
+                        JsonUtils.objectToJson(Result.build(e.getCode(), e.getMessage())));
             }
         }
-
-
         return chain.proceed(newBuilder.build());
     }
 
-    protected Response getResponse(Request request, String json) {
+    private Response getResponse(Request request, String json) {
         return new Response.Builder()
                 .code(200)
                 .addHeader("Content-Type", "application/json")

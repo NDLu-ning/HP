@@ -14,6 +14,9 @@ import java.util.concurrent.TimeUnit;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 
+/**
+ * 三角形指示控件
+ */
 public class TriangleView extends AppCompatImageView {
 
     private boolean down = true;

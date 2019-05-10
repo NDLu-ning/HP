@@ -8,7 +8,7 @@ import com.graduation.hp.core.utils.CommonUtils;
 import com.graduation.hp.core.utils.LogUtils;
 
 /**
- *
+ * 响应序列化类
  */
 public class Result {
 

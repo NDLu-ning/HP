@@ -28,6 +28,9 @@ import com.graduation.hp.core.utils.LogUtils;
 import com.graduation.hp.core.utils.ScreenUtils;
 import com.graduation.hp.core.utils.ToastUtils;
 
+/**
+ * 聊天弹窗
+ */
 public class CommentDialog extends DialogFragment {
 
     private Dialog mDialog;
@@ -75,9 +78,9 @@ public class CommentDialog extends DialogFragment {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if(charSequence.length() > 0){
+                if (charSequence.length() > 0) {
                     mSendBtn.setEnabled(true);
-                }else {
+                } else {
                     mSendBtn.setEnabled(false);
                 }
             }

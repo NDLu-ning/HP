@@ -6,41 +6,55 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.text.TextUtils;
 import android.view.View;
 
 import com.graduation.hp.R;
 import com.graduation.hp.app.constant.Key;
 import com.graduation.hp.core.app.di.component.AppComponent;
 import com.graduation.hp.core.ui.SingleFragmentActivity;
+import com.graduation.hp.core.utils.JsonUtils;
 import com.graduation.hp.repository.http.entity.pojo.PhysiquePO;
 
 public class QuestionActivity extends SingleFragmentActivity
-        implements QuestionListFragment.QuestionListFragmentListener {
+        implements QuestionListFragment.QuestionListFragmentListener,
+        TestResultFragment.TestResultFragmentListener {
 
     public static final int FRAGMENT_IS_QUESTION_LIST = 1;
     public static final int FRAGMENT_IS_QUESTION_RESULT = 2;
     public static final int FRAGMENT_IS_QUESTION_WELCOME = 3;
 
     public static Intent createIntent(Context context, int type) {
-        return createIntent(context, type, FRAGMENT_IS_QUESTION_LIST);
+        return createIntent(context, type, FRAGMENT_IS_QUESTION_LIST, "");
     }
 
-    public static Intent createIntent(Context context, int type, int curFragment) {
+    public static Intent createIntent(Context context, int type, String testResult) {
+        if (TextUtils.isEmpty(testResult)) {
+            return createIntent(context, type, FRAGMENT_IS_QUESTION_LIST, "");
+        } else {
+            return createIntent(context, type, FRAGMENT_IS_QUESTION_RESULT, testResult);
+        }
+    }
+
+    public static Intent createIntent(Context context, int type, int curFragment, String testResult) {
         Intent intent = new Intent(context, QuestionActivity.class);
         intent.putExtra(Key.TYPE, type);
         intent.putExtra(Key.CUR_FRAGMENT, curFragment);
+        intent.putExtra(Key.TEST_RESULT, testResult);
         return intent;
     }
 
     private int mType;
     private int mCurFragment;
+    private String mTestResult;
 
     @Override
     protected void initData(Bundle savedInstanceState) {
-        super.initData(savedInstanceState);
         Intent intent = getIntent();
         mType = intent.getIntExtra(Key.TYPE, 0);
         mCurFragment = intent.getIntExtra(Key.CUR_FRAGMENT, FRAGMENT_IS_QUESTION_LIST);
+        mTestResult = intent.getStringExtra(Key.TEST_RESULT);
+        super.initData(savedInstanceState);
     }
 
     @Override
@@ -51,10 +65,19 @@ public class QuestionActivity extends SingleFragmentActivity
     @Override
     protected Fragment createMainContentFragment() {
         switch (mCurFragment) {
+            case FRAGMENT_IS_QUESTION_RESULT:
+                return TestResultFragment.newInstance(TextUtils.isEmpty(mTestResult) ? null : JsonUtils.jsonToPojo(mTestResult, PhysiquePO.class),
+                        mType == 1);
             case FRAGMENT_IS_QUESTION_LIST:
             default:
                 return QuestionListFragment.newInstance(mType);
+
         }
+    }
+
+    @Override
+    public void repeatTest() {
+        replaceMainContentFragment(QuestionListFragment.newInstance(mType));
     }
 
     @Override

@@ -1,19 +1,24 @@
 package com.graduation.hp.ui.question;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatTextView;
+import android.text.TextUtils;
 import android.view.View;
 
 import com.graduation.hp.R;
 import com.graduation.hp.app.constant.Key;
 import com.graduation.hp.core.app.di.component.AppComponent;
 import com.graduation.hp.core.ui.BaseFragment;
+import com.graduation.hp.core.utils.JsonUtils;
 import com.graduation.hp.repository.http.entity.pojo.PhysiquePO;
 
 import java.util.regex.Pattern;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 public class TestResultFragment extends BaseFragment {
 
@@ -40,7 +45,18 @@ public class TestResultFragment extends BaseFragment {
 
     @BindView(R.id.test_result_constitution_description)
     AppCompatTextView testResultDescriptionTv;
+    private TestResultFragmentListener mListener;
 
+
+    @Override
+    public void onAttach(Context context) {
+        if (context instanceof TestResultFragmentListener) {
+            mListener = (TestResultFragmentListener) context;
+        } else {
+            throw new ClassCastException(context.toString() + "must be implements TestResultFragmentListener");
+        }
+        super.onAttach(context);
+    }
 
     @Override
     protected void init(Bundle savedInstanceState, View view) {
@@ -58,6 +74,11 @@ public class TestResultFragment extends BaseFragment {
 
     }
 
+    @OnClick(R.id.repeat_test)
+    public void onClick() {
+        mListener.repeatTest();
+    }
+
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_test_result;
@@ -70,5 +91,9 @@ public class TestResultFragment extends BaseFragment {
     @Override
     public void onToolbarLeftClickListener(View v) {
         getActivity().finish();
+    }
+
+    public interface TestResultFragmentListener {
+        void repeatTest();
     }
 }

@@ -5,6 +5,7 @@ import android.text.TextUtils;
 import com.graduation.hp.R;
 import com.graduation.hp.core.HPApplication;
 import com.graduation.hp.core.mvp.BasePresenter;
+import com.graduation.hp.core.utils.JsonUtils;
 import com.graduation.hp.repository.RepositoryHelper;
 import com.graduation.hp.repository.contact.QuestionListContact;
 import com.graduation.hp.repository.http.entity.pojo.AnswerPO;
@@ -48,11 +49,12 @@ public class QuestionListPresenter extends BasePresenter<QuestionListFragment, Q
         mMvpModel.addSubscribe(mMvpModel.commit(list)
                 .doFinally(() -> mMvpView.dismissDialog())
                 .subscribe(result -> {
+                            RepositoryHelper repositoryHelper = mMvpModel.getRepositoryHelper();
+                            PreferencesHelper preferencesHelper = repositoryHelper.getPreferencesHelper();
                             if (isCurUserLogin()) {
-                                RepositoryHelper repositoryHelper = mMvpModel.getRepositoryHelper();
-                                PreferencesHelper preferencesHelper = repositoryHelper.getPreferencesHelper();
                                 preferencesHelper.saveCurrentUserPhysiquId(result.getId());
                             }
+                            preferencesHelper.saveTestResult(JsonUtils.objectToJson(result));
                             mMvpView.onCommitSuccess(result);
 
                         },

@@ -10,6 +10,10 @@ import android.view.View;
 import com.graduation.hp.R;
 import com.graduation.hp.core.utils.AnimUtils;
 
+
+/**
+ * 关注按钮
+ */
 public class AttentionButton extends AppCompatButton {
 
     private boolean focusOn = true;

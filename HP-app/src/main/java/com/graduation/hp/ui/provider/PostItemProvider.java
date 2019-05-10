@@ -48,13 +48,8 @@ public class PostItemProvider extends ItemViewBinder<InvitationVO, PostItemProvi
         GlideUtils.loadUserHead(holder.adapterPostIconIv, item.getHeadUrl());
         holder.adapterPostNameTv.setText(item.getNickname());
         holder.adapterPostDateTv.setText(DateUtils.formatPublishDate(item.getCreateTime()));
-        int index = 0;
-        for (; index < BeanFactory.constitutions.length; index++) {
-            String constitution = BeanFactory.constitutions[index];
-            if (constitution.equals(item.getPhysiqueStr())) {
-                break;
-            }
-        }
+        int index = Integer.parseInt(String.valueOf(item.getPhysiqueId()));
+        index = index - 1 >= 0 ? index - 1 : 0;
         holder.adapterPostTagTv.setText(BeanFactory.constitutions[index]);
         holder.adapterPostTagTv.setTextColor(resources.getColor(BeanFactory.constitutions_color[index]));
         holder.adapterPostTagTv.setBackgroundResource(BeanFactory.constitutions_bg_res[index]);
@@ -64,7 +59,7 @@ public class PostItemProvider extends ItemViewBinder<InvitationVO, PostItemProvi
         holder.adapterPostLikeBtn.setLiked(false);
         holder.adapterPostLikeNumTv.setText(String.valueOf(item.getLikeNum()));
         holder.adapterPostCommentNumTv.setText(String.valueOf(item.getDiscussNum()));
-        holder.adapterPostHotIv.setVisibility(item.getLikeNum() > 10 ? View.VISIBLE : View.GONE);
+        holder.adapterPostHotIv.setVisibility(item.getLikeNum() > 1 ? View.VISIBLE : View.GONE);
         List<ImageInfo> imageInfos = new ArrayList<>();
         String[] images = item.getImages().split(",");
         for (int i = 0; i < images.length; i++) {

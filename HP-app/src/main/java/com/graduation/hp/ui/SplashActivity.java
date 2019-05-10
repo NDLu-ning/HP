@@ -22,6 +22,9 @@ import java.util.concurrent.CountDownLatch;
 
 import butterknife.BindView;
 
+/**
+ * 开屏页面
+ */
 public class SplashActivity extends BaseActivity<SplashPresenter>
         implements SplashContact.View {
 

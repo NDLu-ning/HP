@@ -18,6 +18,7 @@ import com.graduation.hp.core.widget.ViewStateManager;
 
 
 /**
+ * 实现MVP框架，且能根据请求结果切换显示状态的Fragment
  * Created by Ning on 2018/11/15.
  */
 

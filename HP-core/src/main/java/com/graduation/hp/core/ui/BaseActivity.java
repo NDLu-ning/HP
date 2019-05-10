@@ -37,6 +37,12 @@ import butterknife.Unbinder;
 import io.reactivex.subjects.BehaviorSubject;
 import io.reactivex.subjects.Subject;
 
+/**
+ * 实现了MVP框架的基础Activity
+ * 可适用不需要MVP架构的简单Activity
+ *
+ * @param <P>
+ */
 public abstract class BaseActivity<P extends BasePresenter> extends AppCompatActivity
         implements BaseContact.View, ActivityLifecycleable, IActivity, Toolbar.OnMenuItemClickListener {
 

@@ -140,6 +140,17 @@ public class PreferencesHelperImpl implements PreferencesHelper {
     }
 
     @Override
+    public void saveTestResult(String objectToJson) {
+        mPreferences.edit().putString(SharedPrefsKey.APP_TEST_RESULT, objectToJson).apply();
+    }
+
+    @Override
+    public String getTestResult() {
+        return mPreferences.getString(SharedPrefsKey.APP_TEST_RESULT, "");
+
+    }
+
+    @Override
     public long getCurrentUserId() {
         return mPreferences.getLong(SharedPrefsKey.APP_CURRENT_USER_ID, -1L);
     }
@@ -186,8 +197,8 @@ public class PreferencesHelperImpl implements PreferencesHelper {
         static final String APP_CURRENT_USER_HEALTHY_NUM = "app_current_user_healthy_num";
         static final String APP_CURRENT_USER_GENDER = "app_current_user_gender";
         static final String APP_CURRENT_USER_REMARK = "app_current_user_remark";
-
         static final String APP_TEXT_SIZE = "app_text_size";
+        static final String APP_TEST_RESULT = "app_test_result";
 
     }
 }

@@ -12,6 +12,9 @@ import com.graduation.hp.repository.http.params.TokenAdder;
 
 import java.util.List;
 
+/**
+ * 在Manifest进行注册，即可对应用使用的插件进行配置
+ */
 public class GlobalConfiguration implements ConfigModule {
 
 

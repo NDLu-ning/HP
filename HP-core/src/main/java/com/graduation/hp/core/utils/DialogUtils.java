@@ -8,6 +8,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.graduation.hp.core.HPApplication;
@@ -63,7 +64,7 @@ public class DialogUtils {
         return dialog;
     }
 
-    public static AlertDialog showTextSortDialog(Context context, final OnItemClickListener listener) {
+    public static AlertDialog showTextSortDialog(Context context, int preSelectTextSize, final OnItemClickListener listener) {
         final AlertDialog.Builder builder = new AlertDialog.Builder(context);
         final int[] checkId = {0};
         View view = LayoutInflater.from(context).inflate(R.layout.view_size_sort_dialog, null);
@@ -74,6 +75,15 @@ public class DialogUtils {
             dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         }
         dialog.show();
+        if (preSelectTextSize == 0) {
+            ((RadioButton) view.findViewById(R.id.small_rb)).setChecked(true);
+        } else if (preSelectTextSize == 1) {
+            ((RadioButton) view.findViewById(R.id.middle_rb)).setChecked(true);
+        } else if (preSelectTextSize == 2) {
+            ((RadioButton) view.findViewById(R.id.big_rb)).setChecked(true);
+        } else if (preSelectTextSize == 3) {
+            ((RadioButton) view.findViewById(R.id.super_big_rb)).setChecked(true);
+        }
         view.findViewById(R.id.view_size_sort_small_rl).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

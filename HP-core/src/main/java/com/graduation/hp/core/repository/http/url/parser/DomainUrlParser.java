@@ -12,6 +12,11 @@ import java.util.List;
 import okhttp3.HttpUrl;
 
 /**
+ * 配置框架---URL切换第一种模式
+ * 只用于切换URL
+ * 例如：设置的基础URL为http://localhost:8080，原路径名为http://localhost:8080/hp/api
+ *      需要替换的URL为http://192.168.119.123:8080
+ *      替换的结果URL为http://192.168.119.123:8080/hp/api
  * Created by Ning on 2019/2/4.
  */
 

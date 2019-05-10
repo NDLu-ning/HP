@@ -7,6 +7,9 @@ import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
 
+/**
+ * 测试问题接口
+ */
 public interface QuestionService {
 
     @Headers(value = {"Content-Type:application/json"})

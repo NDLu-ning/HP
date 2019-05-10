@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import android.view.View;
 
 import com.graduation.hp.R;
+import com.graduation.hp.app.event.TextSizeEvent;
 import com.graduation.hp.core.app.di.component.AppComponent;
 import com.graduation.hp.core.app.listener.SimpleItemClickListenerAdapter;
 import com.graduation.hp.core.ui.BaseFragment;
@@ -15,6 +16,7 @@ import com.graduation.hp.core.utils.DialogUtils;
 import com.graduation.hp.core.utils.PhoneUtils;
 import com.graduation.hp.repository.http.entity.vo.UserVO;
 
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
@@ -97,10 +99,11 @@ public class SettingFragment extends BaseFragment {
     }
 
     @Subscribe(threadMode = ThreadMode.POSTING, priority = 3)
-    public void operateLocalTextSizeSuccess(int textSize) {
+    public void operateLocalTextSizeSuccess(TextSizeEvent textSizeEvent) {
         if (!isAdded()) return;
-        this.textSize = textSize;
-        settingTextTv.setText(TEXTSIZE[textSize]);
+        EventBus.getDefault().cancelEventDelivery(textSizeEvent);
+        this.textSize = textSizeEvent.textSize;
+        getActivity().runOnUiThread(() -> settingTextTv.setText(TEXTSIZE[textSize]));
     }
 
     @OnClick({R.id.setting_clear_cl, R.id.setting_update_cl, R.id.setting_about_cl, R.id.setting_text_cl, R.id.setting_user_cl})

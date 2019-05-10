@@ -1,8 +1,6 @@
 package com.graduation.hp.core.repository.http.interceptor;
 
 
-import android.util.Log;
-
 import com.graduation.hp.core.repository.http.log.HttpLogger;
 import com.graduation.hp.core.utils.LogUtils;
 
@@ -24,13 +22,13 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
-import okhttp3.internal.http.HttpHeaders;
 import okio.Buffer;
 import okio.BufferedSource;
 
 import static com.alibaba.fastjson.util.IOUtils.UTF8;
 
 /**
+ * 配置框架---调试拦截器
  * Created by Ning on 2018/11/20.
  */
 @Singleton
@@ -57,6 +55,10 @@ public class DebugInterceptor implements Interceptor {
     @Inject
     Level level;
 
+    /**
+     * 调试输出信息等级
+     * 用于确认输出对象
+     */
     public enum Level {
         NONE,       /* 不打印任何信息 */
         HEADER,     /* 打印请求路径，请求头 */
@@ -65,8 +67,6 @@ public class DebugInterceptor implements Interceptor {
         BASIC,      /* 打印请求路径，请求方式，响应码，响应信息 */
         ALL         /* 打印请求路径，请求方式，请求头，响应码，相应信息 */
     }
-
-//    private final SimpleDateFormat DATE_FORMAT;
 
     @Inject
     public DebugInterceptor() {

@@ -27,6 +27,7 @@ import javax.inject.Inject;
 import io.reactivex.annotations.Nullable;
 
 /**
+ * 实现了MVP架构的Fragment
  * Created by Ning on 2019/4/24.
  */
 

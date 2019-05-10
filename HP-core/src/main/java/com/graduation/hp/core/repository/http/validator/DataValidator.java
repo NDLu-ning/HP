@@ -5,6 +5,7 @@ import android.text.TextUtils;
 import java.util.Map;
 
 /**
+ * 配置框架---数据验证器
  * Created by Ning on 2018/11/27.
  */
 

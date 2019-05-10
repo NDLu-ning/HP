@@ -4,6 +4,7 @@ package com.graduation.hp.core.repository.http.exception;
 import com.graduation.hp.core.repository.http.bean.ResponseCode;
 
 /**
+ * 自定义系统数据访问异常类
  * Created by Ning on 2018/11/20.
  */
 

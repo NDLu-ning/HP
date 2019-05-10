@@ -5,6 +5,8 @@ import com.graduation.hp.core.repository.http.url.UrlManager;
 import okhttp3.HttpUrl;
 
 /**
+ * 配置框架---URL切换类
+ * 使用策略模式对使用相应的URL进行相应的操作
  * Created by Ning on 2019/2/4.
  */
 

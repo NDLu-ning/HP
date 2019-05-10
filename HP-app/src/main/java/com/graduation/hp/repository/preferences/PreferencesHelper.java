@@ -53,4 +53,8 @@ public interface PreferencesHelper {
     String getSearchKeywordsJson();
 
     void saveSearchKeywordsJson(String json);
+
+    void saveTestResult(String objectToJson);
+
+    String getTestResult();
 }

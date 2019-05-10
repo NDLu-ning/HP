@@ -31,4 +31,13 @@ public class UserTabPresenter extends BasePresenter<UserTabFragment, UserModel>
             mMvpView.getCurrentUserInfoSuccess(preferencesHelper.getCurrentUserInfo());
         }));
     }
+
+    @Override
+    public String getTestResult() {
+        RepositoryHelper repositoryHelper = mMvpModel.getRepositoryHelper();
+        if (repositoryHelper == null) return null;
+        PreferencesHelper preferencesHelper = repositoryHelper.getPreferencesHelper();
+        if (preferencesHelper == null) return null;
+        return preferencesHelper.getTestResult();
+    }
 }

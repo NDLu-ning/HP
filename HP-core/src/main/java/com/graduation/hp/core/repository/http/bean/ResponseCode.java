@@ -1,5 +1,8 @@
 package com.graduation.hp.core.repository.http.bean;
 
+/**
+ * 项目自定义返回码
+ */
 public enum ResponseCode {
     ERROR(0, "ERROR"),
     SUCCESS(200, "SUCCESS"),

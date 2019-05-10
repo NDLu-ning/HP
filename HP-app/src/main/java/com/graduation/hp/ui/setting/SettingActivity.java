@@ -10,11 +10,13 @@ import android.view.View;
 import com.graduation.hp.R;
 import com.graduation.hp.app.di.component.DaggerActivityComponent;
 import com.graduation.hp.app.di.module.ActivityModule;
+import com.graduation.hp.app.event.TextSizeEvent;
 import com.graduation.hp.core.app.di.component.AppComponent;
 import com.graduation.hp.core.app.event.TokenInvalidEvent;
 import com.graduation.hp.core.app.listener.SimpleItemClickListenerAdapter;
 import com.graduation.hp.core.ui.SingleFragmentActivity;
 import com.graduation.hp.core.utils.DialogUtils;
+import com.graduation.hp.core.utils.ToastUtils;
 import com.graduation.hp.presenter.SettingPresenter;
 import com.graduation.hp.repository.contact.SettingContact;
 import com.graduation.hp.repository.http.entity.vo.UserVO;
@@ -113,10 +115,11 @@ public class SettingActivity extends SingleFragmentActivity<SettingPresenter>
 
     @Override
     public void updateTextSize() {
-        DialogUtils.showTextSortDialog(this, new SimpleItemClickListenerAdapter() {
+        DialogUtils.showTextSortDialog(this, mPresenter.getTextSize(), new SimpleItemClickListenerAdapter() {
             @Override
             public void OnItemClick(View view, int position) {
                 mPresenter.updateTextSize(position);
+                EventBus.getDefault().post(new TextSizeEvent(position));
             }
         });
     }
@@ -139,6 +142,6 @@ public class SettingActivity extends SingleFragmentActivity<SettingPresenter>
 
     @Override
     public void showAboutPage() {
-
+        ToastUtils.show(this,getString(R.string.tips_coming_soon));
     }
 }

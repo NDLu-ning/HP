@@ -73,7 +73,16 @@
                 tools:text="多吃鱼油益气健脾的食物，如黄豆、白扁豆、香菇、大枣、桂圆、蜂蜜等。以柔缓运动，如散步、太极等为主。" />
 
 
-
+            <Button
+                android:id="@+id/repeat_test"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/dp_24"
+                android:layout_marginTop="@dimen/dp_50"
+                android:layout_marginEnd="@dimen/dp_24"
+                android:background="@drawable/selector_login_btn"
+                android:text="@string/action_repeat_test"
+                android:textColor="@color/md_white" />
 
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>

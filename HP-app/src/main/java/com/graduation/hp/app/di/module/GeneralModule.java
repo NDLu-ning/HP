@@ -1,18 +1,17 @@
 package com.graduation.hp.app.di.module;
 
 
-import com.graduation.hp.core.app.di.scope.FragmentScope;
 import com.graduation.hp.core.repository.http.HttpHelper;
 import com.graduation.hp.repository.RepositoryHelper;
 import com.graduation.hp.repository.preferences.PreferencesHelper;
 import com.graduation.hp.repository.preferences.PreferencesHelperImpl;
 
-import dagger.Binds;
 import dagger.Module;
 import dagger.Provides;
-import me.drakeet.multitype.Items;
-import me.drakeet.multitype.MultiTypeAdapter;
 
+/**
+ * 提供项目依赖对象
+ */
 @Module
 public abstract class GeneralModule {
 

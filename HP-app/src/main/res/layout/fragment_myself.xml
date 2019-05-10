@@ -53,24 +53,23 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/my_name_tv"
-                tools:text="健康等级："
+                android:text="@string/tips_healthy_level"
                 tools:visibility="visible" />
 
             <TextView
                 android:id="@+id/my_healthy_tag_tv"
-                android:layout_width="@dimen/dp_30"
-                android:layout_height="@dimen/dp_30"
+                android:layout_width="@dimen/dp_35"
+                android:layout_height="@dimen/dp_35"
                 android:layout_marginTop="@dimen/dp_10"
                 android:background="@drawable/healthy_ping_he_tag"
                 android:gravity="center"
-                android:padding="@dimen/dp_6"
-                android:textColor="@color/md_white"
-                android:textSize="8sp"
+                android:textColor="@color/md_black"
+                android:textSize="@dimen/dp_8"
                 android:visibility="invisible"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@id/my_healthy_title_tv"
                 app:layout_constraintTop_toBottomOf="@id/my_name_tv"
-                tools:text="良好"
+                tools:text="平和型"
                 tools:visibility="visible" />
 
         </android.support.constraint.ConstraintLayout>

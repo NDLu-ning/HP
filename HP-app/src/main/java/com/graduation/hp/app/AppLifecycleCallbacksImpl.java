@@ -14,6 +14,7 @@ import com.graduation.hp.core.utils.GlideUtils;
 import com.lzy.ninegrid.NineGridView;
 
 /**
+ * 自定义监听Application的生命周期
  * Created by Ning on 2018/11/21.
  */
 

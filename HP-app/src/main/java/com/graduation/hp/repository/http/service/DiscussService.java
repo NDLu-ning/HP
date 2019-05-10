@@ -5,7 +5,9 @@ import okhttp3.RequestBody;
 import retrofit2.http.Body;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
-
+/**
+ * 评论接口
+ */
 public interface DiscussService {
 
     @Headers(value = {"Content-Type:application/json", "Cookie-Name:token"})

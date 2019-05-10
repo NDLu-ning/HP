@@ -12,7 +12,9 @@ import android.widget.TextView;
 
 import com.graduation.hp.R;
 
-
+/**
+ * 底部导航栏
+ */
 public class NavigationTabView extends FrameLayout {
 
     private static final int ICON_SIZE_ACTIVE =  R.dimen.tab_icon_size_selected;

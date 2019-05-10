@@ -8,6 +8,9 @@ import android.view.View;
 import com.graduation.hp.R;
 import com.graduation.hp.core.utils.AnimUtils;
 
+/**
+ * 点赞按钮
+ */
 public class LikeButton extends AppCompatImageView {
 
     private boolean liked = false;

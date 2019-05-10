@@ -7,6 +7,9 @@ import retrofit2.http.Body;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
 
+/**
+ * 关注接口
+ */
 public interface AttentionService {
 
     @Headers(value = {"Content-Type:application/json"})

@@ -12,6 +12,11 @@ import java.util.List;
 import okhttp3.HttpUrl;
 
 /**
+ * 配置框架---URL切换第二种模式
+ * 例如：第一种基础模式的升级版本，基础模式中存在了漏洞，例如基础的URL为http://localhost:8080/hp，到最终被替换的URL部分仍为http://localhost:8080
+ * 故推出升级版模式：设置的基础URL为http://localhost:8080/hp，原路径名为http://localhost:8080/hp/api
+ *                需要替换的URL为http://192.168.119.123:8080
+ *                替换的结果URL为http://192.168.119.123:8080/api
  * Created by Ning on 2019/2/6.
  */
 
@@ -28,9 +33,7 @@ public class AdvancedUrlParser implements UrlParser {
     @Override
     public HttpUrl parseUrl(HttpUrl domainUrl, HttpUrl url) {
         if (null == domainUrl) return url;
-
         HttpUrl.Builder builder = url.newBuilder();
-
         if (TextUtils.isEmpty(mCache.get(getKey(domainUrl, url)))) {
 //            LogUtils.d(url.encodedPath());// /rest/user/info/basic
             for (int i = 0; i < url.pathSize(); i++) {
@@ -61,7 +64,6 @@ public class AdvancedUrlParser implements UrlParser {
         } else {
             builder.encodedPath(mCache.get(getKey(domainUrl, url)));
         }
-
         HttpUrl httpUrl = builder
                 .scheme(domainUrl.scheme())
                 .host(domainUrl.host())

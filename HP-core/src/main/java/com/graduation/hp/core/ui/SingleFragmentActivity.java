@@ -9,6 +9,11 @@ import com.graduation.hp.core.R;
 import com.graduation.hp.core.mvp.BasePresenter;
 import com.graduation.hp.core.utils.LifecycleUtil;
 
+/**
+ * 单Fragment的Activity，用于实现Fragment的进栈出栈
+ *
+ * @param <P>
+ */
 public abstract class SingleFragmentActivity<P extends BasePresenter> extends BaseActivity<P> {
 
     private static final int LAYOUT_ID = R.layout.activity_single_fragment;

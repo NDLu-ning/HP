@@ -11,6 +11,10 @@ import com.graduation.hp.core.R;
 import com.graduation.hp.core.mvp.BasePresenter;
 import com.graduation.hp.core.widget.ViewStateManager;
 
+/**
+ * 实现MVP框架，且能根据请求结果切换显示状态的Activity
+ * @param <P>
+ */
 public abstract class RootActivity<P extends BasePresenter> extends BaseActivity<P> {
 
     private static final int ID_LOADING = R.id.view_loading;
