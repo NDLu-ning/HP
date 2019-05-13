@@ -200,7 +200,10 @@ public class QuestionListFragment extends RootFragment<QuestionListPresenter>
 
     @Override
     public void onToolbarRightClickListener(View v) {
-        if (!isAdded() && (mQuestionList == null || mQuestionList.size() == 0)) return;
+        if (!isAdded() || mQuestionList == null || mQuestionList.size() == 0) {
+            ToastUtils.show(getContext(), getString(R.string.tips_donot_commit_this_time));
+            return;
+        }
         List<AnswerPO> list = new ArrayList<>();
         for (int i = 0; i < mQuestionList.size(); i++) {
             QuestionVOWrapper wrapper = mQuestionList.get(i);

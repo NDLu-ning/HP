@@ -88,4 +88,6 @@ public class QuestionModel extends BaseModel
     public RepositoryHelper getRepositoryHelper() {
         return mRepositoryHelper;
     }
+
+//    当前的提交测试答案接口，需要携带用户的体质ID，对吗？
 }

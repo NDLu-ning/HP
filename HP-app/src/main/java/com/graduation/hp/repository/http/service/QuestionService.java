@@ -16,7 +16,7 @@ public interface QuestionService {
     @POST("question/getAllQuestion")
     Single<String> getAllQuestion(@Query("type") int type);
 
-    @Headers(value = {"Content-Type:application/json"})
+    @Headers(value = {"Content-Type:application/json", "Cookie-Name:token", "NEED_VALID:false"})
     @POST("question/getPhysique")
     Single<String> commit(@Body RequestBody body);
 }
