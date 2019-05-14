@@ -20,11 +20,11 @@ public class BeanFactory {
             "https://p1.pstatp.com/list/190x124/pgc-image/4b3ce2709d794a2694a86085e80cac59", "https://p1.pstatp.com/list/dfic-imagehandler/9c2eded8-bd69-4988-bf37-5f465587bb56", "https://p9.pstatp.com/list/190x124/pgc-image/af9c890da6ec4d0782a052b5cefc0714"};
     private static final String[] authors = {"南方健康", "味古的厨房", "天天挺健康", "橘子姐美食", "芒果冰", "泽宇营养师"};
 
-    public static final String[] constitutions = {"平和型", "气虚型", "阳虚型", "阴虚型", "痰湿型", "湿热型", "气郁型", "血淤型", "过敏型"};
-    public static final int[] constitutions_color = {R.color.ping_he_color, R.color.qi_xu_color, R.color.yang_xu_color, R.color.yin_xu_color,
-            R.color.tan_shi_color, R.color.shi_re_color, R.color.qi_yu_color, R.color.xue_yu_color, R.color.guo_min_color};
-    public static final int[] constitutions_bg_res = {R.drawable.healthy_ping_he_tag, R.drawable.healthy_qi_xu_tag, R.drawable.healthy_yang_xu_tag, R.drawable.healthy_yin_xu_tag,
-            R.drawable.healthy_tan_shi_tag, R.drawable.healthy_shi_re_tag, R.drawable.healthy_qi_yu_tag, R.drawable.healthy_xue_yu_tag, R.drawable.healthy_guo_min_tag};
+    public static final String[] constitutions = {"阳虚型", "阴虚型", "气虚型", "痰湿型", "湿热型", "血淤型", "特禀型", "气郁型", "平和型"};
+    public static final int[] constitutions_color = {R.color.yang_xu_color, R.color.yin_xu_color, R.color.qi_xu_color,
+            R.color.tan_shi_color, R.color.shi_re_color, R.color.xue_yu_color, R.color.guo_min_color, R.color.qi_yu_color, R.color.ping_he_color};
+    public static final int[] constitutions_bg_res = { R.drawable.healthy_yang_xu_tag, R.drawable.healthy_yin_xu_tag,R.drawable.healthy_qi_xu_tag,
+            R.drawable.healthy_tan_shi_tag, R.drawable.healthy_shi_re_tag, R.drawable.healthy_xue_yu_tag, R.drawable.healthy_guo_min_tag,R.drawable.healthy_qi_yu_tag,R.drawable.healthy_ping_he_tag};
 
     private static final String[] post_titles = {"大厨教你红薯丸子做法，掌握一个技巧，丸子下锅不粘连，一看就会", "它是蔬菜中的补钙王，是菠菜的3倍，清热解毒还降胆固醇"};
     private static final String[] post_author = {"第一美食", "美食达人阿飞", "香哈菜谱"};

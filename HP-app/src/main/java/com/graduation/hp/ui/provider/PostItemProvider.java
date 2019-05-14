@@ -53,13 +53,12 @@ public class PostItemProvider extends ItemViewBinder<InvitationVO, PostItemProvi
         holder.adapterPostTagTv.setText(BeanFactory.constitutions[index]);
         holder.adapterPostTagTv.setTextColor(resources.getColor(BeanFactory.constitutions_color[index]));
         holder.adapterPostTagTv.setBackgroundResource(BeanFactory.constitutions_bg_res[index]);
-        holder.adapterPostHotIv.setVisibility(View.VISIBLE);
         holder.adapterPostContentTv.setText(item.getContext());
         holder.adapterPostReviewsTv.setText(String.format(resources.getString(R.string.tips_total_views_template), item.getLikeNum()));
         holder.adapterPostLikeBtn.setLiked(false);
         holder.adapterPostLikeNumTv.setText(String.valueOf(item.getLikeNum()));
         holder.adapterPostCommentNumTv.setText(String.valueOf(item.getDiscussNum()));
-        holder.adapterPostHotIv.setVisibility(item.getLikeNum() > 1 ? View.VISIBLE : View.GONE);
+        holder.adapterPostHotIv.setVisibility(item.getLikeNum() >= 1 ? View.VISIBLE : View.GONE);
         List<ImageInfo> imageInfos = new ArrayList<>();
         String[] images = item.getImages().split(",");
         for (int i = 0; i < images.length; i++) {

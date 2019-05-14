@@ -24,6 +24,7 @@ import com.graduation.hp.repository.contact.ConstitutionListContact;
 import com.graduation.hp.repository.http.entity.vo.InvitationVO;
 import com.graduation.hp.repository.http.entity.wrapper.ConstitutionVO;
 import com.graduation.hp.ui.navigation.article.detail.ArticleDetailActivity;
+import com.graduation.hp.ui.navigation.constitution.detail.InvitationDetailActivity;
 import com.graduation.hp.ui.provider.ConstitutionItemBigProvider;
 import com.graduation.hp.ui.provider.ConstitutionItemMultiProvider;
 import com.graduation.hp.ui.provider.ConstitutionItemSingleProvider;
@@ -139,8 +140,8 @@ public class ConstitutionListFragment extends RootFragment<ConstitutionListPrese
     private OnItemClickListener listener = new SimpleItemClickListenerAdapter() {
         @Override
         public void OnItemClick(View view, Object object, int position) {
-            InvitationVO articleVO = (InvitationVO) object;
-            startActivity(ArticleDetailActivity.createIntent(getContext(), articleVO.getId()));
+            InvitationVO invitationVO = (InvitationVO) object;
+            startActivity(InvitationDetailActivity.createIntent(getContext(), invitationVO.getId()));
         }
     };
 

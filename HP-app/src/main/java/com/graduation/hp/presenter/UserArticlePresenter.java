@@ -46,7 +46,6 @@ public class UserArticlePresenter extends BasePresenter<UserArticleFragment, Art
                     mMvpView.showMain();
                 }, throwable -> {
                     handlerApiError(throwable);
-                    mMvpView.showError(HPApplication.getStringById(R.string.tips_error_general));
                 }));
     }
 }

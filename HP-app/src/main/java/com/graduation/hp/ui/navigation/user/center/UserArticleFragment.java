@@ -91,7 +91,6 @@ public class UserArticleFragment extends RootFragment<UserArticlePresenter>
 
         @Override
         public void onLikeClick(boolean post, long id, boolean liked) {
-
         }
 
         @Override
