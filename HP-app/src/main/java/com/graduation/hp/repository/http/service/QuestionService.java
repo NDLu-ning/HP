@@ -12,11 +12,11 @@ import retrofit2.http.Query;
  */
 public interface QuestionService {
 
-    @Headers(value = {"Content-Type:application/json"})
+    @Headers(value = {"Content-Type:application/json","Need_Valid:false"})
     @POST("question/getAllQuestion")
     Single<String> getAllQuestion(@Query("type") int type);
 
-    @Headers(value = {"Content-Type:application/json"})
+    @Headers(value = {"Content-Type:application/json", "Cookie-Name:token", "Need_Valid:false"})
     @POST("question/getPhysique")
     Single<String> commit(@Body RequestBody body);
 }

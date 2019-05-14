@@ -47,8 +47,10 @@ public class UserInfoPresenter extends BasePresenter<UserInfoActivity, UserModel
             mMvpView.showMessage(HPApplication.getStringById(R.string.tips_network_unavailable));
             return;
         }
-        mMvpModel.addSubscribe(mMvpModel.updateUserProfile("")
-                .subscribe());
+        mMvpModel.addSubscribe(mMvpModel.updateUserInfo(user)
+                .subscribe(result -> {
+                    mMvpView.showMessage(HPApplication.getStringById(R.string.tips_update_success));
+                },throwable -> handlerApiError(throwable)));
     }
 
     @Override

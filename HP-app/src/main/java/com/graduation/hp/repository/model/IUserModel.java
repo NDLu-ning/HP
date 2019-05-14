@@ -20,6 +20,8 @@ public interface IUserModel {
 
     Single<Boolean> updatePassword(String phoneNumber, String password, String repassword);
 
+    Single<Boolean> updateUserInfo(UserVO user);
+
     Single<Boolean> isCurrentUserLogin();
 
     void clearUserInfo();
