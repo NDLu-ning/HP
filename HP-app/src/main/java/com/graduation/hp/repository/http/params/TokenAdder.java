@@ -21,7 +21,7 @@ public class TokenAdder extends BaseParamsAdder {
     }
 
     private static final String COOKIE_NAME = "Cookie-Name";
-    private static final String NEED_VALID = "Need_Valid";
+    private static final String NEED_VALID = "Need-Valid";
     private static final String TOKEN_KEY = "token";
 
     @Override

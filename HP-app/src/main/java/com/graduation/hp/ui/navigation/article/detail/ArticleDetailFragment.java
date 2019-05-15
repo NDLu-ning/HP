@@ -220,7 +220,6 @@ public class ArticleDetailFragment extends RootFragment<ArticleDetailPresenter>
     @Override
     public void onGetNewsDetailInfoSuccess(ArticleVO articleVO) {
         this.mNews = articleVO;
-        LogUtils.d("Request Return:" + articleVO.getId());
         showNewsContent();
         showNewsAuthorInfo();
         mPresenter.isFocusOn(articleVO.getUserId());
@@ -296,8 +295,8 @@ public class ArticleDetailFragment extends RootFragment<ArticleDetailPresenter>
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void articleCommentSuccess(DiscussEvent discussEvent) {
-        newsDetailCommentNumTv.setText(StringUtils.getFormattedOverMaximumString(
-                discussEvent.isAdded() ? ++mDiscussNum : mDiscussNum, 999, R.string.tips_over_maximum));
+        mNews.setDiscussNum(discussEvent.isAdded() ? ++mDiscussNum : mDiscussNum);
+        newsDetailCommentNumTv.setText(StringUtils.getFormattedOverMaximumString(mDiscussNum, 999, R.string.tips_over_maximum));
     }
 
     @Override

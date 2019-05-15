@@ -7,19 +7,19 @@ public class ChannelVO implements Parcelable {
 
     private long id;
     private String type;
-    private String titile;
+    private String title;
 
     public ChannelVO() {
     }
 
-    public ChannelVO(long id, String titile) {
+    public ChannelVO(long id, String title) {
         this.id = id;
-        this.titile = titile;
+        this.title = title;
     }
 
     protected ChannelVO(Parcel in) {
         id = in.readLong();
-        titile = in.readString();
+        title = in.readString();
     }
 
     public static final Creator<ChannelVO> CREATOR = new Creator<ChannelVO>() {
@@ -42,12 +42,12 @@ public class ChannelVO implements Parcelable {
         this.id = id;
     }
 
-    public String getTitile() {
-        return titile;
+    public String getTitle() {
+        return title;
     }
 
-    public void setTitile(String titile) {
-        this.titile = titile;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
 
@@ -59,6 +59,6 @@ public class ChannelVO implements Parcelable {
     @Override
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeLong(id);
-        parcel.writeString(titile);
+        parcel.writeString(title);
     }
 }

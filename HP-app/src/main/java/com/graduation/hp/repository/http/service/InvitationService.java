@@ -11,11 +11,11 @@ import retrofit2.http.POST;
  */
 public interface InvitationService {
 
-    @Headers(value = {"Content-Type:application/json"})
+    @Headers(value = {"Content-Type:application/json","Cookie-Name:token","Need-Valid:false"})
     @POST("invitation/dataGrid")
     Single<String> dataGrid(@Body RequestBody body);
 
-    @Headers(value = {"Content-Type:application/json"})
+    @Headers(value = {"Content-Type:application/json","Cookie-Name:token","Need-Valid:false"})
     @POST("invitation/queryByCondition")
     Single<String> queryByCondition(@Body RequestBody body);
 

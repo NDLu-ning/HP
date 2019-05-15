@@ -182,4 +182,14 @@ public class ArticleListFragment extends RootFragment<ArticleListPresenter>
     protected int getNoDataStringResId() {
         return R.string.tips_empty_news_list;
     }
+
+    @Override
+    protected void onRetryClick() {
+        mPresenter.downloadInitialData(mChannelVo.getId());
+    }
+
+    @Override
+    protected void onEmptyClick() {
+        mPresenter.downloadInitialData(mChannelVo.getId());
+    }
 }

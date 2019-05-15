@@ -16,7 +16,7 @@ public interface ArticleService {
     @POST("article/dataGrid")
     Single<String> dataGrid(@Body RequestBody body);
 
-    @Headers(value = {"Content-Type:application/json"})
+    @Headers(value = {"Content-Type:application/json","Cookie-Name:token","Need-Valid:false"})
     @POST("article/queryByCondition")
     Single<String> queryByCondition(@Body RequestBody body);
 }

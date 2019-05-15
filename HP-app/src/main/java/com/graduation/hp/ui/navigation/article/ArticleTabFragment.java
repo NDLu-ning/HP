@@ -79,7 +79,7 @@ public class ArticleTabFragment extends BaseFragment
 
         @Override
         public CharSequence getPageTitle(int position) {
-            return channelVos[position].getTitile();
+            return channelVos[position].getTitle();
         }
 
         @Override

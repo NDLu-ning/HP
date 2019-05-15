@@ -56,7 +56,7 @@ public class LikeModel extends BaseModel
                 emitter.onError(new ApiException(ResponseCode.ILLEGAL_ARGUMENT));
             }
             Map<String, Object> params = new HashMap<>();
-            params.put(Key.ARTICLE_ID, invitationId);
+            params.put(Key.INVITATION_ID_CAMEL_CASE, invitationId);
             emitter.onSuccess(params);
         }).flatMap(params -> httpHelper.obtainRetrofitService(LikeService.class)
                 .likeInvitation(JsonUtils.mapToRequestBody(params))

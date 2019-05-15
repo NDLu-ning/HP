@@ -55,10 +55,10 @@ public class PostItemProvider extends ItemViewBinder<InvitationVO, PostItemProvi
         holder.adapterPostTagTv.setBackgroundResource(Key.constitutions_bg_res[index]);
         holder.adapterPostContentTv.setText(item.getContext());
         holder.adapterPostReviewsTv.setText(String.format(resources.getString(R.string.tips_total_views_template), item.getLikeNum()));
-        holder.adapterPostLikeBtn.setLiked(false);
-        holder.adapterPostLikeNumTv.setText(String.valueOf(item.getLikeNum()));
         holder.adapterPostCommentNumTv.setText(String.valueOf(item.getDiscussNum()));
         holder.adapterPostHotIv.setVisibility(item.getLikeNum() >= 1 ? View.VISIBLE : View.GONE);
+        holder.adapterPostLikeBtn.setLiked(item.isWhetherLike());
+        holder.adapterPostLikeNumTv.setText(String.valueOf(item.getLikeNum()));
         List<ImageInfo> imageInfos = new ArrayList<>();
         String[] images = item.getImages().split(",");
         for (int i = 0; i < images.length; i++) {
@@ -81,6 +81,7 @@ public class PostItemProvider extends ItemViewBinder<InvitationVO, PostItemProvi
         holder.adapterPostLikeBtn.setLikeButtonClickListener((v, isLiked) -> {
             if (mListener != null) {
                 holder.adapterPostLikeBtn.setLiked(!isLiked);
+                item.setWhetherLike(!isLiked);
                 item.setLikeNum(!isLiked ? item.getLikeNum() + 1 : item.getLikeNum() - 1);
                 holder.adapterPostLikeNumTv.setText(String.valueOf(item.getLikeNum()));
                 mListener.OnItemCheckChange(holder.itemView, item, isLiked);

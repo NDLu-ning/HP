@@ -189,9 +189,9 @@ public class ArticleCommentFragment extends RootFragment<ArticleCommentPresenter
     public void operateArticleCommentStatus(boolean success) {
         mDiscussionDialogListener.dismissCommentDialog();
         showMessage(getString(success ? R.string.tips_comment_success : R.string.tips_comment_failed));
-        EventBus.getDefault().post(new DiscussEvent(true));
         if (success) {
             mPresenter.getArticleCommentList(State.STATE_REFRESH, mNewsId);
         }
+        EventBus.getDefault().post(new DiscussEvent(true));
     }
 }

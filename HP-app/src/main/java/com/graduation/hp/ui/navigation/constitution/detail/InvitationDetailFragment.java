@@ -90,8 +90,6 @@ public class InvitationDetailFragment extends RootFragment<InvitationDetailPrese
     AppCompatTextView invitationDetailEmptyTv;
 
     private long mInvitationId;
-    private int mLikeNum = 0;
-    private int mDiscussNum = 0;
     private InvitationVO mInvitationVo;
     private PrepareForDiscussionListener mDiscussionDialogListener;
 
@@ -207,6 +205,7 @@ public class InvitationDetailFragment extends RootFragment<InvitationDetailPrese
         invitationDetailTagTv.setText(Key.constitutions[pid]);
         invitationDetailTagTv.setBackgroundResource(Key.constitutions_bg_res[pid]);
         invitationDetailTagTv.setTextColor(getResources().getColor(Key.constitutions_color[pid]));
+        invitationDetailLikeBtn.setLiked(mInvitationVo.isWhetherLike());
         invitationDetailLikeNumTv.setText(getString(R.string.tips_total_like_count_template, mInvitationVo.getLikeNum()));
         invitationDetailCommentNumTv.setText(String.valueOf(mInvitationVo.getDiscussNum()));
         invitationDetailDateTv.setText(DateUtils.formatPublishDate(mInvitationVo.getCreateTime()));
@@ -266,9 +265,11 @@ public class InvitationDetailFragment extends RootFragment<InvitationDetailPrese
     @Override
     public void operateLikeStateSuccess(boolean isLiked) {
         if (!isAdded()) return;
+        mInvitationVo.setWhetherLike(isLiked);
         invitationDetailLikeBtn.setLiked(isLiked);
-        mLikeNum = isLiked ? 1 + mLikeNum : mLikeNum - 1;
-        invitationDetailLikeNumTv.setText(getString(R.string.tips_total_like_count_template, mLikeNum));
+        long likeNum = mInvitationVo.getLikeNum();
+        mInvitationVo.setLikeNum(isLiked ? 1 + likeNum : likeNum - 1);
+        invitationDetailLikeNumTv.setText(getString(R.string.tips_total_like_count_template, mInvitationVo.getLikeNum()));
         showMessage(getString(isLiked ? R.string.tips_like_success : R.string.tips_cancel_like_success));
     }
 
@@ -288,8 +289,9 @@ public class InvitationDetailFragment extends RootFragment<InvitationDetailPrese
     public void operateArticleCommentStatus(boolean success) {
         mDiscussionDialogListener.dismissCommentDialog();
         showMessage(getString(success ? R.string.tips_comment_success : R.string.tips_comment_failed));
-        invitationDetailCommentNumTv.setText(StringUtils.getFormattedOverMaximumString(
-                success ? ++mDiscussNum : mDiscussNum, 999, R.string.tips_over_maximum));
+        long discussNum = mInvitationVo.getDiscussNum();
+        mInvitationVo.setDiscussNum(success ? ++discussNum : discussNum);
+        invitationDetailCommentNumTv.setText(StringUtils.getFormattedOverMaximumString((int) discussNum, 999, R.string.tips_over_maximum));
         invitationCommentContainer.setVisibility(success ? View.VISIBLE : View.INVISIBLE);
         invitationDetailEmptyTv.setVisibility(success ? View.GONE : View.VISIBLE);
         if (success) {

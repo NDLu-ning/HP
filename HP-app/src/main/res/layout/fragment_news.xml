@@ -10,8 +10,7 @@
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        >
+        android:layout_height="wrap_content">
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
@@ -70,32 +69,16 @@
 
         </android.support.v7.widget.Toolbar>
 
-        <LinearLayout
+        <android.support.design.widget.TabLayout
+            android:id="@+id/news_tab_tl"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/md_white">
+            android:layout_height="@dimen/dp_35"
+            android:layout_weight="1"
+            android:background="@color/md_white"
+            app:tabIndicatorColor="@color/colorPrimary"
+            app:tabMode="scrollable"
+            tools:background="@color/md_grey_500" />
 
-            <android.support.design.widget.TabLayout
-                android:id="@+id/news_tab_tl"
-                android:layout_width="0dp"
-                android:layout_height="@dimen/dp_35"
-                android:layout_weight="1"
-                android:background="@color/md_white"
-                app:tabIndicatorColor="@color/colorPrimary"
-                app:tabMode="scrollable"
-                tools:background="@color/md_grey_500" />
-
-            <android.support.v7.widget.AppCompatImageView
-                android:id="@+id/news_news_category_iv"
-                android:layout_width="@dimen/dp_40"
-                android:layout_height="match_parent"
-                android:layout_gravity="center_vertical"
-                android:background="@color/md_white"
-                android:paddingTop="@dimen/dp_8"
-                android:paddingBottom="@dimen/dp_8"
-                android:src="@mipmap/ic_arrow_down" />
-
-        </LinearLayout>
     </android.support.design.widget.AppBarLayout>
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout

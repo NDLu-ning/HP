@@ -88,6 +88,8 @@ public class InvitationVO extends Page
      * 体质字符
      */
     private String physiqueStr;
+    private boolean whetherLike;
+
 
     public InvitationVO() {
     }
@@ -139,7 +141,7 @@ public class InvitationVO extends Page
             long endTime = in.readLong();
             updateTime = new Date(endTime);
         }
-
+        whetherLike = in.readInt() == 1;
     }
 
     public static final Creator<InvitationVO> CREATOR = new Creator<InvitationVO>() {
@@ -293,7 +295,6 @@ public class InvitationVO extends Page
         this.physiqueStr = physiqueStr;
     }
 
-
     @Override
     public int describeContents() {
         return 0;
@@ -352,5 +353,14 @@ public class InvitationVO extends Page
             parcel.writeByte((byte) 1);
             parcel.writeLong(updateTime.getTime());
         }
+        parcel.writeByte((byte) (whetherLike ? 1 : 0));
+    }
+
+    public boolean isWhetherLike() {
+        return whetherLike;
+    }
+
+    public void setWhetherLike(boolean whetherLike) {
+        this.whetherLike = whetherLike;
     }
 }
