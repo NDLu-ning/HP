@@ -184,14 +184,24 @@ public class ArticleCommentFragment extends RootFragment<ArticleCommentPresenter
         mAdapter.notifyDataSetChanged();
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
     @Override
+    public void operateArticleCommentStatus(boolean success) {
+        mDiscussionDialogListener.dismissCommentDialog();
+        showMessage(getString(success ? R.string.tips_comment_success : R.string.tips_comment_failed));
+        EventBus.getDefault().post(new DiscussEvent(true));
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void operateArticleCommentStatus(DiscussEvent event) {
         mDiscussionDialogListener.dismissCommentDialog();
         showMessage(getString(event.isAdded() ? R.string.tips_comment_success : R.string.tips_comment_failed));
         if (event.isAdded()) {
             mPresenter.getArticleCommentList(State.STATE_REFRESH, mNewsId);
         }
-        EventBus.getDefault().post(new DiscussEvent(true));
+    }
+
+    @Override
+    public boolean useEventBus() {
+        return true;
     }
 }

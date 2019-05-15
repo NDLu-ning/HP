@@ -20,12 +20,12 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.FrameLayout;
 
-import com.graduation.hp.app.event.DiscussEvent;
-import com.graduation.hp.core.HPApplication;
 import com.graduation.hp.R;
 import com.graduation.hp.app.constant.Key;
 import com.graduation.hp.app.di.component.DaggerFragmentComponent;
 import com.graduation.hp.app.di.module.FragmentModule;
+import com.graduation.hp.app.event.DiscussEvent;
+import com.graduation.hp.core.HPApplication;
 import com.graduation.hp.core.app.di.component.AppComponent;
 import com.graduation.hp.core.ui.RootFragment;
 import com.graduation.hp.core.utils.DateUtils;
@@ -289,8 +289,7 @@ public class ArticleDetailFragment extends RootFragment<ArticleDetailPresenter>
     public void operateArticleCommentStatus(boolean success) {
         mDiscussionDialogListener.dismissCommentDialog();
         showMessage(getString(success ? R.string.tips_comment_success : R.string.tips_comment_failed));
-        articleCommentSuccess(new DiscussEvent(true));
-        EventBus.getDefault().post(success);
+        EventBus.getDefault().post(new DiscussEvent(success));
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

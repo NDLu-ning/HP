@@ -1,7 +1,6 @@
 package com.graduation.hp.presenter;
 
 import com.graduation.hp.R;
-import com.graduation.hp.app.event.DiscussEvent;
 import com.graduation.hp.core.HPApplication;
 import com.graduation.hp.core.mvp.BasePresenter;
 import com.graduation.hp.core.mvp.State;
@@ -47,10 +46,9 @@ public class ArticleCommentPresenter extends BasePresenter<ArticleCommentFragmen
                 talkerUserId == -1L ? DiscussModel.DISCUSS_COMMENT : DiscussModel.DISCUSS_REPLY,
                 talkerUserId)
                 .doFinally(() -> mMvpView.dismissDialog())
-                .subscribe(result -> mMvpView.operateArticleCommentStatus(new DiscussEvent(result)),
+                .subscribe(result -> mMvpView.operateArticleCommentStatus(result),
                         throwable -> {
-                            mMvpView.operateArticleCommentStatus(new DiscussEvent(false));
-                            handlerApiError(throwable);
+                            mMvpView.operateArticleCommentStatus(false);
                         }));
     }
 }
