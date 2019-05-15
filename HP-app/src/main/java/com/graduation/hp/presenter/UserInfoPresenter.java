@@ -1,6 +1,7 @@
 package com.graduation.hp.presenter;
 
 import com.graduation.hp.R;
+import com.graduation.hp.app.event.UploadProfileEvent;
 import com.graduation.hp.core.HPApplication;
 import com.graduation.hp.core.mvp.BasePresenter;
 import com.graduation.hp.repository.contact.UserInfoContact;
@@ -79,7 +80,7 @@ public class UserInfoPresenter extends BasePresenter<UserInfoActivity, UserModel
         mMvpModel.addSubscribe(uploadModel.uploadFile(file)
                 .flatMap(event -> mMvpModel.updateUserProfile(event.getUrl()))
                 .doFinally(() -> mMvpView.dismissDialog())
-                .subscribe(event -> EventBus.getDefault().post(event),
+                .subscribe(event -> EventBus.getDefault().post(new UploadProfileEvent(event)),
                         throwable -> handlerApiError(throwable)));
     }
 }

@@ -147,9 +147,6 @@ public class UserArticleFragment extends RootFragment<UserArticlePresenter>
         if (mPresenter.isRefresh()) {
             mItems.clear();
         }
-        for (ArticleVO a : list) {
-            LogUtils.d(a.getId() + "");
-        }
         mItems.addAll(list);
         mAdapter.notifyDataSetChanged();
     }
