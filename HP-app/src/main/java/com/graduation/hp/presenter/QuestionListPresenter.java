@@ -3,6 +3,7 @@ package com.graduation.hp.presenter;
 import android.text.TextUtils;
 
 import com.graduation.hp.R;
+import com.graduation.hp.app.event.TestResultEvent;
 import com.graduation.hp.core.HPApplication;
 import com.graduation.hp.core.mvp.BasePresenter;
 import com.graduation.hp.core.utils.JsonUtils;
@@ -12,6 +13,8 @@ import com.graduation.hp.repository.http.entity.pojo.AnswerPO;
 import com.graduation.hp.repository.model.impl.QuestionModel;
 import com.graduation.hp.repository.preferences.PreferencesHelper;
 import com.graduation.hp.ui.question.QuestionListFragment;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 
@@ -53,6 +56,7 @@ public class QuestionListPresenter extends BasePresenter<QuestionListFragment, Q
                             PreferencesHelper preferencesHelper = repositoryHelper.getPreferencesHelper();
                             if (isCurUserLogin()) {
                                 preferencesHelper.saveCurrentUserPhysiquId(result.getId());
+                                EventBus.getDefault().post(new TestResultEvent(result.getId()));
                             }
                             preferencesHelper.saveTestResult(JsonUtils.objectToJson(result));
                             mMvpView.onCommitSuccess(result);

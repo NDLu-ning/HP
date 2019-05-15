@@ -25,6 +25,13 @@ public class Key {
             new ConstitutionVO(9, "平和型", "特点是:体型匀称健壮，睡眠好，二便正常，平时不容易得病，性格开朗，社会和自然适应能力强。饮食不要过抱、过饥、过冷、过热；多吃五谷杂粮、蔬菜瓜果，少食过于油腻以及辛辣之物，适度运动锻炼。")
     };
 
+    public static final String[] constitutions = {"阳虚型", "阴虚型", "气虚型", "痰湿型", "湿热型", "血淤型", "特禀型", "气郁型", "平和型"};
+    public static final int[] constitutions_color = {R.color.yang_xu_color, R.color.yin_xu_color, R.color.qi_xu_color,
+            R.color.tan_shi_color, R.color.shi_re_color, R.color.xue_yu_color, R.color.guo_min_color, R.color.qi_yu_color, R.color.ping_he_color};
+    public static final int[] constitutions_bg_res = { R.drawable.healthy_yang_xu_tag, R.drawable.healthy_yin_xu_tag,R.drawable.healthy_qi_xu_tag,
+            R.drawable.healthy_tan_shi_tag, R.drawable.healthy_shi_re_tag, R.drawable.healthy_xue_yu_tag, R.drawable.healthy_guo_min_tag,R.drawable.healthy_qi_yu_tag,R.drawable.healthy_ping_he_tag};
+
+
     public static final int[] CONSTITUTIONS_IMAGE_RES = {
             R.mipmap.ic_yangxu, R.mipmap.ic_yinxu, R.mipmap.ic_qixu,
             R.mipmap.ic_tanshi, R.mipmap.ic_shire, R.mipmap.ic_xueyu,

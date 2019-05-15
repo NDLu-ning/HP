@@ -190,6 +190,15 @@ public class UserModel extends BaseModel
     }
 
     @Override
+    public Single<Boolean> updateUserInfo(UserVO user) {
+        PreferencesHelper preferencesHelper = mRepositoryHelper.getPreferencesHelper();
+        return Single.<Boolean>create(emitter -> {
+            preferencesHelper.saveCurrentUserInfo(user);
+            emitter.onSuccess(true);
+        });
+    }
+
+    @Override
     public Single<Boolean> isCurrentUserLogin() {
         PreferencesHelper preferencesHelper = mRepositoryHelper.getPreferencesHelper();
         return Single.just(!TextUtils.isEmpty(preferencesHelper.getCurrentUserToken()));

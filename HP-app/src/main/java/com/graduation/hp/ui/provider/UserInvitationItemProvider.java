@@ -11,11 +11,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.graduation.hp.R;
+import com.graduation.hp.app.constant.Key;
 import com.graduation.hp.core.utils.DateUtils;
 import com.graduation.hp.core.utils.GlideUtils;
 import com.graduation.hp.repository.http.entity.vo.InvitationVO;
 import com.graduation.hp.ui.navigation.user.center.UserCenterTabListener;
-import com.graduation.hp.utils.BeanFactory;
 import com.graduation.hp.widget.LikeButton;
 import com.lzy.ninegrid.ImageInfo;
 import com.lzy.ninegrid.NineGridView;
@@ -49,15 +49,15 @@ public class UserInvitationItemProvider extends ItemViewBinder<InvitationVO, Use
         holder.adapterPostNameTv.setText(item.getNickname());
         holder.adapterPostDateTv.setText(DateUtils.formatPublishDate(item.getCreateTime()));
         int index = 0;
-        for (; index < BeanFactory.constitutions.length; index++) {
-            String constitution = BeanFactory.constitutions[index];
+        for (; index < Key.constitutions.length; index++) {
+            String constitution = Key.constitutions[index];
             if (constitution.equals(item.getPhysiqueStr())) {
                 break;
             }
         }
-        holder.adapterPostTagTv.setText(BeanFactory.constitutions[index]);
-        holder.adapterPostTagTv.setTextColor(resources.getColor(BeanFactory.constitutions_color[index]));
-        holder.adapterPostTagTv.setBackgroundResource(BeanFactory.constitutions_bg_res[index]);
+        holder.adapterPostTagTv.setText(Key.constitutions[index]);
+        holder.adapterPostTagTv.setTextColor(resources.getColor(Key.constitutions_color[index]));
+        holder.adapterPostTagTv.setBackgroundResource(Key.constitutions_bg_res[index]);
         holder.adapterPostHotIv.setVisibility(View.VISIBLE);
         holder.adapterPostContentTv.setText(item.getContext());
         holder.adapterPostReviewsTv.setText(String.format(resources.getString(R.string.tips_total_views_template), item.getLikeNum()));

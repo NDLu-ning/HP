@@ -21,35 +21,34 @@ public class TokenAdder extends BaseParamsAdder {
     }
 
     private static final String COOKIE_NAME = "Cookie-Name";
-    private static final String NEED_VALID = "NEED_VALID";
+    private static final String NEED_VALID = "Need_Valid";
     private static final String TOKEN_KEY = "token";
 
     @Override
     public void addParams(Request request, Request.Builder newBuilder) throws ApiException {
         try {
             String cookieName = obtainCookieNameFromHeaders(COOKIE_NAME, request);
-            String needValid = obtainCookieNameFromHeaders(NEED_VALID, request);
-            boolean isNeedValid;
+            String needValidStr = obtainCookieNameFromHeaders(NEED_VALID, request);
+            boolean needValid;
             try {
-                isNeedValid = TextUtils.isEmpty(needValid)
-                        || Boolean.getBoolean(needValid);
+                needValid = TextUtils.isEmpty(needValidStr)
+                        || Boolean.getBoolean(needValidStr);
             } catch (ClassCastException e) {
                 e = new ClassCastException("The header Key NEED_VALID must give a bool value");
                 e.printStackTrace();
-                isNeedValid = true;
+                needValid = true;
             }
-            if (!TextUtils.isEmpty(needValid)) {
+            if (!TextUtils.isEmpty(needValidStr)) {
                 newBuilder.removeHeader(NEED_VALID);
             }
             // 是否添加Token至Cookie
             if (!TextUtils.isEmpty(cookieName) && TOKEN_KEY.equals(cookieName)) {
                 String token = mPreferencesHelper.getCurrentUserToken();
                 newBuilder.removeHeader(COOKIE_NAME);
-                if (!TextUtils.isEmpty(token)) {
-                    newBuilder.addHeader(TOKEN_KEY, token);
-                } else if (isNeedValid) {
+                if (TextUtils.isEmpty(token) && needValid) {
                     throw new ApiException(ResponseCode.TOKEN_ERROR);
                 }
+                newBuilder.addHeader(TOKEN_KEY, token);
             }
         } catch (IllegalArgumentException e) {
         }

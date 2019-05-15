@@ -5,6 +5,7 @@ import com.graduation.hp.R;
 import com.graduation.hp.core.mvp.BasePresenter;
 import com.graduation.hp.core.repository.http.bean.ResponseCode;
 import com.graduation.hp.core.repository.http.exception.ApiException;
+import com.graduation.hp.repository.RepositoryHelper;
 import com.graduation.hp.repository.contact.ArticleDetailContact;
 import com.graduation.hp.repository.model.impl.ArticleModel;
 import com.graduation.hp.repository.model.impl.AttentionModel;
@@ -34,7 +35,15 @@ public class ArticleDetailPresenter extends BasePresenter<ArticleDetailFragment,
 
     @Override
     public int getLocalTextSize() {
-        return 1;
+        RepositoryHelper repositoryHelper = mMvpModel.getRepositoryHelper();
+        if (repositoryHelper == null) {
+            return 1;
+        }
+        PreferencesHelper preferencesHelper = repositoryHelper.getPreferencesHelper();
+        if (preferencesHelper == null) {
+            return 1;
+        }
+        return preferencesHelper.getTextSize();
     }
 
     @Override

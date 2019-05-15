@@ -69,18 +69,13 @@ public class InvitationTabPresenter extends BasePresenter<InvitationTabFragment,
         if (state == State.STATE_INIT) {
             mMvpView.showLoading();
         }
-        mMvpModel.addSubscribe(Single.just(getUserPhysicalId()).flatMap(physicalId -> {
-                    if (physicalId > 0) {
-                        return mMvpModel.getInvitationListByPhysiqueId(physicalId, page.getOffset(), page.getLimit());
-                    } else {
-                        return mMvpModel.getInvitationList(page.getOffset(), page.getLimit());
-                    }
-                }).doOnSuccess(invitationLists -> page.setOffset(page.getOffset() + page.getLimit()))
-                        .doFinally(() -> mMvpView.dismissDialog())
-                        .subscribe(invitationLists -> {
-                            mMvpView.onDownloadDataSuccess(state, invitationLists);
-                            mMvpView.showMain();
-                        }, throwable -> handlerApiError(throwable))
+        mMvpModel.addSubscribe(mMvpModel.getInvitationList(page.getOffset(), page.getLimit())
+                .doOnSuccess(invitationLists -> page.setOffset(page.getOffset() + page.getLimit()))
+                .doFinally(() -> mMvpView.dismissDialog())
+                .subscribe(invitationLists -> {
+                    mMvpView.onDownloadDataSuccess(state, invitationLists);
+                    mMvpView.showMain();
+                }, throwable -> handlerApiError(throwable))
         );
     }
 

@@ -26,7 +26,6 @@ import com.graduation.hp.repository.http.entity.pojo.InvitationDiscussPO;
 import com.graduation.hp.repository.http.entity.vo.InvitationVO;
 import com.graduation.hp.ui.navigation.article.comment.PrepareForDiscussionListener;
 import com.graduation.hp.ui.navigation.user.center.UserCenterActivity;
-import com.graduation.hp.utils.BeanFactory;
 import com.graduation.hp.utils.StringUtils;
 import com.graduation.hp.widget.LikeButton;
 import com.graduation.hp.widget.dialog.CommentDialog;
@@ -202,13 +201,12 @@ public class InvitationDetailFragment extends RootFragment<InvitationDetailPrese
     private void showInvitationAuthorInfo() {
         GlideUtils.loadUserHead(invitationPostIconIv, mInvitationVo.getHeadUrl());
         invitationDetailNameTv.setText(mInvitationVo.getNickname());
-        invitationDetailTagTv.setText(mInvitationVo.getPhysiqueStr());
         invitationDetailContentTv.setText(mInvitationVo.getContext());
-        int index = Integer.parseInt(String.valueOf(mInvitationVo.getPhysiqueId()));
-        index = index - 1 >= 0 ? index - 1 : 0;
-        invitationDetailTagTv.setText(BeanFactory.constitutions[index]);
-        invitationDetailTagTv.setTextColor(getResources().getColor(BeanFactory.constitutions_color[index]));
-        invitationDetailTagTv.setBackgroundResource(BeanFactory.constitutions_bg_res[index]);
+        int pid = Integer.parseInt(String.valueOf(mInvitationVo.getPhysiqueId()));
+        pid = pid > 0 && pid <= 9 ? pid - 1 : 0;
+        invitationDetailTagTv.setText(Key.constitutions[pid]);
+        invitationDetailTagTv.setBackgroundResource(Key.constitutions_bg_res[pid]);
+        invitationDetailTagTv.setTextColor(getResources().getColor(Key.constitutions_color[pid]));
         invitationDetailLikeNumTv.setText(getString(R.string.tips_total_like_count_template, mInvitationVo.getLikeNum()));
         invitationDetailCommentNumTv.setText(String.valueOf(mInvitationVo.getDiscussNum()));
         invitationDetailDateTv.setText(DateUtils.formatPublishDate(mInvitationVo.getCreateTime()));

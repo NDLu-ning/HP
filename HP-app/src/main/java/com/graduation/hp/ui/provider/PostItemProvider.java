@@ -11,11 +11,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.graduation.hp.R;
+import com.graduation.hp.app.constant.Key;
 import com.graduation.hp.core.app.listener.OnItemClickListener;
 import com.graduation.hp.core.utils.DateUtils;
 import com.graduation.hp.core.utils.GlideUtils;
 import com.graduation.hp.repository.http.entity.vo.InvitationVO;
-import com.graduation.hp.utils.BeanFactory;
 import com.graduation.hp.widget.LikeButton;
 import com.lzy.ninegrid.ImageInfo;
 import com.lzy.ninegrid.NineGridView;
@@ -50,16 +50,15 @@ public class PostItemProvider extends ItemViewBinder<InvitationVO, PostItemProvi
         holder.adapterPostDateTv.setText(DateUtils.formatPublishDate(item.getCreateTime()));
         int index = Integer.parseInt(String.valueOf(item.getPhysiqueId()));
         index = index - 1 >= 0 ? index - 1 : 0;
-        holder.adapterPostTagTv.setText(BeanFactory.constitutions[index]);
-        holder.adapterPostTagTv.setTextColor(resources.getColor(BeanFactory.constitutions_color[index]));
-        holder.adapterPostTagTv.setBackgroundResource(BeanFactory.constitutions_bg_res[index]);
-        holder.adapterPostHotIv.setVisibility(View.VISIBLE);
+        holder.adapterPostTagTv.setText(Key.constitutions[index]);
+        holder.adapterPostTagTv.setTextColor(resources.getColor(Key.constitutions_color[index]));
+        holder.adapterPostTagTv.setBackgroundResource(Key.constitutions_bg_res[index]);
         holder.adapterPostContentTv.setText(item.getContext());
         holder.adapterPostReviewsTv.setText(String.format(resources.getString(R.string.tips_total_views_template), item.getLikeNum()));
         holder.adapterPostLikeBtn.setLiked(false);
         holder.adapterPostLikeNumTv.setText(String.valueOf(item.getLikeNum()));
         holder.adapterPostCommentNumTv.setText(String.valueOf(item.getDiscussNum()));
-        holder.adapterPostHotIv.setVisibility(item.getLikeNum() > 1 ? View.VISIBLE : View.GONE);
+        holder.adapterPostHotIv.setVisibility(item.getLikeNum() >= 1 ? View.VISIBLE : View.GONE);
         List<ImageInfo> imageInfos = new ArrayList<>();
         String[] images = item.getImages().split(",");
         for (int i = 0; i < images.length; i++) {

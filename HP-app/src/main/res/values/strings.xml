@@ -180,6 +180,7 @@
     <string name="tips_coming_soon">正在开发...</string>
     <string name="action_repeat_test">重新测试</string>
     <string name="tips_healthy_level">健康等级：</string>
+    <string name="tips_update_success">修改成功</string>
     <string name="tips_donot_commit_this_time">当前状态不能进行提交</string>
 
     <string-array name="user_center_tab_titles">

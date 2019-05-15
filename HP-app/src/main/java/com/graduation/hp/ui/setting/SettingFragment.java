@@ -144,7 +144,7 @@ public class SettingFragment extends BaseFragment {
         DialogUtils.showConfirmDialog(getContext(), getString(R.string.tips_dialog_title), getString(R.string.tips_want_to_clear_cache), new SimpleItemClickListenerAdapter() {
             @Override
             public void OnItemClick(View view, int position) {
-                if (position == 0) {
+                if (position == 1) {
                     PhoneUtils.clearAllCache(getContext());
                     setSettingView();
                 }
