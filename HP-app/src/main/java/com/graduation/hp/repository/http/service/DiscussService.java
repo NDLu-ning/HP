@@ -25,6 +25,6 @@ public interface DiscussService {
 
 
     @Headers(value = {"Content-Type:application/json", "Cookie-Name:token"})
-    @POST("invitation/getDiscuss")
+    @POST("invitation/discuss")
     Single<String> discussInvitation(@Body RequestBody body);
 }

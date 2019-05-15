@@ -61,10 +61,10 @@ public class UserInvitationItemProvider extends ItemViewBinder<InvitationVO, Use
         holder.adapterPostHotIv.setVisibility(View.VISIBLE);
         holder.adapterPostContentTv.setText(item.getContext());
         holder.adapterPostReviewsTv.setText(String.format(resources.getString(R.string.tips_total_views_template), item.getLikeNum()));
-        holder.adapterPostLikeBtn.setLiked(false);
+        holder.adapterPostLikeBtn.setLiked(item.isWhetherLike());
         holder.adapterPostLikeNumTv.setText(String.valueOf(item.getLikeNum()));
         holder.adapterPostCommentNumTv.setText(String.valueOf(item.getDiscussNum()));
-        holder.adapterPostHotIv.setVisibility(item.getLikeNum() > 10 ? View.VISIBLE : View.GONE);
+        holder.adapterPostHotIv.setVisibility(item.getLikeNum() >= 1 ? View.VISIBLE : View.GONE);
         List<ImageInfo> imageInfos = new ArrayList<>();
         String[] images = item.getImages().split(",");
         for (int i = 0; i < images.length; i++) {
@@ -92,6 +92,7 @@ public class UserInvitationItemProvider extends ItemViewBinder<InvitationVO, Use
         holder.adapterPostLikeBtn.setLikeButtonClickListener((v, isLiked) -> {
             if (mListener != null) {
                 holder.adapterPostLikeBtn.setLiked(!isLiked);
+                item.setWhetherLike(!isLiked);
                 item.setLikeNum(!isLiked ? item.getLikeNum() + 1 : item.getLikeNum() - 1);
                 holder.adapterPostLikeNumTv.setText(String.valueOf(item.getLikeNum()));
                 mListener.onLikeClick(true, item.getId(), isLiked);
@@ -121,7 +122,6 @@ public class UserInvitationItemProvider extends ItemViewBinder<InvitationVO, Use
         AppCompatImageView adapterPostCommentIv;
         @BindView(R.id.adapter_post_comment_num_tv)
         AppCompatTextView adapterPostCommentNumTv;
-
         @BindView(R.id.adapter_post_like_btn)
         LikeButton adapterPostLikeBtn;
         @BindView(R.id.adapter_post_like_num_tv)

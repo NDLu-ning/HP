@@ -102,14 +102,14 @@ public class DiscussModel extends BaseModel
     }
 
     @Override
-    public Single<List<InvitationDiscussPO>> getInvitationDiscuss(long articleId) {
+    public Single<List<InvitationDiscussPO>> getInvitationDiscuss(long invitationId) {
         HttpHelper httpHelper = mRepositoryHelper.getHttpHelper();
         return Single.<Map<String, Object>>create(emitter -> {
-            if (articleId == 0L) {
+            if (invitationId == 0L) {
                 emitter.onError(new ApiException(ResponseCode.ILLEGAL_ARGUMENT));
             }
             Map<String, Object> params = new HashMap<>();
-            params.put(Key.ARTICLE_ID, articleId);
+            params.put(Key.INVITATION_ID_CAMEL_CASE, invitationId);
             emitter.onSuccess(params);
         }).flatMap(params -> httpHelper.obtainRetrofitService(DiscussService.class)
                 .getInvitationDiscuss(JsonUtils.mapToRequestBody(params))
