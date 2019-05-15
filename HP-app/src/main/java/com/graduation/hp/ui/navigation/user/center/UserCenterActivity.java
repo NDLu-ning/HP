@@ -107,10 +107,11 @@ public class UserCenterActivity extends BaseActivity<UserCenterPresenter>
         initTabLayout();
         mRefreshLayout.setOnRefreshListener(this);
         mRefreshLayout.setOnLoadMoreListener(this);
+        mPresenter.onGetUserInfo(mUserId);
     }
 
     private void initTabLayout() {
-        mAdapter = new UserCenterAdapter(getSupportFragmentManager(),mOwnerId, mUserId,
+        mAdapter = new UserCenterAdapter(getSupportFragmentManager(), mOwnerId, mUserId,
                 getResources().getStringArray(R.array.user_center_tab_titles));
         mViewPager.setAdapter(mAdapter);
         mTabLayout.setupWithViewPager(mViewPager, true);
@@ -120,7 +121,6 @@ public class UserCenterActivity extends BaseActivity<UserCenterPresenter>
     @Override
     protected void onResume() {
         super.onResume();
-        mPresenter.onGetUserInfo(mUserId);
     }
 
     @Override
@@ -147,8 +147,28 @@ public class UserCenterActivity extends BaseActivity<UserCenterPresenter>
     @Override
     public void onGetUserSuccess(UserVOWrapper userVo) {
         mUser = userVo.getUser();
-        setUserData(mUser);
+        setUserView(mUser);
         setUserAttentionNumber(userVo.getAttentionCount());
+    }
+
+    private void setUserView(UserVO user) {
+        GlideUtils.loadUserHead(mUserCenterIconIv, user.getHeadUrl());
+        if (mOwnerId == mUserId) {
+            mUserCenterSubCb.setVisibility(View.GONE);
+            mUserCenterEditTv.setVisibility(View.VISIBLE);
+            mUserCenterEditTv.setOnClickListener(v -> startActivity(UserInfoActivity.createIntent(this)));
+        } else {
+            mUserCenterEditTv.setVisibility(View.GONE);
+            mUserCenterSubCb.setVisibility(View.VISIBLE);
+            mUserCenterSubCb.setAttentionButtonClickListener((compoundButton, checked) -> mPresenter.attentionUser(mUserId));
+            mPresenter.isFocusOn(mUser.getId());
+        }
+        mUserCenterSummaryTv.setText(user.getRemark());
+        mUserCenterCollapsingTl.setTitle(user.getNickname());
+        mTriangleView.setTriangleViewClickListener((v, down) -> {
+            int maxLine = mUserCenterSummaryTv.getMaxLines();
+            mUserCenterSummaryTv.setMaxLines(maxLine > 1 ? 1 : 4);
+        });
     }
 
     @Override
@@ -170,23 +190,9 @@ public class UserCenterActivity extends BaseActivity<UserCenterPresenter>
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void setUserData(UserVO user) {
-        GlideUtils.loadUserHead(mUserCenterIconIv, user.getHeadUrl());
-        if (mOwnerId == mUserId) {
-            mUserCenterSubCb.setVisibility(View.GONE);
-            mUserCenterEditTv.setVisibility(View.VISIBLE);
-            mUserCenterEditTv.setOnClickListener(v -> startActivity(UserInfoActivity.createIntent(this)));
-        } else {
-            mUserCenterEditTv.setVisibility(View.GONE);
-            mUserCenterSubCb.setVisibility(View.VISIBLE);
-            mUserCenterSubCb.setAttentionButtonClickListener((compoundButton, checked) -> mPresenter.attentionUser(mUserId));
-            mPresenter.isFocusOn(mUser.getId());
+        if (user.getId() == mUserId) {
+            setUserView(user);
         }
-        mUserCenterSummaryTv.setText(user.getRemark());
-        mUserCenterCollapsingTl.setTitle(user.getNickname());
-        mTriangleView.setTriangleViewClickListener((v, down) -> {
-            int maxLine = mUserCenterSummaryTv.getMaxLines();
-            mUserCenterSummaryTv.setMaxLines(maxLine > 1 ? 1 : 4);
-        });
     }
 
     @Override
@@ -203,7 +209,7 @@ public class UserCenterActivity extends BaseActivity<UserCenterPresenter>
 
         private int curPosition;
 
-        UserCenterAdapter(FragmentManager fm,long ownerId, long userId, String[] titles) {
+        UserCenterAdapter(FragmentManager fm, long ownerId, long userId, String[] titles) {
             super(fm);
             this.mOwnerId = ownerId;
             this.mUserId = userId;
@@ -227,7 +233,7 @@ public class UserCenterActivity extends BaseActivity<UserCenterPresenter>
             switch (position) {
                 case 0:
                     if (mFragments[position] == null) {
-                        mFragments[position] = UserArticleFragment.newInstance(mOwnerId,mUserId);
+                        mFragments[position] = UserArticleFragment.newInstance(mOwnerId, mUserId);
                     }
                     break;
                 case 1:
@@ -264,4 +270,8 @@ public class UserCenterActivity extends BaseActivity<UserCenterPresenter>
         ((OnRefreshListener) mAdapter.getCurrentItem()).onRefresh(refreshLayout);
     }
 
+    @Override
+    public boolean useEventBus() {
+        return true;
+    }
 }

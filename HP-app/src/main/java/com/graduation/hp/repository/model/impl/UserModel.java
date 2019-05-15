@@ -193,7 +193,9 @@ public class UserModel extends BaseModel
     public Single<Boolean> updateUserInfo(UserVO user) {
         PreferencesHelper preferencesHelper = mRepositoryHelper.getPreferencesHelper();
         return Single.<Boolean>create(emitter -> {
-            preferencesHelper.saveCurrentUserInfo(user);
+            preferencesHelper.saveCurrentUserGender(user.getSex());
+            preferencesHelper.saveCurrentUserNickname(user.getNickname());
+            preferencesHelper.saveCurrentUserRemark(user.getRemark());
             emitter.onSuccess(true);
         });
     }

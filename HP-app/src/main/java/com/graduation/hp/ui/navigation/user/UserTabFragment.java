@@ -153,4 +153,9 @@ public class UserTabFragment extends BaseFragment<UserTabPresenter>
     private void skipToUserDetailPage() {
         startActivity(UserCenterActivity.createIntent(getContext(), mUser.getId()));
     }
+
+    @Override
+    public boolean useEventBus() {
+        return true;
+    }
 }

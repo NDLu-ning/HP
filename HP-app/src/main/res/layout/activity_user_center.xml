@@ -153,11 +153,11 @@
             android:gravity="center"
             android:minHeight="@dimen/dp_30"
             app:layout_collapseMode="pin"
-            app:tabIndicatorColor="@color/md_blue_500"
+            app:tabIndicatorColor="@color/colorPrimary"
             app:tabIndicatorHeight="2dp"
             app:tabMode="scrollable"
             app:tabMaxWidth="60dp"
-            app:tabSelectedTextColor="@color/md_blue_500"
+            app:tabSelectedTextColor="@color/colorPrimary"
             app:tabTextColor="@color/md_grey_400" >
 
             <android.support.design.widget.TabItem

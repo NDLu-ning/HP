@@ -63,8 +63,10 @@ public class UserInfoPresenter extends BasePresenter<UserInfoActivity, UserModel
         }
         mMvpModel.addSubscribe(mMvpModel.updateUserInfo(user)
                 .subscribe(result -> {
-                    mMvpView.showMessage(HPApplication.getStringById(R.string.tips_update_success));
-                },throwable -> handlerApiError(throwable)));
+                            mMvpView.showMessage(HPApplication.getStringById(R.string.tips_update_success));
+                            EventBus.getDefault().post(user);
+                        },
+                        throwable -> handlerApiError(throwable)));
     }
 
     @Override

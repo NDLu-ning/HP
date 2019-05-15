@@ -115,9 +115,9 @@ public class UserInfoActivity extends SingleFragmentActivity<UserInfoPresenter>
     @Override
     public void updateUserInfo(int type, UserVO user) {
         LogUtils.d(type + "," + user.getNickname() + "," + user.getSex() + "," + user.getRemark());
-        if (mCurFragment != FRAGMENT_IS_USER_INFO) {
+//        if (mCurFragment != FRAGMENT_IS_USER_INFO) {
             mPresenter.updateUserInfo(type, user);
-        }
+//        }
     }
 
     @Override
