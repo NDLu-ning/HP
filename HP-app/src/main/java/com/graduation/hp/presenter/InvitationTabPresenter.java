@@ -45,6 +45,12 @@ public class InvitationTabPresenter extends BasePresenter<InvitationTabFragment,
     }
 
     @Override
+    public boolean isUserHasTested() {
+        RepositoryHelper repositoryHelper = userModel.getRepositoryHelper();
+        return repositoryHelper.getPreferencesHelper().getCurrentUserPhysiquId() > 0;
+    }
+
+    @Override
     public long getUserPhysicalId() {
         RepositoryHelper repositoryHelper = userModel.getRepositoryHelper();
         return repositoryHelper.getPreferencesHelper().getCurrentUserPhysiquId();

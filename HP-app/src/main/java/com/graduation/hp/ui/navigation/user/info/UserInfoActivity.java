@@ -21,6 +21,7 @@ import com.graduation.hp.core.utils.UploadAvatarHelper;
 import com.graduation.hp.presenter.UserInfoPresenter;
 import com.graduation.hp.repository.contact.UserInfoContact;
 import com.graduation.hp.repository.http.entity.vo.UserVO;
+import com.graduation.hp.ui.navigation.NavigationTabActivity;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -137,6 +138,13 @@ public class UserInfoActivity extends SingleFragmentActivity<UserInfoPresenter>
             return;
         }
         mPresenter.uploadUserProfile(file);
+    }
+
+
+    @Override
+    public void onLogoutSuccess() {
+        showMessage(getString(R.string.tips_logout_success));
+        startActivity(NavigationTabActivity.createIntent(this, false));
     }
 
     @Override

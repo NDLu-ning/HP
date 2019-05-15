@@ -107,15 +107,10 @@ public class UserCenterActivity extends BaseActivity<UserCenterPresenter>
         initTabLayout();
         mRefreshLayout.setOnRefreshListener(this);
         mRefreshLayout.setOnLoadMoreListener(this);
-        mUserCenterSubCb.setAttentionButtonClickListener((v, focusOn) -> {
-            if (mUserId == -1L)
-                return;
-            mPresenter.attentionUser(mUserId);
-        });
     }
 
     private void initTabLayout() {
-        mAdapter = new UserCenterAdapter(getSupportFragmentManager(), mUserId,
+        mAdapter = new UserCenterAdapter(getSupportFragmentManager(),mOwnerId, mUserId,
                 getResources().getStringArray(R.array.user_center_tab_titles));
         mViewPager.setAdapter(mAdapter);
         mTabLayout.setupWithViewPager(mViewPager, true);
@@ -135,6 +130,13 @@ public class UserCenterActivity extends BaseActivity<UserCenterPresenter>
                 .activityModule(new ActivityModule(this))
                 .build()
                 .inject(this);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.getLong(Key.OWNER_ID, mOwnerId);
+        outState.putLong(Key.USER_ID, mUserId);
+        super.onSaveInstanceState(outState);
     }
 
     @Override
@@ -176,7 +178,7 @@ public class UserCenterActivity extends BaseActivity<UserCenterPresenter>
         } else {
             mUserCenterEditTv.setVisibility(View.GONE);
             mUserCenterSubCb.setVisibility(View.VISIBLE);
-            mUserCenterSubCb.setAttentionButtonClickListener((compoundButton, checked) -> mPresenter.attentionUser(mOwnerId));
+            mUserCenterSubCb.setAttentionButtonClickListener((compoundButton, checked) -> mPresenter.attentionUser(mUserId));
             mPresenter.isFocusOn(mUser.getId());
         }
         mUserCenterSummaryTv.setText(user.getRemark());
@@ -196,12 +198,14 @@ public class UserCenterActivity extends BaseActivity<UserCenterPresenter>
 
         private final long mUserId;
         private final String[] mTitles;
+        private final long mOwnerId;
         private Fragment[] mFragments;
 
         private int curPosition;
 
-        UserCenterAdapter(FragmentManager fm, long userId, String[] titles) {
+        UserCenterAdapter(FragmentManager fm,long ownerId, long userId, String[] titles) {
             super(fm);
+            this.mOwnerId = ownerId;
             this.mUserId = userId;
             this.mTitles = titles;
             this.mFragments = new Fragment[2];
@@ -223,7 +227,7 @@ public class UserCenterActivity extends BaseActivity<UserCenterPresenter>
             switch (position) {
                 case 0:
                     if (mFragments[position] == null) {
-                        mFragments[position] = UserArticleFragment.newInstance(mUserId);
+                        mFragments[position] = UserArticleFragment.newInstance(mOwnerId,mUserId);
                     }
                     break;
                 case 1:

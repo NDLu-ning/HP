@@ -126,21 +126,25 @@ public class UserTabFragment extends BaseFragment<UserTabPresenter>
         if (isAdded()) {
             if (mUser == null) {
                 myNameTv.setText(getString(R.string.tips_myself_login));
+                myHealthyTitleTv.setVisibility(View.GONE);
                 myHealthyTagTv.setVisibility(View.GONE);
-                myCenterCl.setOnClickListener(v -> {
-                    EventBus.getDefault().post(TokenInvalidEvent.INSTANCE);
-                });
+                myCenterCl.setOnClickListener(v -> EventBus.getDefault().post(TokenInvalidEvent.INSTANCE));
             } else {
                 int width = ScreenUtils.dip2px(getContext(), 80);
                 GlideUtils.loadUserHead(myPhotoIv, mUser.getHeadUrl(), width, width);
                 myNameTv.setText(mUser.getNickname());
-                myHealthyTitleTv.setVisibility(View.VISIBLE);
-                myHealthyTagTv.setVisibility(View.VISIBLE);
                 int index = Integer.parseInt(String.valueOf(mUser.getPhysiquId()));
-                index = index - 1 >= 0 ? index - 1 : 0;
-                myHealthyTagTv.setText(Key.constitutions[index]);
-                myHealthyTagTv.setTextColor(getResources().getColor(Key.constitutions_color[index]));
-                myHealthyTagTv.setBackgroundResource(Key.constitutions_bg_res[index]);
+                index = index > 0 && index <= 9 ? index - 1 : -1;
+                if(index == -1){
+                    myHealthyTitleTv.setVisibility(View.GONE);
+                    myHealthyTagTv.setVisibility(View.GONE);
+                }else {
+                    myHealthyTitleTv.setVisibility(View.VISIBLE);
+                    myHealthyTagTv.setVisibility(View.VISIBLE);
+                    myHealthyTagTv.setText(Key.constitutions[index]);
+                    myHealthyTagTv.setTextColor(getResources().getColor(Key.constitutions_color[index]));
+                    myHealthyTagTv.setBackgroundResource(Key.constitutions_bg_res[index]);
+                }
                 myCenterCl.setOnClickListener(v -> skipToUserDetailPage());
             }
         }

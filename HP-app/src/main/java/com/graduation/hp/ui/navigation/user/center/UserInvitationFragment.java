@@ -18,6 +18,7 @@ import com.graduation.hp.presenter.UserInvitationPresenter;
 import com.graduation.hp.repository.contact.UserInvitationContact;
 import com.graduation.hp.repository.http.entity.vo.InvitationVO;
 import com.graduation.hp.ui.navigation.constitution.detail.InvitationDetailActivity;
+import com.graduation.hp.ui.navigation.invitation.create.InvitationCreationActivity;
 import com.graduation.hp.ui.provider.UserInvitationItemProvider;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
@@ -97,7 +98,7 @@ public class UserInvitationFragment extends RootFragment<UserInvitationPresenter
 
         @Override
         public void onLikeClick(boolean post, long id, boolean liked) {
-            if(!post) return;
+            if (!post) return;
             mPresenter.likeInvitation(id);
         }
     };
@@ -157,6 +158,12 @@ public class UserInvitationFragment extends RootFragment<UserInvitationPresenter
     }
 
     @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        outState.putLong(Key.USER_ID, mUserId);
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
     public void onLoadMore(RefreshLayout refreshLayout) {
         if (!isAdded()) return;
         if (mRefreshLayout == null) {
@@ -172,5 +179,15 @@ public class UserInvitationFragment extends RootFragment<UserInvitationPresenter
             mRefreshLayout = refreshLayout;
         }
         mPresenter.loadMorePostList(State.STATE_REFRESH, mUserId);
+    }
+
+    @Override
+    protected void onEmptyClick() {
+        startActivity(InvitationCreationActivity.createIntent(getContext()));
+    }
+
+    @Override
+    protected void onRetryClick() {
+        mPresenter.downloadInitialPostList(mUserId);
     }
 }

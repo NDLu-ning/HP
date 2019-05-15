@@ -8,6 +8,8 @@ import java.util.List;
 public interface InvitationCreationContact {
     interface Presenter {
 
+        boolean isUserHasTested();
+
         void uploadPicture(int index, File file);
 
         void publishInvitation(String title, String context, List<String> pics);

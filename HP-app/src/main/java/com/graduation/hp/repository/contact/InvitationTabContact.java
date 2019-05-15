@@ -19,6 +19,8 @@ public interface InvitationTabContact {
     interface Presenter {
         boolean checkUserLoginStatus();
 
+        boolean isUserHasTested();
+
         long getUserPhysicalId();
 
         void downloadInitialData();

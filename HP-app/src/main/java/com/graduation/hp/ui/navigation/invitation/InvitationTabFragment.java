@@ -71,7 +71,11 @@ public class InvitationTabFragment extends RootFragment<InvitationTabPresenter>
         super.init(savedInstanceState, rootView);
         rootView.findViewById(R.id.post_publish_fab).setOnClickListener(v -> {
             if (mPresenter.checkUserLoginStatus()) {
-                startActivity(InvitationCreationActivity.createIntent(getContext()));
+                if (mPresenter.isUserHasTested()) {
+                    startActivity(InvitationCreationActivity.createIntent(getContext()));
+                } else {
+                    ToastUtils.show(getContext(), getString(R.string.tips_please_test_first));
+                }
             } else {
                 ToastUtils.show(getContext(), getString(R.string.tips_please_login_first));
                 startActivity(AuthActivity.createIntent(getContext()));

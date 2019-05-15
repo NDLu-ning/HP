@@ -144,6 +144,7 @@ public class ArticleDetailFragment extends RootFragment<ArticleDetailPresenter>
         if (mNewsId == 0L) {
             throw new IllegalArgumentException("InvitationDetailFragment must receive the news's id");
         }
+        LogUtils.d(mNewsId + "");
         initToolbar(rootView, "", R.mipmap.ic_navigation_back, R.mipmap.ic_toolbar_dot);
         initWebView(rootView);
         initListener();
@@ -219,6 +220,7 @@ public class ArticleDetailFragment extends RootFragment<ArticleDetailPresenter>
     @Override
     public void onGetNewsDetailInfoSuccess(ArticleVO articleVO) {
         this.mNews = articleVO;
+        LogUtils.d("Request Return:" + articleVO.getId());
         showNewsContent();
         showNewsAuthorInfo();
         mPresenter.isFocusOn(articleVO.getUserId());
@@ -248,6 +250,7 @@ public class ArticleDetailFragment extends RootFragment<ArticleDetailPresenter>
         mLikeNum = mNews.getLikeNum();
         mDiscussNum = mNews.getDiscussNum();
         newsDetailLikeTv.setText(String.valueOf(mLikeNum));
+        newsDetailLikeBtn.setLiked(mNews.isWhetherLike());
         articleCommentSuccess(new DiscussEvent(false));
         String body = mNews.getContent();
         // 使用css样式的方式设置图片大小
@@ -266,11 +269,13 @@ public class ArticleDetailFragment extends RootFragment<ArticleDetailPresenter>
     public void operateLikeStateSuccess(boolean isLiked) {
         newsDetailLikeBtn.setLiked(isLiked);
         newsDetailLikeTv.setText(String.valueOf(isLiked ? ++mLikeNum : --mLikeNum));
+        mNews.setWhetherLike(isLiked);
         showMessage(getString(isLiked ? R.string.tips_like_success : R.string.tips_cancel_like_success));
     }
 
     @Override
     public void operateLikeStateError() {
+        mNews.setWhetherLike(!newsDetailLikeBtn.isLiked());
         newsDetailLikeBtn.setLiked(!newsDetailLikeBtn.isLiked());
         showMessage(getString(R.string.tips_happen_unknown_error));
     }

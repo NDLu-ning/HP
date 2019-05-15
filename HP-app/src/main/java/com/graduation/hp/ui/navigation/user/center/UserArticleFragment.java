@@ -13,9 +13,11 @@ import com.graduation.hp.app.di.module.FragmentModule;
 import com.graduation.hp.core.app.di.component.AppComponent;
 import com.graduation.hp.core.mvp.State;
 import com.graduation.hp.core.ui.RootFragment;
+import com.graduation.hp.core.utils.LogUtils;
 import com.graduation.hp.presenter.UserArticlePresenter;
 import com.graduation.hp.repository.contact.UserArticleContact;
 import com.graduation.hp.repository.http.entity.vo.ArticleVO;
+import com.graduation.hp.ui.navigation.NavigationTabActivity;
 import com.graduation.hp.ui.navigation.article.detail.ArticleDetailActivity;
 import com.graduation.hp.ui.provider.UserArticleItemProvider;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -35,9 +37,10 @@ public class UserArticleFragment extends RootFragment<UserArticlePresenter>
         implements UserArticleContact.View, OnRefreshListener, OnLoadMoreListener {
 
 
-    public static UserArticleFragment newInstance(long userId) {
+    public static UserArticleFragment newInstance(long ownerId, long userId) {
         UserArticleFragment newsFragment = new UserArticleFragment();
         Bundle args = new Bundle();
+        args.putLong(Key.OWNER_ID, ownerId);
         args.putLong(Key.USER_ID, userId);
         newsFragment.setArguments(args);
         return newsFragment;
@@ -54,6 +57,7 @@ public class UserArticleFragment extends RootFragment<UserArticlePresenter>
 
     private RefreshLayout mRefreshLayout;
     private long mUserId;
+    private long mOwnerId;
 
     @Override
     protected void init(Bundle savedInstanceState, android.view.View rootView) {
@@ -65,13 +69,17 @@ public class UserArticleFragment extends RootFragment<UserArticlePresenter>
     private void initBasicData(Bundle savedInstanceState) {
         if (savedInstanceState != null) {
             mUserId = savedInstanceState.getLong(Key.USER_ID, -1L);
+            mOwnerId = savedInstanceState.getLong(Key.OWNER_ID, -1L);
         } else {
             Bundle bundle = getArguments();
             mUserId = bundle.getLong(Key.USER_ID, -1L);
+            mOwnerId = bundle.getLong(Key.OWNER_ID, -1L);
+
         }
         if (mUserId == -1L) {
             throw new IllegalArgumentException("UserInvitationFragment must be passed user's id");
         }
+        LogUtils.d(mUserId + "");
     }
 
     private void initMultiTypeAdapter() {
@@ -139,6 +147,9 @@ public class UserArticleFragment extends RootFragment<UserArticlePresenter>
         if (mPresenter.isRefresh()) {
             mItems.clear();
         }
+        for (ArticleVO a : list) {
+            LogUtils.d(a.getId() + "");
+        }
         mItems.addAll(list);
         mAdapter.notifyDataSetChanged();
     }
@@ -161,5 +172,20 @@ public class UserArticleFragment extends RootFragment<UserArticlePresenter>
         mPresenter.loadMoreNewsList(State.STATE_REFRESH, mUserId);
     }
 
+    @Override
+    protected void onEmptyClick() {
+        startActivity(NavigationTabActivity.createIntent(getContext(), mOwnerId != -1));
+    }
 
+    @Override
+    protected void onRetryClick() {
+        mPresenter.downloadInitialNewsList(mUserId);
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        outState.putLong(Key.USER_ID, mUserId);
+        outState.putLong(Key.OWNER_ID, mOwnerId);
+        super.onSaveInstanceState(outState);
+    }
 }

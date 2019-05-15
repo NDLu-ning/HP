@@ -160,7 +160,11 @@ public class InvitationCreationActivity extends BaseActivity<InvitationCreationP
         if (TextUtils.isEmpty(content) || TextUtils.isEmpty(title)) {
             ToastUtils.show(this, getString(R.string.tips_post_content_not_null));
         }
-        mPresenter.publishInvitation(title, content, uploaded);
+        if (mPresenter.isUserHasTested()) {
+            mPresenter.publishInvitation(title, content, uploaded);
+        } else {
+            ToastUtils.show(this, getString(R.string.tips_please_test_first));
+        }
     }
 
     @OnClick(R.id.post_add_picture_ll)
@@ -185,14 +189,6 @@ public class InvitationCreationActivity extends BaseActivity<InvitationCreationP
                             mPresenter.uploadPicture(index, new File(selectList.get(i).getCompressPath()));
                         }
                     }
-
-                    // 例如 LocalMedia 里面返回三种path
-                    // 1.media.getPath(); 为原图path
-                    // 2.media.getCutPath();为裁剪后path，需判断media.isCut();是否为true  注意：音视频除外
-                    // 3.media.getCompressPath();为压缩后path，需判断media.isCompressed();是否为true  注意：音视频除外
-                    // 如果裁剪并压缩了，以取压缩路径为准，因为是先裁剪后压缩的
-//                    adapter.setList(selectList);
-//                    adapter.notifyDataSetChanged();
                     break;
                 case Code.ATTACHMENT_NEW_PHOTO:
                 case Code.ATTACHMENT_CROP_PHOTO:

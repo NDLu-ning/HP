@@ -101,6 +101,7 @@ public class ArticleVO extends Page
      * 修改时间
      */
     private Date updateTime;
+    private boolean whetherLike;
 
     public ArticleVO() {
     }
@@ -146,6 +147,7 @@ public class ArticleVO extends Page
             discussNum = in.readInt();
         }
         content = in.readString();
+        whetherLike = in.readInt() == 1;
     }
 
     public static final Creator<ArticleVO> CREATOR = new Creator<ArticleVO>() {
@@ -369,5 +371,14 @@ public class ArticleVO extends Page
             dest.writeInt(discussNum);
         }
         dest.writeString(content);
+        dest.writeByte((byte) (whetherLike ? 1 : 0));
+    }
+
+    public boolean isWhetherLike() {
+        return whetherLike;
+    }
+
+    public void setWhetherLike(boolean whetherLike) {
+        this.whetherLike = whetherLike;
     }
 }

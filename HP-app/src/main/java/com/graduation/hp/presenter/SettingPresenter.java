@@ -85,10 +85,5 @@ public class SettingPresenter extends BasePresenter<SettingActivity, UserModel>
                     mMvpModel.clearUserInfo();
                     mMvpView.onLogoutSuccess();
                 }));
-//        mMvpModel.addSubscribe(mMvpModel.logout()
-//                .subscribe(success -> {
-//                    mMvpModel.clearUserInfo();
-//                    mMvpView.onLogoutSuccess();
-//                }, throwable -> handlerApiError(throwable)));
     }
 }

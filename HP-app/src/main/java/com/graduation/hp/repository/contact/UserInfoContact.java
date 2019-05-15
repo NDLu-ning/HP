@@ -8,6 +8,8 @@ public interface UserInfoContact {
 
     interface View {
         void onGetUserInfoSuccess(UserVO user);
+
+        void onLogoutSuccess();
     }
 
     interface Presenter {

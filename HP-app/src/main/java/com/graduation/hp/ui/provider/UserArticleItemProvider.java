@@ -52,7 +52,7 @@ public class UserArticleItemProvider extends ItemViewBinder<ArticleVO, UserArtic
         }
         holder.itemView.setOnClickListener(view -> {
             if (mListener != null) {
-                mListener.onItemClick(false, 1L);
+                mListener.onItemClick(false, item.getId());
             }
         });
     }

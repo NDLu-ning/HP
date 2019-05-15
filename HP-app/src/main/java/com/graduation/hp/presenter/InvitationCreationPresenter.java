@@ -4,6 +4,7 @@ import com.graduation.hp.R;
 import com.graduation.hp.core.HPApplication;
 import com.graduation.hp.core.mvp.BasePresenter;
 import com.graduation.hp.core.utils.LogUtils;
+import com.graduation.hp.repository.RepositoryHelper;
 import com.graduation.hp.repository.contact.InvitationCreationContact;
 import com.graduation.hp.repository.model.impl.InvitationModel;
 import com.graduation.hp.repository.model.impl.UploadModel;
@@ -23,6 +24,13 @@ public class InvitationCreationPresenter extends BasePresenter<InvitationCreatio
     @Inject
     public InvitationCreationPresenter(InvitationModel mMvpModel) {
         super(mMvpModel);
+    }
+
+
+    @Override
+    public boolean isUserHasTested() {
+        RepositoryHelper repositoryHelper = mMvpModel.getRepositoryHelper();
+        return repositoryHelper.getPreferencesHelper().getCurrentUserPhysiquId() > 0;
     }
 
 

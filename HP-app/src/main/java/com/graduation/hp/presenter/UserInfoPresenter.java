@@ -12,8 +12,12 @@ import com.graduation.hp.ui.navigation.user.info.UserInfoActivity;
 import org.greenrobot.eventbus.EventBus;
 
 import java.io.File;
+import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
+
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 
 public class UserInfoPresenter extends BasePresenter<UserInfoActivity, UserModel>
         implements UserInfoContact.Presenter {
@@ -37,8 +41,18 @@ public class UserInfoPresenter extends BasePresenter<UserInfoActivity, UserModel
 
     @Override
     public void logout() {
-        mMvpModel.addSubscribe(mMvpModel.logout()
-                .subscribe());
+        if (!mMvpView.isNetworkAvailable()) {
+            mMvpView.showError(HPApplication.getStringById(R.string.tips_network_unavailable));
+            return;
+        }
+        mMvpView.showDialog(HPApplication.getStringById(R.string.tips_logout_ing));
+        mMvpModel.addSubscribe(Observable.timer(1, TimeUnit.SECONDS)
+                .observeOn(AndroidSchedulers.mainThread())
+                .doFinally(() -> mMvpView.dismissDialog())
+                .subscribe(result -> {
+                    mMvpModel.clearUserInfo();
+                    mMvpView.onLogoutSuccess();
+                }));
     }
 
     @Override
